@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание - 21-IDUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/21idum" href="/images/logo.png">
+    <style>
+        /* Spacing tweaks for schedule page */
+        .schedule-section {
+            padding: 60px 0 70px;
+            background: #f8f9fa;
+        }
+
+        .schedule-grid {
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .schedule-content .schedule-item,
+        .schedule-content .schedule-break {
+            margin-bottom: 16px;
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            max-height: none;
+        }
+
+        .schedule-card,
+        .events-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .schedule-content,
+        .events-list {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about.html">О школе</a></li>
+                <li><a href="/schedule.html" class="active">Расписание</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Расписание уроков</h1>
+            <p class="page-subtitle">Две смены и ближайшие события</p>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="schedule-section" id="schedule">
+        <div class="container">
+            <div class="schedule-grid">
+                <!-- School Time Schedule with Shift Switcher -->
+                <div class="schedule-card">
+                    <div class="schedule-header">
+                        <span class="schedule-icon" id="shiftIcon">☀️</span>
+                        <h3 id="shiftTitle">Расписание звонков</h3>
+                    </div>
+
+                    <!-- Shift Switcher -->
+                    <div class="shift-switcher">
+                        <button class="shift-btn active" data-shift="first">
+                            <span class="shift-emoji">☀️</span>
+                            Первая смена
+                        </button>
+                        <button class="shift-btn" data-shift="second">
+                            <span class="shift-emoji">🌙</span>
+                            Вторая смена
+                        </button>
+                    </div>
+
+                    <!-- First Shift Content -->
+                    <div class="schedule-content shift-content active" id="firstShift">
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:00 - 08:45</div>
+                            <div class="schedule-label">1-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:50 - 09:35</div>
+                            <div class="schedule-label">2-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">09:40 - 10:25</div>
+                            <div class="schedule-label">3-й урок</div>
+                        </div>
+                        <div class="schedule-break">
+                            <div class="break-time">10:25 - 10:35</div>
+                            <div class="break-label">Большая перемена (10 мин)</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">10:35 - 11:20</div>
+                            <div class="schedule-label">4-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">11:25 - 12:10</div>
+                            <div class="schedule-label">5-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">12:15 - 13:00</div>
+                            <div class="schedule-label">6-й урок</div>
+                        </div>
+                    </div>
+
+                    <!-- Second Shift Content -->
+                    <div class="schedule-content shift-content" id="secondShift">
+                        <div class="schedule-item">
+                            <div class="schedule-time">13:30 - 14:15</div>
+                            <div class="schedule-label">1-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">14:20 - 15:05</div>
+                            <div class="schedule-label">2-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">15:10 - 15:55</div>
+                            <div class="schedule-label">3-й урок</div>
+                        </div>
+                        <div class="schedule-break">
+                            <div class="break-time">15:55 - 16:05</div>
+                            <div class="break-label">Большая перемена (10 мин)</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">16:05 - 16:50</div>
+                            <div class="schedule-label">4-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">16:55 - 17:40</div>
+                            <div class="schedule-label">5-й урок</div>
+                        </div>
+                        <div class="schedule-item">
+                            <div class="schedule-time">17:45 - 18:30</div>
+                            <div class="schedule-label">6-й урок</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="events-card">
+                    <div class="schedule-header">
+                        <span class="schedule-icon">🔔</span>
+                        <h3>Ближайшие события</h3>
+                    </div>
+                    <div class="events-list" id="eventsList">
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">25</div>
+                                <div class="event-month">Дек</div>
+                            </div>
+                            <div class="event-info">
+                                <h4 class="event-title">Новогодний концерт</h4>
+                                <p class="event-desc">Праздничное мероприятие для всех классов</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">09</div>
+                                <div class="event-month">Янв</div>
+                            </div>
+                            <div class="event-info">
+                                <h4 class="event-title">Начало второго семестра</h4>
+                                <p class="event-desc">Возобновление занятий после каникул</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">15</div>
+                                <div class="event-month">Янв</div>
+                            </div>
+                            <div class="event-info">
+                                <h4 class="event-title">Олимпиада по математике</h4>
+                                <p class="event-desc">Школьный этап для 5-11 классов</p>
+                            </div>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">
+                                <div class="event-day">01</div>
+                                <div class="event-month">Фев</div>
+                            </div>
+                            <div class="event-info">
+                                <h4 class="event-title">День открытых дверей</h4>
+                                <p class="event-desc">Для будущих первоклассников и их родителей</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Специализированная школа №21 города Андижана</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about.html">О школе</a></li>
+                        <li><a href="/schedule.html">Расписание</a></li>
+                        <li><a href="/news.html">Новости</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Школа №21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Burger Menu
+        const burgerMenu = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+        });
+
+        // Shift switcher functionality
+        const shiftBtns = document.querySelectorAll('.shift-btn');
+        const shiftContents = document.querySelectorAll('.shift-content');
+        const shiftIcon = document.getElementById('shiftIcon');
+
+        shiftBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const shift = this.getAttribute('data-shift');
+
+                // Remove active class from all buttons and contents
+                shiftBtns.forEach(b => b.classList.remove('active'));
+                shiftContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Show corresponding content and update icon
+                if (shift === 'first') {
+                    document.getElementById('firstShift').classList.add('active');
+                    shiftIcon.textContent = '☀️';
+                } else {
+                    document.getElementById('secondShift').classList.add('active');
+                    shiftIcon.textContent = '🌙';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

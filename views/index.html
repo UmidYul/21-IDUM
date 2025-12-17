@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>21-IDUM — Главная</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/" class="active">Главная</a></li>
+                <li><a href="/about.html">О школе</a></li>
+                <li><a href="/schedule.html">Расписание</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Carousel -->
+    <section id="home">
+        <div class="container">
+            <div class="carousel">
+                <div class="carousel-inner" id="carouselInner">
+                    <div class="carousel-item" style="background-image: url('/images/1.jpg');"></div>
+                    <div class="carousel-item" style="background-image: url('/images/2.webp');"></div>
+                    <div class="carousel-item" style="background-image: url('/images/3.webp');"></div>
+                    <div class="carousel-item" style="background-image: url('/images/2.webp');"></div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn">‹</button>
+                    <button class="carousel-btn" id="nextBtn">›</button>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators">
+                    <div class="indicator active"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                    <div class="indicator"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" id="about">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="studentsCount">2496</div>
+                    <div class="stat-label">Учащихся</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="teachersCount">117</div>
+                    <div class="stat-label">Преподавателей</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="classesCount">73</div>
+                    <div class="stat-label">Классов (1-11)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts">
+        <div class="container">
+            <h2 class="section-title">Статистика школы</h2>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Успеваемость по четвертям</h3>
+                    <div class="chart-container"><canvas id="lineChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Распределение оценок</h3>
+                    <div class="chart-container"><canvas id="pieChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Announcements -->
+    <section class="announcements" id="announcements">
+        <div class="container">
+            <h2 class="section-title">Важные объявления</h2>
+            <div class="announcements-grid">
+                <div class="announcement-card important">
+                    <div class="announcement-icon">📢</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge">Важно</div>
+                        <h3 class="announcement-title">Набор в 1 класс на 2025-2026 учебный год</h3>
+                        <p class="announcement-text">Начался прием документов для зачисления в первый класс. Количество
+                            мест ограничено — 75 человек. Подача заявок до 15 марта 2025 года.</p>
+                        <div class="announcement-meta">
+                            <span class="announcement-date">📅 До 15 марта 2025</span>
+                            <a href="#contact" class="announcement-link">Подать заявку →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-card event">
+                    <div class="announcement-icon">🎉</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge event-badge">Мероприятие</div>
+                        <h3 class="announcement-title">День открытых дверей</h3>
+                        <p class="announcement-text">Приглашаем будущих первоклассников и их родителей! Экскурсия по
+                            школе, встреча с учителями, презентация программ обучения.</p>
+                        <div class="announcement-meta">
+                            <span class="announcement-date">📅 1 февраля, 10:00</span>
+                            <span class="announcement-location">📍 Актовый зал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-card info">
+                    <div class="announcement-icon">📚</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge info-badge">Информация</div>
+                        <h3 class="announcement-title">Зимние каникулы 2024-2025</h3>
+                        <p class="announcement-text">Учебные занятия возобновляются 9 января 2025 года. Желаем всем
+                            отличного отдыха и счастливых праздников!</p>
+                        <div class="announcement-meta"><span class="announcement-date">📅 25 дек — 8 янв</span></div>
+                    </div>
+                </div>
+                <div class="announcement-card achievement">
+                    <div class="announcement-icon">🏆</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge achievement-badge">Достижение</div>
+                        <h3 class="announcement-title">Победа на городской олимпиаде</h3>
+                        <p class="announcement-text">Поздравляем команду 9А класса с первым местом на городской
+                            математической олимпиаде! Гордимся вами!</p>
+                        <div class="announcement-meta"><span class="announcement-date">📅 15 декабря 2024</span></div>
+                    </div>
+                </div>
+                <div class="announcement-card urgent">
+                    <div class="announcement-icon">⚠️</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge urgent-badge">Срочно</div>
+                        <h3 class="announcement-title">Изменение в расписании</h3>
+                        <p class="announcement-text">20 декабря занятия второй смены начнутся в 14:00 вместо 13:30 в
+                            связи с проведением педагогического совета.</p>
+                        <div class="announcement-meta"><span class="announcement-date">📅 20 декабря 2024</span></div>
+                    </div>
+                </div>
+                <div class="announcement-card competition">
+                    <div class="announcement-icon">🎯</div>
+                    <div class="announcement-content">
+                        <div class="announcement-badge competition-badge">Конкурс</div>
+                        <h3 class="announcement-title">Конкурс "Лучший класс года"</h3>
+                        <p class="announcement-text">Стартует ежегодный конкурс среди 5-11 классов. Оценивается
+                            успеваемость, участие в мероприятиях и общественная активность.</p>
+                        <div class="announcement-meta"><span class="announcement-date">📅 Январь — май 2025</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="map">
+        <div class="container">
+            <div class="map-container">
+                <div class="map-placeholder" style="height: 100%;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1518.444573224244!2d71.76306641646347!3d40.43345347833234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb82cb402f5d71%3A0x86a40294d27eef27!2z0KHQv9C10YbQuNCw0LvQuNC30LjRgNC-0LLQsNC90L3QsNGPLiDQqNC60L7Qu9CwIC7ihJYyMS4!5e0!3m2!1sru!2s!4v1765255410362!5m2!1sru!2s"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Обратная связь</h2>
+            <div class="form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" id="name" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea id="message" class="form-textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="social-media" id="social">
+        <div class="container">
+            <h2 class="section-title">Мы в социальных сетях</h2>
+            <p class="social-intro">Следите за новостями и событиями школы</p>
+            <div class="social-links-minimal">
+                <a href="https://t.me/your_school_channel" target="_blank" class="social-link telegram"
+                    aria-label="Telegram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19c-.14.75-.42 1-.68 1.03c-.58.05-1.02-.38-1.58-.75c-.88-.58-1.38-.94-2.23-1.5c-.99-.65-.35-1.01.22-1.59c.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02c-.09.02-1.49.95-4.22 2.79c-.4.27-.76.41-1.08.4c-.36-.01-1.04-.2-1.55-.37c-.63-.2-1.12-.31-1.08-.66c.02-.18.27-.36.74-.55c2.92-1.27 4.86-2.11 5.83-2.51c2.78-1.16 3.35-1.36 3.73-1.36c.08 0 .27.02.39.12c.1.08.13.19.14.27c-.01.06.01.24 0 .38" />
+                    </svg>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://instagram.com/your_school" target="_blank" class="social-link instagram"
+                    aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3" />
+                    </svg>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://facebook.com/your_school" target="_blank" class="social-link facebook"
+                    aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95" />
+                    </svg>
+                    <span>Facebook</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Официальный сайт общеобразовательной школы №21.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about.html">О школе</a></li>
+                        <li><a href="/schedule.html">Расписание</a></li>
+                        <li><a href="/news.html">Новости</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const languageSwitch = document.getElementById('languageSwitch');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sectionTitles = document.querySelectorAll('.section-title');
+        const statLabels = document.querySelectorAll('.stat-label');
+
+        let currentLang = 'ru';
+        languageSwitch.addEventListener('click', () => {
+            if (currentLang === 'ru') { currentLang = 'uz'; languageSwitch.textContent = "O‘zbekcha"; updateContentToUzbek(); }
+            else { currentLang = 'ru'; languageSwitch.textContent = 'Русский'; updateContentToRussian(); }
+        });
+
+        function updateContentToUzbek() {
+            navLinks[0].textContent = 'Bosh sahifa';
+            navLinks[1].textContent = 'Maktab haqida';
+            navLinks[2].textContent = 'Jadval';
+            navLinks[3].textContent = 'Yangiliklar';
+            navLinks[4].textContent = 'FAQ';
+            sectionTitles[0].textContent = 'Maktab statistikasi';
+            sectionTitles[1].textContent = 'Muhim e‘lonlar';
+            statLabels[0].textContent = "O‘quvchilar";
+            statLabels[1].textContent = "O‘qituvchilar";
+            statLabels[2].textContent = 'Sinf (1-11)';
+            document.querySelector('.chart-title').textContent = "Choraklar bo‘yicha o‘qish sifati";
+            document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Baholar taqsimoti';
+            document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Barcha huquqlar himoya qilindi.';
+        }
+        function updateContentToRussian() {
+            navLinks[0].textContent = 'Главная';
+            navLinks[1].textContent = 'О школе';
+            navLinks[2].textContent = 'Расписание';
+            navLinks[3].textContent = 'Новости';
+            navLinks[4].textContent = 'FAQ';
+            sectionTitles[0].textContent = 'Статистика школы';
+            sectionTitles[1].textContent = 'Важные объявления';
+            statLabels[0].textContent = 'Учащихся';
+            statLabels[1].textContent = 'Преподавателей';
+            statLabels[2].textContent = 'Классов (1-11)';
+            document.querySelector('.chart-title').textContent = 'Успеваемость по четвертям';
+            document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Распределение оценок';
+            document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Все права защищены.';
+        }
+
+        const burgerMenu = document.getElementById('burgerMenu');
+        const navLinksContainer = document.getElementById('navLinks');
+        burgerMenu.addEventListener('click', () => { burgerMenu.classList.toggle('active'); navLinksContainer.classList.toggle('active'); });
+        navLinks.forEach(link => link.addEventListener('click', () => { burgerMenu.classList.remove('active'); navLinksContainer.classList.remove('active'); }));
+
+        const carouselInner = document.getElementById('carouselInner');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0; const totalItems = indicators.length; let autoPlayInterval; let isTransitioning = false;
+        function updateCarousel() { if (isTransitioning) return; isTransitioning = true; carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`; indicators.forEach((i, idx) => i.classList.toggle('active', idx === currentIndex)); setTimeout(() => { isTransitioning = false; }, 500); }
+        function nextSlide() { currentIndex = (currentIndex + 1) % totalItems; updateCarousel(); }
+        function prevSlide() { currentIndex = (currentIndex - 1 + totalItems) % totalItems; updateCarousel(); }
+        function startAutoPlay() { stopAutoPlay(); autoPlayInterval = setInterval(nextSlide, 5000); }
+        function stopAutoPlay() { if (autoPlayInterval) clearInterval(autoPlayInterval); }
+        nextBtn.addEventListener('click', () => { nextSlide(); startAutoPlay(); });
+        prevBtn.addEventListener('click', () => { prevSlide(); startAutoPlay(); });
+        indicators.forEach((indicator, index) => indicator.addEventListener('click', () => { if (currentIndex !== index) { currentIndex = index; updateCarousel(); startAutoPlay(); } }));
+        let touchStartX = 0, touchEndX = 0;
+        carouselInner.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; stopAutoPlay(); });
+        carouselInner.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; const t = 50; if (touchStartX - touchEndX > t) nextSlide(); else if (touchEndX - touchStartX > t) prevSlide(); startAutoPlay(); });
+        document.querySelector('.carousel').addEventListener('mouseenter', stopAutoPlay);
+        document.querySelector('.carousel').addEventListener('mouseleave', startAutoPlay);
+        document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') { prevSlide(); startAutoPlay(); } else if (e.key === 'ArrowRight') { nextSlide(); startAutoPlay(); } });
+        startAutoPlay();
+
+        const canvas = document.getElementById('lineChart');
+        const mlCtx = canvas.getContext('2d');
+        const years = ['2020/2021', '2021/2022', '2022/2023', '2023/2024', '2024/2025', '2025/2026'];
+        const averageGrades = [4.1, 4.2, 3.0, 4.3, 4.4, 4.5];
+        const studentCounts = [520, 545, 560, 590, 610, 640];
+        const graduatesCount = [85, 90, 88, 92, 95, 100];
+        new Chart(mlCtx, {
+            type: 'line', data: {
+                labels: years, datasets: [
+                    { label: 'Средний балл', data: averageGrades, borderColor: '#FFD700', backgroundColor: 'rgba(255,215,0,0.2)', borderWidth: 3, fill: true, tension: 0.3 },
+                    { label: 'Количество учеников', data: studentCounts, borderColor: '#4CAF50', backgroundColor: 'rgba(76,175,80,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' },
+                    { label: 'Выпускники', data: graduatesCount, borderColor: '#2196F3', backgroundColor: 'rgba(33,150,243,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' }
+                ]
+            }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Средний балл' }, min: 0, max: 5 }, y1: { beginAtZero: true, position: 'right', title: { display: true, text: 'Количество учеников' }, grid: { drawOnChartArea: false } } } }
+        });
+        new Chart(document.getElementById('pieChart').getContext('2d'), { type: 'pie', data: { labels: ['Отлично (5)', 'Хорошо (4)', 'Удовлетворительно (3)', 'Неудовлетворительно (2)'], datasets: [{ data: [35, 45, 18, 2], backgroundColor: ['#4CAF50', '#FFD700', '#FF9800', '#F44336'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Yuborilmoqda...';
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message })
+                });
+                const result = await response.json();
+                if (response.ok && result.ok) {
+                    alert(currentLang === 'ru' ? '✅ Ваше сообщение отправлено администратору!' : '✅ Xabaringiz administratorga yuborildi!');
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.error || 'Ошибка отправки');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert(currentLang === 'ru' ? '❌ Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.' : '❌ Xabar yuborishda xatolik. Iltimos, keyinroq urinib ko‘ring.');
+            } finally { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+        });
+
+        window.addEventListener('load', () => { console.log('✅ Главная страница 21-IDUM загружена'); });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новости - 21-IDUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/21idum" href="/images/logo.png">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about.html">О школе</a></li>
+                <li><a href="/schedule.html">Расписание</a></li>
+                <li><a href="/news.html" class="active">Новости</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Новости школы</h1>
+            <p class="page-subtitle">Актуальные события и важная информация</p>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-page">
+        <div class="container">
+            <div class="news-grid" id="newsContainer">
+                <!-- Новости будут загружены через JavaScript -->
+            </div>
+            <div class="loading-spinner" id="newsLoading">
+                Загрузка новостей...
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Специализированная школа №21 города Андижана</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about.html">О школе</a></li>
+                        <li><a href="/schedule.html">Расписание</a></li>
+                        <li><a href="/news.html">Новости</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Школа №21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentLang = 'ru';
+
+        // Language Switcher
+        const languageSwitch = document.getElementById('languageSwitch');
+        languageSwitch.addEventListener('click', () => {
+            currentLang = currentLang === 'ru' ? 'uz' : 'ru';
+            languageSwitch.textContent = currentLang === 'ru' ? 'Русский' : 'O\'zbekcha';
+            loadNews(currentLang);
+        });
+
+        // Burger Menu
+        const burgerMenu = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+        });
+
+        // Load News Function
+        async function loadNews(lang = 'ru') {
+            const newsContainer = document.getElementById('newsContainer');
+            const newsLoading = document.getElementById('newsLoading');
+
+            newsLoading.style.display = 'block';
+            newsContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/news?lang=${lang}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const news = await response.json();
+                newsLoading.style.display = 'none';
+
+                if (news.length === 0) {
+                    newsContainer.innerHTML = '<p class="no-news">Новостей пока нет</p>';
+                    return;
+                }
+
+                news.forEach(item => {
+                    const newsCard = document.createElement('div');
+                    newsCard.className = 'news-card';
+                    newsCard.innerHTML = `
+                        <div class="news-img" style="background-image: url('${item.image || '/images/news-placeholder.jpg'}');">
+                            <div class="news-date">${new Date(item.date).toLocaleDateString('ru-RU')}</div>
+                        </div>
+                        <div class="news-content">
+                            <h3 class="news-title">${item.title}</h3>
+                            <p class="news-excerpt">${item.content.substring(0, 150)}...</p>
+                            <a href="#" class="news-link">Читать далее →</a>
+                        </div>
+                    `;
+                    newsContainer.appendChild(newsCard);
+                });
+            } catch (error) {
+                newsLoading.style.display = 'none';
+                newsContainer.innerHTML = '<p class="error-message">Ошибка загрузки новостей. Попробуйте позже.</p>';
+                console.error('Error loading news:', error);
+            }
+        }
+
+        // Load news on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNews(currentLang);
+        });
+
+        // Auto-refresh news every 5 minutes
+        setInterval(() => {
+            loadNews(currentLang);
+        }, 5 * 60 * 1000);
+    </script>
+
+</body>
+
+</html>
