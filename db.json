@@ -1,0 +1,542 @@
+{
+  "news": [
+    {
+      "id": "c6b6139c-3c2e-4a6f-a737-3b8c5a4c1d11",
+      "title_ru": "Открытие нового STEM-класса",
+      "title_uz": "Yangi STEM sinfi ochildi",
+      "body_ru": "Мы запустили новый STEM-класс с оборудованием для робототехники и 3D-печати. Набор открыт для 7-9 классов.",
+      "body_uz": "Robototexnika va 3D-printerlar bilan jihozlangan yangi STEM sinfi ishga tushdi. 7-9 sinflar uchun qabul ochiq.",
+      "coverUrl": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=500&fit=crop",
+      "slug": "otkrytie-stem-klassa-2025-12-17",
+      "status": "published",
+      "publishAt": "2025-12-10T09:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "createdAt": "2025-12-17T19:40:00.000Z",
+      "updatedAt": "2025-12-17T19:40:00.000Z"
+    },
+    {
+      "id": "a1f5c2d4-8c3b-4e1f-9a7d-2f6b4c8a9d01",
+      "title_ru": "Спортивный день:足球турнир",
+      "title_uz": "Sport kuni: futbol turniri",
+      "body_ru": "Прошёл чемпионат по футболу среди всех классов школы. Призовые места распределены справедливо, молодцы ребята!",
+      "body_uz": "Maktabaning barcha sinflari o'rtasida futbol chempionati o'tkazildi. Prizoviy o'rinlar справедливо taqsimlandi.",
+      "coverUrl": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&h=500&fit=crop",
+      "slug": "sport-den-futbol-turnir-2025-12-18",
+      "status": "published",
+      "publishAt": "2025-12-15T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z"
+    },
+    {
+      "id": "c3f7e4g6-0e5d-6g3h-1c9f-4h8d0e0c1f03",
+      "title_ru": "Конкурс творческих работ",
+      "title_uz": "Ijodiy ishlar musobaqasi",
+      "body_ru": "Подведены итоги конкурса творческих работ учащихся. Победители получат грамоты и призы на торжественной церемонии в конце месяца.",
+      "body_uz": "O'quvchilarning ijodiy ishlari musobaqasining natijalari e'lon qilindi. G'olib o'quvchilar oyning oxirida tantanali marosimda diplomlar va hadyalar oladilar.",
+      "coverUrl": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop",
+      "slug": "konkurs-tvorcheskikh-rabot-2025-12-18",
+      "status": "published",
+      "publishAt": "2025-12-13T14:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z"
+    },
+    {
+      "id": "d4g8f5h7-1f6e-7h4i-2d0g-5i9e1f1d2g04",
+      "title_ru": "Встреча с университетом",
+      "title_uz": "Universitet bilan uchrashish",
+      "body_ru": "Представители Национального университета Узбекистана провели встречу со старшеклассниками. Ребята узнали о программах обучения и условиях поступления.",
+      "body_uz": "O'zbekiston Milliy universitetining vakillari o'zbekistanlik talabalar bilan uchrashdi. Bolalar o'qitish dasturlari va kirim shartlari haqida bilib oldiler.",
+      "coverUrl": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=500&fit=crop",
+      "slug": "vstrecha-universitet-2025-12-18",
+      "status": "published",
+      "publishAt": "2025-12-11T11:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "username": "admin",
+      "password": "admin",
+      "role": "admin",
+      "createdAt": "2025-12-17T12:32:46.782Z",
+      "lastLoginAt": "2025-12-17T12:39:51.171Z",
+      "displayName": "Йулдашев Умид",
+      "email": "yumid253@gmail.com",
+      "phone": "+998905329686",
+      "updatedAt": "2025-12-17T17:11:49.161Z"
+    },
+    {
+      "id": "e07bfdef-39bc-4829-a592-cba4529d283f",
+      "username": "admin1",
+      "password": "admin",
+      "role": "editor",
+      "displayName": "Йулдашев Умид",
+      "email": "webxperts.uz@gmail.com",
+      "phone": "+998905329686",
+      "createdAt": "2025-12-17T17:12:00.852Z",
+      "lastLoginAt": null
+    }
+  ],
+  "sessions": [
+    {
+      "token": "87e399259deefd5cbad3dfbba96569aad8d774d52d6e2c19",
+      "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "username": "admin",
+      "role": "admin",
+      "createdAt": "2025-12-17T18:10:49.415Z",
+      "expiresAt": "2025-12-24T18:10:49.415Z"
+    }
+  ],
+  "faq": [
+    {
+      "id": "faq-001",
+      "question_ru": "Как поступить в школу №21-IDUM?",
+      "question_uz": "21-IDUM maktabiga qanday qabul qilinaman?",
+      "answer_ru": "Для поступления необходимо пройти вступительные экзамены по математике, русскому и узбекскому языкам. Регистрация на экзамены проходит в мае-июне каждого года. Документы можно подать онлайн через наш сайт или лично в приемной комиссии.",
+      "answer_uz": "Qabul uchun matematika, rus va o'zbek tillaridan kirish imtihonlarini topshirish kerak. Imtihonlarga ro'yxatdan o'tish har yili may-iyun oylarida o'tkaziladi. Hujjatlarni saytimiz orqali onlayn yoki qabul komissiyasida shaxsan topshirish mumkin.",
+      "category": "admission",
+      "order": 1,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-002",
+      "question_ru": "Какие документы нужны для поступления?",
+      "question_uz": "Qabul uchun qanday hujjatlar kerak?",
+      "answer_ru": "Необходимы: копия свидетельства о рождении, медицинская справка формы 086-У, характеристика из предыдущей школы (для учащихся 2-11 классов), 4 фотографии 3x4, копия паспорта одного из родителей.",
+      "answer_uz": "Kerakli hujjatlar: tug'ilganlik haqida guvohnoma nusxasi, 086-U shaklidagi tibbiy ma'lumotnoma, oldingi maktabdan tavsifnoma (2-11 sinf o'quvchilari uchun), 3x4 o'lchamda 4 ta fotosurat, ota-onadan birining passport nusxasi.",
+      "category": "documents",
+      "order": 2,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-003",
+      "question_ru": "Какое расписание занятий в школе?",
+      "question_uz": "Maktabda darslar jadvali qanday?",
+      "answer_ru": "Занятия проходят в одну смену с 8:00 до 14:30. Уроки начинаются в 8:00, продолжительность урока - 45 минут. После третьего урока - большая перемена 20 минут для обеда.",
+      "answer_uz": "Darslar bir smenada 8:00 dan 14:30 gacha o'tkaziladi. Darslar 8:00 da boshlanadi, har bir dars 45 daqiqa davom etadi. Uchinchi darsdan keyin tushlik uchun 20 daqiqalik katta tanaffus.",
+      "category": "education",
+      "order": 3,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-004",
+      "question_ru": "Есть ли в школе кружки и секции?",
+      "question_uz": "Maktabda to'garaklar va sektsiyalar bormi?",
+      "answer_ru": "Да, у нас работают различные кружки: робототехника, программирование, английский клуб, математический кружок, шахматы, театральная студия. Также есть спортивные секции: футбол, волейбол, баскетбол, настольный теннис.",
+      "answer_uz": "Ha, bizda turli to'garaklar ishlaydi: robototexnika, dasturlash, ingliz tili klubi, matematika to'garagi, shaxmat, teatr studiyasi. Shuningdek, sport sektsiyalari: futbol, voleybol, basketbol, stol tennisi.",
+      "category": "education",
+      "order": 4,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-005",
+      "question_ru": "Какова стоимость обучения?",
+      "question_uz": "O'qish narxi qancha?",
+      "answer_ru": "Обучение в школе №21-IDUM бесплатное. Финансирование осуществляется из государственного бюджета. Родители оплачивают только питание и дополнительные образовательные услуги (по желанию).",
+      "answer_uz": "21-IDUM maktabida o'qish bepul. Moliyalashtirish davlat byudjeti hisobidan amalga oshiriladi. Ota-onalar faqat ovqatlanish va qo'shimcha ta'lim xizmatlarini (ixtiyoriy) to'laydilar.",
+      "category": "general",
+      "order": 5,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-006",
+      "question_ru": "Как организовано питание в школе?",
+      "question_uz": "Maktabda ovqatlanish qanday tashkil etilgan?",
+      "answer_ru": "В школе работает современная столовая. Для учащихся 1-4 классов предоставляется бесплатное горячее питание. Старшеклассники питаются за символическую плату. Меню составляется с учетом норм здорового питания и согласовывается с санэпидемстанцией.",
+      "answer_uz": "Maktabda zamonaviy oshxona ishlaydi. 1-4 sinf o'quvchilari uchun bepul issiq ovqat taqdim etiladi. Katta sinf o'quvchilari arzon narxda ovqatlanadilar. Menyu sog'lom ovqatlanish me'yorlariga muvofiq tuziladi va sanitariya-epidemiologiya stantsiyasi bilan kelishiladi.",
+      "category": "general",
+      "order": 6,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-007",
+      "question_ru": "Когда проходят экзамены?",
+      "question_uz": "Imtihonlar qachon o'tkaziladi?",
+      "answer_ru": "Промежуточная аттестация проходит в конце каждой четверти. Итоговые экзамены для 9 и 11 классов проводятся в мае-июне. График экзаменов публикуется на сайте школы заранее.",
+      "answer_uz": "Oraliq attestatsiya har chorak oxirida o'tkaziladi. 9 va 11 sinflar uchun yakuniy imtihonlar may-iyun oylarida o'tkaziladi. Imtihonlar jadvali oldindan maktab saytida e'lon qilinadi.",
+      "category": "exams",
+      "order": 7,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-008",
+      "question_ru": "Есть ли в школе медицинский кабинет?",
+      "question_uz": "Maktabda tibbiy xona bormi?",
+      "answer_ru": "Да, в школе работает медицинский кабинет. Медицинская сестра присутствует ежедневно с 8:00 до 15:00. Проводятся профилактические осмотры, вакцинация, оказывается первая помощь.",
+      "answer_uz": "Ha, maktabda tibbiy xona ishlaydi. Tibbiy hamshira har kuni 8:00 dan 15:00 gacha navbatchilikda. Profilaktik ko'riklar, emlash o'tkaziladi, birinchi yordam ko'rsatiladi.",
+      "category": "general",
+      "order": 8,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-009",
+      "question_ru": "Как связаться с учителями?",
+      "question_uz": "O'qituvchilar bilan qanday bog'lanish mumkin?",
+      "answer_ru": "Вы можете связаться с классным руководителем через электронный дневник, по телефону (номера публикуются на сайте) или записаться на личную встречу через секретаря. Также проводятся родительские собрания каждую четверть.",
+      "answer_uz": "Sinf rahbari bilan elektron kundalik orqali, telefon orqali (raqamlar saytda e'lon qilingan) yoki kotiba orqali shaxsiy uchrashuv belgilash mumkin. Shuningdek, har chorakda ota-onalar yig'ilishlari o'tkaziladi.",
+      "category": "general",
+      "order": 9,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "faq-010",
+      "question_ru": "Есть ли школьная форма?",
+      "question_uz": "Maktab formasi bormi?",
+      "answer_ru": "Да, в школе установлена единая форма одежды. Для мальчиков: темные брюки, белая рубашка, жилет или пиджак синего цвета. Для девочек: темная юбка или брюки, белая блузка, жилет или пиджак синего цвета. Спортивная форма - белая футболка и темные спортивные брюки.",
+      "answer_uz": "Ha, maktabda yagona kiyim shakli belgilangan. O'g'il bolalar uchun: to'q rangli shim, oq ko'ylak, ko'k rangli jilet yoki pidzhak. Qizlar uchun: to'q rangli yubka yoki shim, oq bluza, ko'k rangli jilet yoki pidzhak. Sport formasi - oq futbolka va to'q rangli sport shimi.",
+      "category": "general",
+      "order": 10,
+      "visible": true,
+      "createdAt": "2025-12-17T10:00:00.000Z",
+      "updatedAt": "2025-12-17T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    }
+  ],
+  "schedule": {
+    "bells": [
+      {
+        "shift": 1,
+        "name_ru": "Первая смена",
+        "name_uz": "Birinchi smena",
+        "lessons": [
+          {
+            "time": "08:00 - 08:45",
+            "isBreak": false
+          },
+          {
+            "time": "08:45 - 08:50",
+            "isBreak": true
+          },
+          {
+            "time": "08:50 - 09:35",
+            "isBreak": false
+          },
+          {
+            "time": "09:35 - 09:40",
+            "isBreak": true
+          },
+          {
+            "time": "09:40 - 10:25",
+            "isBreak": false
+          },
+          {
+            "time": "10:25 - 10:35",
+            "isBreak": true
+          },
+          {
+            "time": "10:35 - 11:20",
+            "isBreak": false
+          },
+          {
+            "time": "11:20 - 11:25",
+            "isBreak": true
+          },
+          {
+            "time": "11:25 - 12:10",
+            "isBreak": false
+          },
+          {
+            "time": "12:10 - 12:15",
+            "isBreak": true
+          },
+          {
+            "time": "12:15 - 13:00",
+            "isBreak": false
+          }
+        ]
+      },
+      {
+        "shift": 2,
+        "name_ru": "Вторая смена",
+        "name_uz": "Ikkinchi smena",
+        "lessons": [
+          {
+            "time": "14:00 - 14:45",
+            "isBreak": false
+          },
+          {
+            "time": "14:45 - 14:50",
+            "isBreak": true
+          },
+          {
+            "time": "14:50 - 15:35",
+            "isBreak": false
+          },
+          {
+            "time": "15:35 - 15:40",
+            "isBreak": true
+          },
+          {
+            "time": "15:40 - 16:25",
+            "isBreak": false
+          },
+          {
+            "time": "16:25 - 16:35",
+            "isBreak": true
+          },
+          {
+            "time": "16:35 - 17:20",
+            "isBreak": false
+          },
+          {
+            "time": "17:20 - 17:25",
+            "isBreak": true
+          },
+          {
+            "time": "17:25 - 18:10",
+            "isBreak": false
+          },
+          {
+            "time": "18:10 - 18:15",
+            "isBreak": true
+          },
+          {
+            "time": "18:15 - 19:00",
+            "isBreak": false
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "id": "701f7beb-0817-4bbb-bed7-e629c2654565",
+        "title_ru": "День Спорта",
+        "title_uz": "",
+        "description_ru": "«Здравствуйте!\nБольшое спасибо за интерес к вакансии! К сожалению, сейчас мы не готовы пригласить вас на следующий этап.\nЦеним ваше внимание и будем рады получать ваши отклики на другие позиции.»",
+        "description_uz": "",
+        "date": "2025-12-09",
+        "time": "17:00",
+        "location_ru": "Спортзал",
+        "location_uz": "",
+        "createdAt": "2025-12-17T16:06:18.928Z",
+        "updatedAt": "2025-12-17T16:47:35.495Z",
+        "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+        "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+      },
+      {
+        "id": "701f7beb-0817-4bbb-bed7-e629c2654565",
+        "title_ru": "День Спорта",
+        "title_uz": "",
+        "description_ru": "«Здравствуйте!\nБольшое спасибо за интерес к вакансии! К сожалению, сейчас мы не готовы пригласить вас на следующий этап.\nЦеним ваше внимание и будем рады получать ваши отклики на другие позиции.»",
+        "description_uz": "",
+        "date": "2025-12-18",
+        "time": "17:00",
+        "location_ru": "Спортзал",
+        "location_uz": "",
+        "createdAt": "2025-12-17T16:06:18.928Z",
+        "updatedAt": "2025-12-17T16:06:18.928Z",
+        "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+      }
+    ]
+  },
+  "announcements": [
+    {
+      "id": "a1f5c2d4-8c3b-4e1f-9a7d-2f6b4c8a9d11",
+      "title": "График зимних каникул",
+      "text": "Каникулы с 25 декабря по 8 января. Учеба возобновится 9 января в обычном режиме.",
+      "type": "info",
+      "date": "2025-12-09",
+      "location": "",
+      "link": "",
+      "status": "published",
+      "publishAt": "2025-12-09T08:00:00.000Z",
+      "createdAt": "2025-12-17T19:50:00.000Z",
+      "updatedAt": "2025-12-17T19:50:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "b7d2e1f4-9c8b-4a7d-8e6f-1a2c3d4b5e66",
+      "title": "День открытых дверей",
+      "text": "Экскурсии по кабинетам, знакомство с учителями, ответы на вопросы родителей.",
+      "type": "event",
+      "date": "2026-01-20",
+      "location": "Актовый зал",
+      "link": "",
+      "status": "published",
+      "publishAt": "2025-12-12T10:00:00.000Z",
+      "createdAt": "2025-12-17T19:51:00.000Z",
+      "updatedAt": "2025-12-17T19:51:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "c9e4d2b1-7a3f-4c9d-9e8b-5f1d2c3a4b77",
+      "title": "Конкурс проектов по робототехнике",
+      "text": "Прием заявок до 15 февраля. Лучшая команда получит 3D-принтер для школьной лаборатории.",
+      "type": "competition",
+      "date": "2026-02-20",
+      "location": "Лаборатория STEM",
+      "link": "",
+      "status": "published",
+      "publishAt": "2025-12-15T12:00:00.000Z",
+      "createdAt": "2025-12-17T19:52:00.000Z",
+      "updatedAt": "2025-12-17T19:52:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    }
+  ],
+  "auditLog": [
+    {
+      "id": "4cc81f73-3ebe-43b4-bddd-5d6bfee5be1f",
+      "type": "login",
+      "userId": "e07bfdef-39bc-4829-a592-cba4529d283f",
+      "username": "admin1",
+      "role": "editor",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+      "at": "2025-12-17T18:10:44.639Z"
+    },
+    {
+      "id": "ac18cdb8-16f6-43f2-8600-95ac50e84358",
+      "type": "login",
+      "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "username": "admin",
+      "role": "admin",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+      "at": "2025-12-17T18:10:49.419Z"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "t-001",
+      "name_ru": "Иванов Иван Иванович",
+      "name_uz": "Ivanov Ivan Ivanovich",
+      "position_ru": "Директор",
+      "position_uz": "Direktur",
+      "bio_ru": "Директор школы с 20-летним опытом работы в системе образования. Преподаватель математики, внедряет инновационные методы обучения.",
+      "bio_uz": "Maktab direktori, ta'lim tizimida 20 yillik tajribaga ega. Matematika o'qituvchisi, innovatsion o'qitish usullarini joriy qiladi.",
+      "photo": "/images/t1.jpg",
+      "instagram": "https://instagram.com/ivanov",
+      "telegram": "https://t.me/ivanov",
+      "phone": "+998774535550",
+      "status": "published",
+      "order": 1,
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "t-002",
+      "name_ru": "Петрова Мария Петровна",
+      "name_uz": "Petrova Mariya Petrovna",
+      "position_ru": "Заместитель директора",
+      "position_uz": "Direktor o'rinbosari",
+      "bio_ru": "Заместитель директора по учебной работе. Преподаватель русского языка и литературы. Опытный методист, автор учебных программ.",
+      "bio_uz": "O'quv ishlari bo'yicha direktor o'rinbosari. Rus tili va adabiyoti o'qituvchisi. Tajribali metodist, o'quv dasturlarining muallifi.",
+      "photo": "/images/t2.jpg",
+      "instagram": "https://instagram.com/petrova",
+      "telegram": "https://t.me/petrova",
+      "phone": "+998774535551",
+      "status": "published",
+      "order": 2,
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "t-003",
+      "name_ru": "Сидоров Алексей Алексеевич",
+      "name_uz": "Sidorov Aleksey Alekseevich",
+      "position_ru": "Завуч",
+      "position_uz": "Bosh o'qituvchi",
+      "bio_ru": "Завуч по воспитательной работе. Преподаватель физики и информатики. Руководит научно-методическим советом школы.",
+      "bio_uz": "Ta'rbiya ishlari bo'yicha zavuч. Fizika va informatika o'qituvchisi. Maktab ilmiy-metodik kengashiga rahbarlik qiladi.",
+      "photo": "/images/t3.jpg",
+      "instagram": "https://instagram.com/sidorov",
+      "telegram": "https://t.me/sidorov",
+      "phone": "+998774535552",
+      "status": "published",
+      "order": 3,
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "t-004",
+      "name_ru": "Кузнецова Елена Владимировна",
+      "name_uz": "Kuznetsova Elena Vladimirovna",
+      "position_ru": "Администратор",
+      "position_uz": "Administrator",
+      "bio_ru": "Администратор школы. Координирует учебный процесс, курирует работу с родителями и общественностью. Опыт работы в образовании - 15 лет.",
+      "bio_uz": "Maktab administratori. O'quv jarayonini koordinatsiya qiladi, ota-onalar va jamiyat bilan ishni kuratsiya qiladi. Ta'lim sohasida 15 yillik tajriba.",
+      "photo": "/images/t4.jpg",
+      "instagram": "https://instagram.com/kuznetsova",
+      "telegram": "https://t.me/kuznetsova",
+      "phone": "+998774535553",
+      "status": "published",
+      "order": 4,
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "r-001",
+      "author": "Алишер Каримов",
+      "text_ru": "Отличная школа с квалифицированными педагогами! Мой сын учится здесь уже 4 года, и я вижу, как он развивается не только в учёбе, но и в спорте. Особенно нравится индивидуальный подход к каждому ребёнку.",
+      "text_uz": "Malaka ega o'qituvchilari bilan ajoyib maktab! Mening o'g'lim shu yerda 4 yildan beri o'qiydi va men uning o'qish va sportda ham rivojlanaganini ko'rayapman. Ayniqsa har bir bolaga individual yondashuv yoqadi.",
+      "date": "2025-12-10",
+      "status": "published",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "r-002",
+      "author": "Дилноза Рахимова",
+      "text_ru": "Благодаря нашим учителям я смогла поступить в престижный университет. Здесь не просто дают знания, но и учат думать, анализировать и решать сложные задачи. Особая благодарность учителям математики и физики!",
+      "text_uz": "Bizning o'qituvchilari tufayli men istediy universitetga kirishga muvaffaq bo'ldim. Bu yerda shunchaki bilim bermasdan, balki fikr yuritish, tahlil qilish va murakkab masalalarni hal qilishni o'rgatadi. Matematika va fizika o'qituvchilari uchun alohida rahmat!",
+      "date": "2025-12-11",
+      "status": "published",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    },
+    {
+      "id": "r-003",
+      "author": "Нигора Усманова",
+      "text_ru": "Моя дочь с удовольствием ходит в школу каждый день! Здесь созданы все условия для развития: современные классы, спортивный зал, библиотека. Учителя всегда на связи и готовы помочь.",
+      "text_uz": "Mening qizim quvonch bilan har kuni maktabga boravdi! Rivojlanish uchun barcha shartlar yaratilgan: zamonaviy sinflar, sport zali, kutubxona. O'qituvchilar har doim aloqada va yordam berishga tayyorlar.",
+      "date": "2025-12-12",
+      "status": "published",
+      "createdAt": "2025-12-18T10:00:00.000Z",
+      "updatedAt": "2025-12-18T10:00:00.000Z",
+      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+    }
+  ]
+}
