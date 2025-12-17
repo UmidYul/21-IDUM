@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Админ-панель — 21-IDUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">На сайт</a></li>
+            </ul>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar">
+                        <strong id="userLabel">Админ</strong>
+                        <button id="logoutBtn" class="btn btn-sm btn-danger">Выйти</button>
+                    </div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin" class="active">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li><a href="/admin/teachers">Учителя</a></li>
+                        <li><a href="/admin/reviews">Отзывы</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule">Расписание</a></li>
+                        <li id="usersMenuAdmin"><a href="/admin/users">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <h1 class="admin-title">Дашборд</h1>
+                    <p class="admin-sub">Управление контентом сайта 21-IDUM</p>
+                    <div class="grid">
+                        <div class="card">
+                            <strong>Новости</strong>
+                            <div id="statNews" class="kpi">—</div>
+                        </div>
+                        <div class="card">
+                            <strong>FAQ</strong>
+                            <div id="statFaq" class="kpi">—</div>
+                        </div>
+                        <div class="card">
+                            <strong>События</strong>
+                            <div id="statEvents" class="kpi">—</div>
+                        </div>
+                        <div class="card" id="statUsersCard" style="display:none">
+                            <strong>Пользователи</strong>
+                            <div id="statUsers" class="kpi">—</div>
+                        </div>
+                    </div>
+
+
+
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <script src="/admin-nav.js"></script>
+    <script src="/admin.js"></script>
+</body>
+
+</html>

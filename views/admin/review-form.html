@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать отзыв — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/reviews">← Назад к отзывам</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать отзыв</h1>
+            <p class="muted" style="margin:0 0 20px">Добавьте отзыв на русском и узбекском языках</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="author">Автор *</label>
+                    <input type="text" id="author" name="author" required placeholder="Имя автора отзыва">
+                </div>
+
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="text_ru">Текст отзыва *</label>
+                        <textarea id="text_ru" name="text_ru" required placeholder="Содержание отзыва"></textarea>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="text_uz">Sharhni matni</label>
+                        <textarea id="text_uz" name="text_uz" placeholder="Sharhning mazmuni"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Дата</label>
+                    <input type="date" id="date" name="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус</label>
+                    <select id="status" name="status">
+                        <option value="draft">Черновик</option>
+                        <option value="published">Опубликован</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/reviews'">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="/admin-review-form.js"></script>
+</body>
+
+</html>

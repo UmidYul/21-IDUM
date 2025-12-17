@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактировать расписание звонков — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/schedule">← Назад к расписанию</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Редактировать расписание звонков</h1>
+            <p class="muted" style="margin:0 0 20px">Настройте время начала и конца уроков</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="bellsForm">
+                <div class="form-group">
+                    <label for="name_ru">Название смены (Русский) *</label>
+                    <input type="text" id="name_ru" name="name_ru" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name_uz">Название смены (O'zbekcha) *</label>
+                    <input type="text" id="name_uz" name="name_uz" required>
+                </div>
+
+                <h3 style="margin:20px 0 12px">Расписание уроков</h3>
+                <div id="lessonsContainer">
+                    <!-- Уроки будут добавлены динамически -->
+                </div>
+
+                <button type="button" class="btn btn-sm" onclick="addLesson()">+ Добавить урок</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="addBreak()" style="margin-left:8px">+
+                    Добавить перемену</button>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/schedule'">Отмена</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </section>
+
+    <script src="/admin-schedule-bells-form.js"></script>
+</body>
+
+</html>

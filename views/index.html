@@ -98,111 +98,60 @@
     <section class="announcements" id="announcements">
         <div class="container">
             <h2 class="section-title">Важные объявления</h2>
-            <div class="announcements-grid">
-                <div class="announcement-card important">
-                    <div class="announcement-icon">📢</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge">Важно</div>
-                        <h3 class="announcement-title">Набор в 1 класс на 2025-2026 учебный год</h3>
-                        <p class="announcement-text">Начался прием документов для зачисления в первый класс. Количество
-                            мест ограничено — 75 человек. Подача заявок до 15 марта 2025 года.</p>
-                        <div class="announcement-meta">
-                            <span class="announcement-date">📅 До 15 марта 2025</span>
-                            <a href="#contact" class="announcement-link">Подать заявку →</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="announcement-card event">
-                    <div class="announcement-icon">🎉</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge event-badge">Мероприятие</div>
-                        <h3 class="announcement-title">День открытых дверей</h3>
-                        <p class="announcement-text">Приглашаем будущих первоклассников и их родителей! Экскурсия по
-                            школе, встреча с учителями, презентация программ обучения.</p>
-                        <div class="announcement-meta">
-                            <span class="announcement-date">📅 1 февраля, 10:00</span>
-                            <span class="announcement-location">📍 Актовый зал</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="announcement-card info">
-                    <div class="announcement-icon">📚</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge info-badge">Информация</div>
-                        <h3 class="announcement-title">Зимние каникулы 2024-2025</h3>
-                        <p class="announcement-text">Учебные занятия возобновляются 9 января 2025 года. Желаем всем
-                            отличного отдыха и счастливых праздников!</p>
-                        <div class="announcement-meta"><span class="announcement-date">📅 25 дек — 8 янв</span></div>
-                    </div>
-                </div>
-                <div class="announcement-card achievement">
-                    <div class="announcement-icon">🏆</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge achievement-badge">Достижение</div>
-                        <h3 class="announcement-title">Победа на городской олимпиаде</h3>
-                        <p class="announcement-text">Поздравляем команду 9А класса с первым местом на городской
-                            математической олимпиаде! Гордимся вами!</p>
-                        <div class="announcement-meta"><span class="announcement-date">📅 15 декабря 2024</span></div>
-                    </div>
-                </div>
-                <div class="announcement-card urgent">
-                    <div class="announcement-icon">⚠️</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge urgent-badge">Срочно</div>
-                        <h3 class="announcement-title">Изменение в расписании</h3>
-                        <p class="announcement-text">20 декабря занятия второй смены начнутся в 14:00 вместо 13:30 в
-                            связи с проведением педагогического совета.</p>
-                        <div class="announcement-meta"><span class="announcement-date">📅 20 декабря 2024</span></div>
-                    </div>
-                </div>
-                <div class="announcement-card competition">
-                    <div class="announcement-icon">🎯</div>
-                    <div class="announcement-content">
-                        <div class="announcement-badge competition-badge">Конкурс</div>
-                        <h3 class="announcement-title">Конкурс "Лучший класс года"</h3>
-                        <p class="announcement-text">Стартует ежегодный конкурс среди 5-11 классов. Оценивается
-                            успеваемость, участие в мероприятиях и общественная активность.</p>
-                        <div class="announcement-meta"><span class="announcement-date">📅 Январь — май 2025</span></div>
-                    </div>
-                </div>
+            <div class="announcements-grid" id="announcementsGrid"></div>
+            <div class="announcements-loading" id="announcementsLoading" style="margin-top: 12px;">Загрузка
+                объявлений...</div>
+            <div class="announcements-actions" style="margin-top: 16px;">
+                <a href="/news.html" class="announcement-link" aria-label="Все важные объявления">Все объявления →</a>
             </div>
         </div>
     </section>
 
-    <!-- Map -->
-    <section class="map">
+    <!-- Home Events -->
+    <section class="home-events" id="events">
         <div class="container">
-            <div class="map-container">
-                <div class="map-placeholder" style="height: 100%;">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1518.444573224244!2d71.76306641646347!3d40.43345347833234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb82cb402f5d71%3A0x86a40294d27eef27!2z0KHQv9C10YbQuNCw0LvQuNC30LjRgNC-0LLQsNC90L3QsNGPLiDQqNC60L7Qu9CwIC7ihJYyMS4!5e0!3m2!1sru!2s!4v1765255410362!5m2!1sru!2s"
-                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+            <div class="home-events-header">
+                <h2 class="section-title">Предстоящие события</h2>
+                <a class="announcement-link" href="/schedule.html" aria-label="Все события">Все события →</a>
             </div>
+            <div class="home-events-grid" id="homeEventsList"></div>
+            <div class="home-events-loading" id="homeEventsLoading">Загрузка событий...</div>
         </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact & Map -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title">Обратная связь</h2>
-            <div class="form-container">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name" class="form-label">Имя</label>
-                        <input type="text" id="name" class="form-input" required />
+            <div class="contact-header">
+                <h2 class="section-title">Обратная связь</h2>
+                <p class="contact-sub">Оставьте сообщение или найдите нас на карте</p>
+            </div>
+            <div class="contact-grid">
+                <div class="form-container">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Имя</label>
+                            <input type="text" id="name" class="form-input" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-input" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Сообщение</label>
+                            <textarea id="message" class="form-textarea" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Отправить</button>
+                    </form>
+                </div>
+                <div class="map-container contact-map">
+                    <div class="map-placeholder" style="height: 100%;">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1518.444573224244!2d71.76306641646347!3d40.43345347833234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb82cb402f5d71%3A0x86a40294d27eef27!2z0KHQv9C10YbQuNCw0LvQuNC30LjRgNC-0LLQsNC90L3QsNGPLiDQqNC60L7Qu9CwIC7ihJYyMS4!5e0!3m2!1sru!2s!4v1765255410362!5m2!1sru!2s"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-input" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="message" class="form-label">Сообщение</label>
-                        <textarea id="message" class="form-textarea" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Отправить</button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
@@ -360,6 +309,98 @@
         });
         new Chart(document.getElementById('pieChart').getContext('2d'), { type: 'pie', data: { labels: ['Отлично (5)', 'Хорошо (4)', 'Удовлетворительно (3)', 'Неудовлетворительно (2)'], datasets: [{ data: [35, 45, 18, 2], backgroundColor: ['#4CAF50', '#FFD700', '#FF9800', '#F44336'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
 
+        // Load latest announcements (top 3) via API
+        async function loadAnnouncements() {
+            const grid = document.getElementById('announcementsGrid');
+            const loading = document.getElementById('announcementsLoading');
+            if (!grid) return;
+            try {
+                loading && (loading.style.display = 'block');
+                const resp = await fetch('/api/announcements?limit=3');
+                const data = await resp.json();
+                const items = Array.isArray(data) ? data : (data.items || []);
+                grid.innerHTML = '';
+                const typeIcons = { important: '📢', event: '🎉', info: '📚', achievement: '🏆', urgent: '⚠️', competition: '🎯' };
+                items.forEach(item => {
+                    const icon = typeIcons[item.type] || '📢';
+                    const badgeClass = `${item.type}-badge`;
+                    const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+                    const locationHtml = item.location ? `<span class="announcement-location">📍 ${item.location}</span>` : '';
+                    const linkHtml = item.link ? `<a href="${item.link}" class="announcement-link">Подать заявку →</a>` : '';
+                    grid.insertAdjacentHTML('beforeend', `
+                        <div class="announcement-card ${item.type}">
+                          <div class="announcement-icon">${icon}</div>
+                          <div class="announcement-content">
+                            <div class="announcement-badge ${badgeClass}">${item.type === 'important' ? 'Важно' : item.type === 'event' ? 'Мероприятие' : item.type === 'info' ? 'Информация' : item.type === 'achievement' ? 'Достижение' : item.type === 'urgent' ? 'Срочно' : 'Конкурс'}</div>
+                            <h3 class="announcement-title">${item.title}</h3>
+                            <p class="announcement-text">${item.text}</p>
+                            <div class="announcement-meta">
+                              <span class="announcement-date">📅 ${dateStr}</span>
+                              ${locationHtml}
+                              ${linkHtml}
+                            </div>
+                          </div>
+                        </div>
+                    `);
+                });
+            } catch (err) {
+                console.error('Ошибка загрузки объявлений:', err);
+                grid.innerHTML = '<p style="color:#c00;">Не удалось загрузить объявления</p>';
+            } finally {
+                loading && (loading.style.display = 'none');
+            }
+        }
+        // Load events for home page
+        async function loadHomeEvents() {
+            const list = document.getElementById('homeEventsList');
+            const loading = document.getElementById('homeEventsLoading');
+            if (!list) return;
+            try {
+                if (loading) loading.style.display = 'block';
+                const resp = await fetch('/api/schedule/events?upcoming=true&limit=4');
+                const data = await resp.json();
+                const events = Array.isArray(data) ? data : (data.events || []);
+
+                if (!events.length) {
+                    list.innerHTML = '<div class="home-events-empty">Ближайших событий нет</div>';
+                    return;
+                }
+
+                list.innerHTML = events.map(evt => {
+                    const date = new Date(evt.date);
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const month = date.toLocaleDateString('ru-RU', { month: 'short' });
+                    const title = evt.title_ru || evt.title_uz || 'Событие';
+                    const time = evt.time ? `<span>⏰ ${evt.time}</span>` : '';
+                    const location = evt.location_ru || evt.location_uz;
+                    const locationHtml = location ? `<span>📍 ${location}</span>` : '';
+
+                    return `
+                        <div class="home-event-card">
+                            <div class="home-event-date">
+                                <div class="home-event-day">${day}</div>
+                                <div class="home-event-month">${month}</div>
+                            </div>
+                            <div class="home-event-info">
+                                <h3 class="home-event-title">${title}</h3>
+                                <div class="home-event-meta">${time}${time && locationHtml ? ' · ' : ''}${locationHtml}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error('Ошибка загрузки событий:', err);
+                list.innerHTML = '<div class="home-events-empty">Не удалось загрузить события</div>';
+            } finally {
+                if (loading) loading.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAnnouncements();
+            loadHomeEvents();
+        });
+
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -371,9 +412,12 @@
             submitBtn.disabled = true;
             submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Yuborilmoqda...';
             try {
+                // Fetch CSRF token
+                const csrfResp = await fetch('/api/csrf');
+                const { token } = await csrfResp.json();
                 const response = await fetch('/api/contact', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
                     body: JSON.stringify({ name, email, message })
                 });
                 const result = await response.json();
@@ -384,7 +428,7 @@
                     throw new Error(result.error || 'Ошибка отправки');
                 }
             } catch (error) {
-                console.error('Ошибка:', error);
+                console.error('Ошибка отправки контакта:', error);
                 alert(currentLang === 'ru' ? '❌ Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.' : '❌ Xabar yuborishda xatolik. Iltimos, keyinroq urinib ko‘ring.');
             } finally { submitBtn.disabled = false; submitBtn.textContent = originalText; }
         });

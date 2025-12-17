@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Аудит входов — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/admin">← Дашборд</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar"><strong id="userLabel">Админ</strong><button id="logoutBtn" class="btn btn-sm"
+                            style="background:#ef4444">Выйти</button></div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule">Расписание</a></li>
+                        <li id="usersMenuAdmin"><a href="/admin/users">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit" class="active">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <h1 class="admin-title">Последние входы</h1>
+                    <p class="admin-sub">История успешных авторизаций (последние записи)</p>
+
+                    <div id="errorBox" class="error"></div>
+                    <div id="successBox" class="success"></div>
+
+                    <div style="overflow:auto">
+                        <table class="table" id="auditTable">
+                            <thead>
+                                <tr>
+                                    <th>Дата/время</th>
+                                    <th>Пользователь</th>
+                                    <th>Роль</th>
+                                    <th>IP</th>
+                                    <th>UA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditBody">
+                                <tr>
+                                    <td colspan="5" class="empty">Загрузка...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <script src="/admin-nav.js"></script>
+    <script src="/admin-audit.js"></script>
+</body>
+
+</html>

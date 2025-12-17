@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пользователь — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/users">← Пользователи</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать пользователя</h1>
+            <p class="muted" style="margin:0 0 16px">Роли: Администратор — все права; Редактор — базовые
+                операции</p>
+            <div id="errorBox" class="muted" style="display:none"></div>
+
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="username">Логин *</label>
+                    <input type="text" id="username" required />
+                </div>
+                <div class="form-group">
+                    <label for="displayName">Имя *</label>
+                    <input type="text" id="displayName" required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Почта *</label>
+                    <input type="email" id="email" required />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль <span id="passwordHint" class="muted">(обязательно для
+                            создания)</span></label>
+                    <input type="password" id="password" />
+                </div>
+                <div class="form-group">
+                    <label for="role">Роль *</label>
+                    <select id="role" required>
+                        <option value="admin">Администратор — все права</option>
+                        <option value="editor">Редактор — базовые операции</option>
+                    </select>
+                </div>
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn" style="background:#6b7280"
+                        onclick="window.location.href='/admin/users'">Отмена</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </section>
+
+    <script src="/admin-user-form.js"></script>
+</body>
+
+</html>

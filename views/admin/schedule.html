@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Расписание — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/">На сайт</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar">
+                        <strong id="userLabel">Админ</strong>
+                        <button id="logoutBtn" class="btn btn-sm btn-danger">Выйти</button>
+                    </div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule" class="active">Расписание</a></li>
+                        <li id="usersMenuAdmin"><a href="/admin/users">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <div class="topbar">
+                        <div>
+                            <h1 style="margin:0 0 4px; font-size:22px">Расписание</h1>
+                            <p style="margin:0">Управление звонками и событиями</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content active" id="bells-tab">
+                        <div style="margin-bottom:16px">
+                            <a href="/admin/schedule/bells/edit/1" class="btn btn-sm">Редактировать смену 1</a>
+                            <a href="/admin/schedule/bells/edit/2" class="btn btn-sm"
+                                style="margin-left:8px">Редактировать смену 2</a>
+                        </div>
+                        <div id="bellsTable">
+                            <div class="empty">Загрузка...</div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <script src="/admin-nav.js"></script>
+    <script src="/admin-schedule.js"></script>
+</body>
+
+</html>

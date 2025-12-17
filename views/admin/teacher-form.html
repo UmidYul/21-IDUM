@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать учителя — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/teachers">← Назад к учителям</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать учителя</h1>
+            <p class="muted" style="margin:0 0 20px">Заполните информацию об учителе на русском и узбекском языках</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="teacherForm">
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="name_ru">ФИО *</label>
+                        <input type="text" id="name_ru" name="name_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="position_ru">Должность *</label>
+                        <input type="text" id="position_ru" name="position_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio_ru">Описание</label>
+                        <textarea id="bio_ru" name="bio_ru" placeholder="Краткая информация об учителе"></textarea>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="name_uz">F.I.O.</label>
+                        <input type="text" id="name_uz" name="name_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="position_uz">Lavozimi</label>
+                        <input type="text" id="position_uz" name="position_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio_uz">Tavsif</label>
+                        <textarea id="bio_uz" name="bio_uz"
+                            placeholder="O'qituvchi haqida qisqacha ma'lumot"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="photo">Фото *</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Порядок</label>
+                        <input type="number" id="order" name="order" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="instagram">Instagram</label>
+                        <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="telegram">Telegram</label>
+                        <input type="url" id="telegram" name="telegram" placeholder="https://t.me/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+998...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус</label>
+                    <select id="status" name="status">
+                        <option value="draft">Черновик</option>
+                        <option value="published">Опубликован</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/teachers'">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="/admin-teacher-form.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать FAQ — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/faq">← Назад к FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать FAQ</h1>
+            <p class="muted" style="margin:0 0 20px">Заполните вопрос и ответ на русском и узбекском языках</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="faqForm">
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="question_ru">Вопрос *</label>
+                        <input type="text" id="question_ru" name="question_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="answer_ru">Ответ *</label>
+                        <textarea id="answer_ru" name="answer_ru" required></textarea>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="question_uz">Savol</label>
+                        <input type="text" id="question_uz" name="question_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="answer_uz">Javob</label>
+                        <textarea id="answer_uz" name="answer_uz"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Категория</label>
+                        <select id="category" name="category">
+                            <option value="general">Общие</option>
+                            <option value="admission">Поступление</option>
+                            <option value="education">Обучение</option>
+                            <option value="exams">Экзамены</option>
+                            <option value="documents">Документы</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order">Порядок (0-999)</label>
+                        <input type="number" id="order" name="order" value="0" min="0" max="999">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="visible" name="visible" checked>
+                        Видимость (показывать на сайте)
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/faq'">Отмена</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </section>
+
+    <script src="/admin-faq-form.js"></script>
+</body>
+
+</html>

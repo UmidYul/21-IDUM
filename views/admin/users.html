@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Пользователи — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin">Админ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar"><strong id="userLabel">Админ</strong><button id="logoutBtn" class="btn btn-sm"
+                            style="background:#ef4444">Выйти</button></div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li><a href="/admin/teachers">Учителя</a></li>
+                        <li><a href="/admin/reviews">Отзывы</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule">Расписание</a></li>
+                        <li><a href="/admin/users" class="active">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <div class="topbar">
+                        <div>
+                            <h1 style="margin:0 0 6px">Пользователи</h1>
+                            <p class="muted" style="margin:0">Роли: Администратор (все права), Редактор (базовые
+                                операции)</p>
+                        </div>
+                        <div class="actions">
+                            <a href="/admin/users/create" class="btn">+ Добавить пользователя</a>
+                        </div>
+                    </div>
+
+                    <div id="errorBox" class="muted" style="display:none"></div>
+                    <div style="overflow:auto">
+                        <table class="table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Логин</th>
+                                    <th>Имя</th>
+                                    <th>Почта</th>
+                                    <th>Телефон</th>
+                                    <th>Роль</th>
+                                    <th>Создан</th>
+                                    <th style="width:180px">Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersBody"></tbody>
+                        </table>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <script src="/admin-nav.js"></script>
+    <script src="/admin-users.js"></script>
+</body>
+
+</html>

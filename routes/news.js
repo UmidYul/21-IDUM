@@ -3,15 +3,6 @@ import db from '../database.js';
 
 const router = express.Router();
 
-// Middleware to check if user is authenticated
-const isAuthenticated = (req, res, next) => {
-    if (req.session && req.session.adminLoggedIn) {
-        next();
-    } else {
-        res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-};
-
 // GET /api/news - Get all news
 router.get('/', async (req, res) => {
     try {
@@ -27,31 +18,40 @@ router.get('/', async (req, res) => {
         // Get news and format based on language
         const allNews = db.data.news || [];
         const news = allNews
-            .sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date))
+            .filter(item => item.status === 'published') // Показываем только опубликованные
+            .sort((a, b) => {
+                const dateA = new Date(a.publishAt || a.publish_date || a.createdAt);
+                const dateB = new Date(b.publishAt || b.publish_date || b.createdAt);
+                return dateB - dateA;
+            })
             .slice(0, limit)
             .map(item => {
-                const publishDate = new Date(item.publish_date);
+                // Поддержка старой и новой структуры
+                const dateToUse = item.publishAt || item.publish_date || item.createdAt;
+                const publishDate = new Date(dateToUse);
                 const formattedDate = publishDate.toLocaleDateString('ru-RU', {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric'
                 });
 
-                // Get content based on language
-                const title = validLang === 'uz' ? item.title_uz : item.title_ru;
-                const content = validLang === 'uz' ? item.content_uz : item.content_ru;
+                // Get content based on language (поддержка body_* и content_*)
+                const title = validLang === 'uz' ? (item.title_uz || '') : (item.title_ru || '');
+                const content = validLang === 'uz' ? (item.body_uz || item.content_uz || '') : (item.body_ru || item.content_ru || '');
 
                 // Create excerpt (first 100 chars without HTML tags)
                 const plainContent = content.replace(/<[^>]*>/g, '');
-                const excerpt = plainContent.substring(0, 100) + '...';
+                const excerpt = plainContent.substring(0, 100) + (plainContent.length > 100 ? '...' : '');
 
                 return {
                     id: item.id,
+                    slug: item.slug,
                     title: title,
                     content: content,
-                    publish_date: formattedDate,
                     excerpt: excerpt,
-                    created_at: item.created_at
+                    coverUrl: item.coverUrl,
+                    publish_date: formattedDate,
+                    created_at: item.createdAt || item.created_at
                 };
             });
 
@@ -108,8 +108,8 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// POST /api/news - Add new news (requires authentication)
-router.post('/', isAuthenticated, async (req, res) => {
+// POST /api/news - Add new news
+router.post('/', async (req, res) => {
     try {
         const { title_ru, content_ru, title_uz, content_uz, publish_date } = req.body;
 
@@ -158,8 +158,8 @@ router.post('/', isAuthenticated, async (req, res) => {
     }
 });
 
-// PUT /api/news/:id - Update news (requires authentication)
-router.put('/:id', isAuthenticated, async (req, res) => {
+// PUT /api/news/:id - Update news
+router.put('/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const { title_ru, content_ru, title_uz, content_uz, publish_date } = req.body;
@@ -205,8 +205,8 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-// DELETE /api/news/:id - Delete news (requires authentication)
-router.delete('/:id', isAuthenticated, async (req, res) => {
+// DELETE /api/news/:id - Delete news
+router.delete('/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
 
@@ -235,8 +235,8 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
     }
 });
 
-// GET /api/news/admin/all - Get all news with all languages (for admin)
-router.get('/admin/all', isAuthenticated, async (req, res) => {
+// GET /api/news/admin/all - Get all news with all languages
+router.get('/admin/all', async (req, res) => {
     try {
         await db.read();
         const allNews = db.data.news || [];

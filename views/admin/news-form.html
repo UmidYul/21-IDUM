@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать новость — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/news">← Назад к новостям</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать новость</h1>
+            <p class="muted" style="margin:0 0 20px">Заполните форму на русском и узбекском языках</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="newsForm">
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="title_ru">Заголовок *</label>
+                        <input type="text" id="title_ru" name="title_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="body_ru">Содержание *</label>
+                        <textarea id="body_ru" name="body_ru" required></textarea>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="title_uz">Sarlavha</label>
+                        <input type="text" id="title_uz" name="title_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="body_uz">Mazmuni</label>
+                        <textarea id="body_uz" name="body_uz"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="coverImage">Обложка (необязательно)</label>
+                    <input type="file" id="coverImage" name="coverImage" accept="image/*">
+                    <div id="imagePreview" style="margin-top:10px; display:none;">
+                        <img id="previewImg" src=""
+                            style="max-width:200px; border-radius:8px; border:1px solid #e5e7eb;">
+                        <button type="button" id="removeImage" class="btn btn-secondary"
+                            style="margin-left:10px; padding:6px 12px;">Удалить</button>
+                    </div>
+                    <input type="hidden" id="coverUrl" name="coverUrl">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус</label>
+                    <select id="status" name="status">
+                        <option value="draft">Черновик</option>
+                        <option value="published">Опубликовано</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/news'">Отмена</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </section>
+
+    <script src="/admin-news-form.js"></script>
+</body>
+
+</html>

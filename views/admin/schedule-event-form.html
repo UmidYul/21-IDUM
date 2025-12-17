@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать событие — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/admin/schedule">← Назад к расписанию</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="admin-content" style="max-width: 1000px; margin: 0 auto; width: 100%;">
+            <h1 id="pageTitle" style="margin:0 0 8px">Создать событие</h1>
+            <p class="muted" style="margin:0 0 20px">Заполните информацию о событии на русском и узбекском
+                языках</p>
+
+            <div id="errorBox" class="error"></div>
+            <div id="successBox" class="success"></div>
+
+            <form id="eventForm">
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="title_ru">Название события *</label>
+                        <input type="text" id="title_ru" name="title_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description_ru">Описание</label>
+                        <textarea id="description_ru" name="description_ru"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="location_ru">Место проведения</label>
+                        <input type="text" id="location_ru" name="location_ru"
+                            placeholder="Актовый зал, спортзал и т.д.">
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="title_uz">Tadbir nomi</label>
+                        <input type="text" id="title_uz" name="title_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="description_uz">Tavsifi</label>
+                        <textarea id="description_uz" name="description_uz"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="location_uz">O'tkaziladigan joy</label>
+                        <input type="text" id="location_uz" name="location_uz">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Дата *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">Время</label>
+                        <input type="time" id="time" name="time">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="window.location.href='/admin/events'">Отмена</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </section>
+
+    <script src="/admin-schedule-event-form.js"></script>
+</body>
+
+</html>

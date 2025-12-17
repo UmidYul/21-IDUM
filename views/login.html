@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход — 21-IDUM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/21idum" href="/images/logo.png">
+    <style>
+        .login-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .login-card {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .login-title {
+            margin: 0 0 8px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .login-sub {
+            margin: 0 0 20px;
+            color: #6b7280;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .login-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #fff;
+            border: 0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: #b91c1c;
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .success {
+            color: #065f46;
+            background: #d1fae5;
+            border: 1px solid #a7f3d0;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .muted {
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about.html">О школе</a></li>
+                <li><a href="/schedule.html">Расписание</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-card">
+                <h1 class="login-title">Вход</h1>
+                <p class="login-sub muted">Минимальная авторизация для редактирования контента</p>
+                <div id="errorBox" class="error"></div>
+                <div id="successBox" class="success"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Логин</label>
+                        <input id="username" name="username" type="text" autocomplete="username" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required />
+                    </div>
+                    <div class="login-actions">
+                        <button id="loginBtn" class="btn-primary" type="submit">Войти</button>
+                        <a id="logoutLink" href="#" class="muted" style="display:none">Выйти</a>
+                    </div>
+                </form>
+                <p class="muted" style="margin-top:14px">По умолчанию: admin / admin123. Можно задать через переменные
+                    окружения ADMIN_USER / ADMIN_PASS.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="/login.js"></script>
+</body>
+
+</html>
