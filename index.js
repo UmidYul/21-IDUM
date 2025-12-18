@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -45,11 +46,49 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Compression middleware (gzip/deflate)
+app.use(compression({
+    level: 6, // Compression level (0-9, 6 is default balance)
+    threshold: 1024, // Only compress responses larger than 1KB
+    filter: (req, res) => {
+        // Don't compress if client doesn't support it
+        if (req.headers['x-no-compression']) {
+            return false;
+        }
+        // Use compression for all content types
+        return compression.filter(req, res);
+    }
+}));
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Static files with cache headers
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: 0, // Default: no cache for HTML
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+        // Cache strategy based on file type
+        if (filePath.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/i)) {
+            // Images: cache for 1 year
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else if (filePath.match(/\.(css|js)$/i)) {
+            // CSS/JS: cache for 1 day
+            res.setHeader('Cache-Control', 'public, max-age=86400');
+        } else if (filePath.match(/\.(woff|woff2|ttf|eot)$/i)) {
+            // Fonts: cache for 1 year
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            // HTML and others: no cache
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+        }
+    }
+}));
 
 // Логирование всех запросов
 app.use((req, res, next) => {
