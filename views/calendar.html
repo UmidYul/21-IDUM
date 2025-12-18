@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Календарь событий — 21-IDUM</title>
+    <meta name="description" content="Календарь важных событий, мероприятий и расписание школы 21-IDUM" />
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        .calendar-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .calendar-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .calendar-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .view-switcher {
+            display: flex;
+            gap: 5px;
+            background: #f5f5f5;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: var(--primary);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .export-btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .export-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .calendar-view {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* Month view */
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .month-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .month-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .month-nav button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .month-nav button:hover {
+            background: #f5f5f5;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .calendar-day-header {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .calendar-day {
+            background: white;
+            min-height: 100px;
+            padding: 8px;
+            position: relative;
+        }
+
+        .calendar-day.other-month {
+            background: #fafafa;
+            opacity: 0.5;
+        }
+
+        .calendar-day.today {
+            background: #fff4e6;
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .day-events {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .day-event {
+            font-size: 11px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .day-event.event-info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .day-event.event-important {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .day-event.event-event {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        /* Week view */
+        .week-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(7, 1fr);
+            gap: 1px;
+            background: #e0e0e0;
+        }
+
+        .time-slot {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .week-day-header {
+            background: #f5f5f5;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .week-cell {
+            background: white;
+            min-height: 60px;
+            padding: 5px;
+        }
+
+        /* List view */
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .event-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            background: #f9f9f9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .event-card:hover {
+            background: #f5f5f5;
+            transform: translateX(5px);
+        }
+
+        .event-date-badge {
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .event-day {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .event-month {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .event-description {
+            color: #555;
+        }
+
+        .event-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-info {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-important {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .badge-event {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .no-events {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        /* Event modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-body {
+            color: #555;
+        }
+
+        .modal-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .modal-meta-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .modal-meta-icon {
+            width: 20px;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .calendar-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 1px;
+            }
+
+            .calendar-day {
+                min-height: 60px;
+                padding: 4px;
+            }
+
+            .day-number {
+                font-size: 12px;
+            }
+
+            .day-event {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/schedule.html">Расписание</a></li>
+                <li><a href="/calendar.html" class="active">Календарь</a></li>
+                <li><a href="/team.html">Команда</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="calendar-container">
+        <div class="calendar-header">
+            <h1 class="calendar-title">📅 Календарь событий</h1>
+            <div class="calendar-controls">
+                <div class="view-switcher">
+                    <button class="view-btn active" data-view="month">Месяц</button>
+                    <button class="view-btn" data-view="list">Список</button>
+                </div>
+                <div class="filter-controls">
+                    <select class="filter-select" id="typeFilter">
+                        <option value="all">Все события</option>
+                        <option value="info">Информация</option>
+                        <option value="important">Важное</option>
+                        <option value="event">Мероприятия</option>
+                    </select>
+                </div>
+                <a href="/api/calendar/export.ics" class="export-btn" download>📥 Экспорт в календарь</a>
+            </div>
+        </div>
+
+        <div class="calendar-view" id="calendarView">
+            <!-- Calendar content will be inserted here by JS -->
+        </div>
+    </section>
+
+    <!-- Event Detail Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-meta" id="modalMeta"></div>
+                <div id="modalDescription"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/calendar.js"></script>
+</body>
+
+</html>

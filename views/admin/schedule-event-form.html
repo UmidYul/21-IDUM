@@ -77,6 +77,23 @@
                         <label for="time">Время</label>
                         <input type="time" id="time" name="time">
                     </div>
+
+                    <div class="form-group">
+                        <label for="type">Тип события *</label>
+                        <select id="type" name="type" required>
+                            <option value="info">📘 Информация (синий)</option>
+                            <option value="important">🔴 Важное (красный)</option>
+                            <option value="event">🎉 Мероприятие (фиолетовый)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Статус</label>
+                    <select id="status" name="status">
+                        <option value="draft">Черновик</option>
+                        <option value="published">Опубликовано</option>
+                    </select>
                 </div>
 
                 <div class="actions">
@@ -90,7 +107,7 @@
     </section>
 
     <script src="/csrf-helper.js"></script>
-    <script src="/admin-schedule-event-form.js"></script>
+    <script src="/admin-schedule-event-form.js?v=20251219"></script>
 </body>
 
 </html>

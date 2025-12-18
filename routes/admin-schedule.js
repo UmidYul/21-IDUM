@@ -158,7 +158,7 @@ router.get('/events/:id', async (req, res) => {
 // POST /api/admin/schedule/events - Create event
 router.post('/events', validate(scheduleEventSchema), async (req, res) => {
     try {
-        const { title_ru, title_uz, description_ru, description_uz, date, time } = req.body;
+        const { title_ru, title_uz, description_ru, description_uz, date, time, type, status, location_ru, location_uz } = req.body;
 
         await db.read();
 
@@ -176,6 +176,8 @@ router.post('/events', validate(scheduleEventSchema), async (req, res) => {
             time: time || '',
             location_ru: location_ru?.trim() || '',
             location_uz: location_uz?.trim() || '',
+            type: type || 'event',
+            status: status || 'draft',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             createdBy: req.user.id
@@ -213,11 +215,17 @@ router.patch('/events/:id', async (req, res) => {
 
         const event = db.data.schedule.events[eventIndex];
 
+        // Log incoming updates for debugging
+        try {
+            console.log('🛠️ Обновление события', { id, updates });
+        } catch (_) { }
+
         // Update fields
-        const allowedFields = ['title_ru', 'title_uz', 'description_ru', 'description_uz', 'date', 'time', 'location_ru', 'location_uz'];
+        const allowedFields = ['title_ru', 'title_uz', 'description_ru', 'description_uz', 'date', 'time', 'location_ru', 'location_uz', 'type', 'status'];
         allowedFields.forEach(field => {
             if (updates[field] !== undefined) {
-                event[field] = updates[field];
+                const val = updates[field];
+                event[field] = typeof val === 'string' ? val.trim() : val;
             }
         });
 
@@ -227,7 +235,9 @@ router.patch('/events/:id', async (req, res) => {
         db.data.schedule.events[eventIndex] = event;
         await db.write();
 
-        console.log(`✅ Обновлено событие: ${id} пользователем: ${req.user.username}`);
+        try {
+            console.log(`✅ Обновлено событие: ${id} пользователем: ${req.user.username}`);
+        } catch (_) { }
 
         res.json({ ok: true, event });
     } catch (error) {

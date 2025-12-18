@@ -67,6 +67,9 @@
             document.getElementById('location_uz').value = event.location_uz || '';
             document.getElementById('date').value = event.date || '';
             document.getElementById('time').value = event.time || '';
+            document.getElementById('type').value = event.type || 'info';
+            // If status is missing (older events), treat as published to match calendar display
+            document.getElementById('status').value = event.status || 'published';
         } catch (err) {
             show(errorBox, 'Ошибка загрузки события');
         }
@@ -87,7 +90,9 @@
                     location_ru: document.getElementById('location_ru').value.trim(),
                     location_uz: document.getElementById('location_uz').value.trim(),
                     date: document.getElementById('date').value,
-                    time: document.getElementById('time').value
+                    time: document.getElementById('time').value,
+                    type: document.getElementById('type').value,
+                    status: document.getElementById('status').value
                 };
 
                 const url = isEdit ? `/api/admin/schedule/events/${eventId}` : '/api/admin/schedule/events';

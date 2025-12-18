@@ -84,12 +84,12 @@
   ],
   "sessions": [
     {
-      "token": "2b7edb985a212440264a05f66544591b977866c7ec1a96eb",
+      "token": "d3de4c8138387af031089f722e7a24d3f4b5547f5ee36bb3",
       "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
       "username": "admin",
       "role": "admin",
-      "createdAt": "2025-12-18T09:33:11.996Z",
-      "expiresAt": "2025-12-25T09:33:11.996Z"
+      "createdAt": "2025-12-18T20:43:27.192Z",
+      "expiresAt": "2025-12-25T20:43:27.192Z"
     }
   ],
   "faq": [
@@ -310,21 +310,6 @@
         "title_uz": "",
         "description_ru": "«Здравствуйте!\nБольшое спасибо за интерес к вакансии! К сожалению, сейчас мы не готовы пригласить вас на следующий этап.\nЦеним ваше внимание и будем рады получать ваши отклики на другие позиции.»",
         "description_uz": "",
-        "date": "2025-12-19",
-        "time": "17:00",
-        "location_ru": "Спортзал",
-        "location_uz": "",
-        "createdAt": "2025-12-17T16:06:18.928Z",
-        "updatedAt": "2025-12-18T06:38:39.657Z",
-        "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
-        "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
-      },
-      {
-        "id": "701f7beb-0817-4bbb-bed7-e629c2654565",
-        "title_ru": "День Спорта",
-        "title_uz": "",
-        "description_ru": "«Здравствуйте!\nБольшое спасибо за интерес к вакансии! К сожалению, сейчас мы не готовы пригласить вас на следующий этап.\nЦеним ваше внимание и будем рады получать ваши отклики на другие позиции.»",
-        "description_uz": "",
         "date": "2025-12-18",
         "time": "17:00",
         "location_ru": "Спортзал",
@@ -344,9 +329,11 @@
         "location_ru": "Везде где она пожелает",
         "location_uz": "",
         "createdAt": "2025-12-18T17:29:57.700Z",
-        "updatedAt": "2025-12-18T17:30:23.332Z",
+        "updatedAt": "2025-12-18T20:43:43.509Z",
         "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
-        "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+        "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+        "type": "important",
+        "status": "published"
       }
     ]
   },
@@ -427,6 +414,16 @@
       "ip": "127.0.0.1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
       "at": "2025-12-18T09:33:11.999Z"
+    },
+    {
+      "id": "07344777-332c-4f99-b2ff-c7f213ffebc3",
+      "type": "login",
+      "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "username": "admin",
+      "role": "admin",
+      "ip": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+      "at": "2025-12-18T20:43:27.196Z"
     }
   ],
   "teachers": [

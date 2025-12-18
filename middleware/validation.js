@@ -151,20 +151,35 @@ export const scheduleEventSchema = z.object({
         .min(1, 'Название на русском обязательно')
         .max(200, 'Название не должно превышать 200 символов'),
     title_uz: z.string()
-        .min(1, 'Название на узбекском обязательно')
-        .max(200, 'Название не должно превышать 200 символов'),
+        .max(200, 'Название не должно превышать 200 символов')
+        .optional()
+        .or(z.literal('')),
     date: z.string()
         .regex(/^\d{4}-\d{2}-\d{2}$/, 'Дата должна быть в формате YYYY-MM-DD'),
     time: z.string()
         .regex(/^\d{2}:\d{2}$/, 'Время должно быть в формате HH:MM')
         .optional()
         .or(z.literal('')),
+    type: z.enum(['info', 'important', 'event'], {
+        errorMap: () => ({ message: 'Тип должен быть info, important или event' })
+    }).default('event').optional(),
+    status: z.enum(['draft', 'published'], {
+        errorMap: () => ({ message: 'Статус должен быть draft или published' })
+    }).default('draft').optional(),
     description_ru: z.string()
         .max(1000, 'Описание не должно превышать 1000 символов')
         .optional()
         .or(z.literal('')),
     description_uz: z.string()
         .max(1000, 'Описание не должно превышать 1000 символов')
+        .optional()
+        .or(z.literal('')),
+    location_ru: z.string()
+        .max(200, 'Место проведения не должно превышать 200 символов')
+        .optional()
+        .or(z.literal('')),
+    location_uz: z.string()
+        .max(200, 'Место проведения не должно превышать 200 символов')
         .optional()
         .or(z.literal(''))
 });

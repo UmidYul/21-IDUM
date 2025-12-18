@@ -152,6 +152,7 @@ import adminUsersRoutes from './routes/admin-users.js';
 import adminAuditRoutes from './routes/admin-audit.js';
 import uploadRoutes from './routes/upload.js';
 import seoRoutes from './routes/seo.js';
+import calendarRoutes from './routes/calendar.js';
 import { cookieParserMiddleware, csrfProtection, csrfTokenEndpoint } from './middleware/csrf.js';
 
 // Use routes
@@ -159,6 +160,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/announcements', announcementsRoutes);
 app.use('/api/faq', faqRoutes);
 app.use('/api/schedule', scheduleRoutes);
+app.use('/api/calendar', calendarRoutes);
 app.use('/api/teachers', teachersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/auth', authRoutes);
@@ -246,6 +248,10 @@ app.get(['/faq', '/faq.html'], (req, res) => {
 
 app.get(['/team', '/team.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'team.html'));
+});
+
+app.get(['/calendar', '/calendar.html'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'calendar.html'));
 });
 
 // Basic login page (MVP)
