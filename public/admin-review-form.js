@@ -95,7 +95,10 @@
 
                 const r = await fetch(url, {
                     method,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getCSRFHeaders()
+                    },
                     body: JSON.stringify(payload),
                     credentials: 'same-origin'
                 });

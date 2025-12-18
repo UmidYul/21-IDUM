@@ -118,6 +118,7 @@
         try {
             const r = await fetch(`/api/admin/schedule/events/${id}`, {
                 method: 'DELETE',
+                headers: getCSRFHeaders(),
                 credentials: 'same-origin'
             });
             if (!r.ok) throw new Error();

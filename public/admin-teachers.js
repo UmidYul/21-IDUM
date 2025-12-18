@@ -75,6 +75,7 @@
         try {
             const r = await fetch(`/api/teachers/${id}`, {
                 method: 'DELETE',
+                headers: getCSRFHeaders(),
                 credentials: 'same-origin'
             });
             if (!r.ok) throw new Error();

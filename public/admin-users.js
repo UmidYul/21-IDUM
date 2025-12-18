@@ -54,7 +54,11 @@
                     const id = btn.getAttribute('data-id');
                     if (!confirm('Удалить пользователя?')) return;
                     try {
-                        const r = await fetch(`/api/admin/users/${id}`, { method: 'DELETE', credentials: 'same-origin' });
+                        const r = await fetch(`/api/admin/users/${id}`, {
+                            method: 'DELETE',
+                            headers: getCSRFHeaders(),
+                            credentials: 'same-origin'
+                        });
                         const j = await r.json();
                         if (!r.ok || !j.ok) throw new Error(j.error || 'Ошибка удаления');
                         loadUsers();

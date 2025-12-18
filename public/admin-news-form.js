@@ -44,6 +44,7 @@
 
                 const r = await fetch('/api/upload/news-cover', {
                     method: 'POST',
+                    headers: getCSRFHeaders(),
                     body: formData,
                     credentials: 'same-origin'
                 });
@@ -129,7 +130,10 @@
 
                 const r = await fetch(url, {
                     method,
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getCSRFHeaders()
+                    },
                     body: JSON.stringify(payload),
                     credentials: 'same-origin'
                 });

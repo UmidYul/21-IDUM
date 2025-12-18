@@ -135,7 +135,10 @@
 
                 const r = await fetch('/api/admin/schedule/bells', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getCSRFHeaders()
+                    },
                     body: JSON.stringify(payload),
                     credentials: 'same-origin'
                 });

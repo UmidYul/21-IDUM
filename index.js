@@ -65,6 +65,7 @@ app.use(compression({
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParserMiddleware); // Required for CSRF protection
 
 // Static files with cache headers
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -151,6 +152,7 @@ import adminUsersRoutes from './routes/admin-users.js';
 import adminAuditRoutes from './routes/admin-audit.js';
 import uploadRoutes from './routes/upload.js';
 import seoRoutes from './routes/seo.js';
+import { cookieParserMiddleware, csrfProtection, csrfTokenEndpoint } from './middleware/csrf.js';
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -160,13 +162,16 @@ app.use('/api/schedule', scheduleRoutes);
 app.use('/api/teachers', teachersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/admin/news', adminNewsRoutes);
-app.use('/api/admin/announcements', adminAnnouncementsRoutes);
-app.use('/api/admin/faq', adminFaqRoutes);
-app.use('/api/admin/schedule', adminScheduleRoutes);
-app.use('/api/admin/users', adminUsersRoutes);
+
+// CSRF token endpoint (must use cookie-parser and CSRF protection)
+app.get('/api/csrf-token', csrfProtection, csrfTokenEndpoint);
+app.use('/api/admin/news', csrfProtection, adminNewsRoutes);
+app.use('/api/admin/announcements', csrfProtection, adminAnnouncementsRoutes);
+app.use('/api/admin/faq', csrfProtection, adminFaqRoutes);
+app.use('/api/admin/schedule', csrfProtection, adminScheduleRoutes);
+app.use('/api/admin/users', csrfProtection, adminUsersRoutes);
 app.use('/api/admin/audit', adminAuditRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api/upload', csrfProtection, uploadRoutes);
 
 // SEO routes (sitemap, robots)
 app.use('/', seoRoutes);

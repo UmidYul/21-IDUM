@@ -64,15 +64,18 @@ function setAuthCookie(res, token) {
     const flags = [
         `Path=/`,
         `HttpOnly`,
-        `SameSite=Lax`,
+        `SameSite=Strict`,
         `Max-Age=${maxAge}`,
     ];
-    // Do not set Secure for http dev; add in prod behind HTTPS
+    // Add Secure flag in production (requires HTTPS)
+    if (process.env.NODE_ENV === 'production') {
+        flags.push('Secure');
+    }
     res.setHeader('Set-Cookie', `auth_token=${encodeURIComponent(token)}; ${flags.join('; ')}`);
 }
 
 function clearAuthCookie(res) {
-    res.setHeader('Set-Cookie', 'auth_token=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+    res.setHeader('Set-Cookie', 'auth_token=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0');
 }
 
 function getToken(req) {

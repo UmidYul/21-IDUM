@@ -68,4 +68,31 @@ if (!db.data.users || db.data.users.length === 0) {
     console.log('✅ Создан дефолтный пользователь: admin / admin123');
 }
 
+// Cleanup expired sessions on startup and every hour
+function cleanupExpiredSessions() {
+    db.read().then(() => {
+        if (!db.data.sessions) return;
+        const now = new Date();
+        const before = db.data.sessions.length;
+        db.data.sessions = db.data.sessions.filter(s => {
+            const expires = new Date(s.expiresAt);
+            return expires > now;
+        });
+        const after = db.data.sessions.length;
+        if (before !== after) {
+            db.write().then(() => {
+                console.log(`🧹 Cleaned up ${before - after} expired sessions`);
+            });
+        }
+    }).catch(err => {
+        console.error('Session cleanup error:', err);
+    });
+}
+
+// Run cleanup on startup
+cleanupExpiredSessions();
+
+// Run cleanup every hour
+setInterval(cleanupExpiredSessions, 60 * 60 * 1000);
+
 export default db;

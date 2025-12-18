@@ -67,6 +67,7 @@
         try {
             const r = await fetch(`/api/admin/news/${id}`, {
                 method: 'DELETE',
+                headers: getCSRFHeaders(),
                 credentials: 'same-origin'
             });
             if (!r.ok) throw new Error();
