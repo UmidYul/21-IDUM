@@ -159,6 +159,10 @@ app.get(['/faq', '/faq.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'faq.html'));
 });
 
+app.get(['/team', '/team.html'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'team.html'));
+});
+
 // Basic login page (MVP)
 app.get(['/login', '/admin/login'], (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
