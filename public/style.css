@@ -275,19 +275,82 @@
 
   @media (max-width: 768px) {
       .hero-static {
-          min-height: 65vh;
+          min-height: 60vh;
       }
 
       .hero-static__content {
-          padding: 80px 0;
+          padding: 60px 20px;
+      }
+
+      .hero-static__text {
+          gap: 12px;
       }
 
       .hero-static__title {
-          font-size: clamp(28px, 6vw, 40px);
+          font-size: clamp(24px, 7vw, 36px);
       }
 
       .hero-static__subtitle {
+          font-size: 14px;
+          line-height: 1.5;
+      }
+
+      .hero-static__kicker {
+          font-size: 11px;
+      }
+
+      .hero-static__btn {
+          padding: 12px 22px;
+          font-size: 14px;
+      }
+
+      .hero-static__btn::after {
           font-size: 16px;
+      }
+  }
+
+  @media (max-width: 480px) {
+      .hero-static {
+          min-height: 55vh;
+      }
+
+      .hero-static__content {
+          padding: 50px 16px;
+      }
+
+      .hero-static__text {
+          gap: 10px;
+          max-width: 100%;
+      }
+
+      .hero-static__title {
+          font-size: clamp(20px, 6vw, 28px);
+          line-height: 1.2;
+      }
+
+      .hero-static__subtitle {
+          font-size: 13px;
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.85);
+      }
+
+      .hero-static__kicker {
+          font-size: 10px;
+          letter-spacing: 0.08em;
+      }
+
+      .hero-static__btn {
+          padding: 11px 18px;
+          font-size: 13px;
+          gap: 8px;
+      }
+
+      .hero-static__btn::after {
+          font-size: 14px;
+      }
+
+      .hero-static__actions {
+          margin-top: 8px;
       }
   }
 

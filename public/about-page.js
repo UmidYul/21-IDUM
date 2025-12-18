@@ -109,8 +109,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        // renderTeachers(); // Disabled - use static HTML instead
-        renderReviews();
+        // renderTeachers(); // Disabled - leadership section removed
     });
 
     // Also call on page visible (for language switch)
