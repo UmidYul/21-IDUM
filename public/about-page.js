@@ -4,6 +4,13 @@
 
     // Render teachers from database
     async function renderTeachers() {
+        const container = document.querySelector('.leadership-grid');
+        if (!container) return;
+
+        // Add loading state
+        container.style.opacity = '0';
+        container.style.transition = 'opacity 0.4s ease';
+
         try {
             const response = await fetch('/api/teachers', { credentials: 'same-origin' });
             if (!response.ok) throw new Error('Failed to fetch teachers');
@@ -11,12 +18,10 @@
             const data = await response.json();
             const teachers = (data.teachers || []).sort((a, b) => a.order - b.order);
 
-            const container = document.querySelector('.leadership-grid');
-            if (!container) return;
-
             container.innerHTML = teachers.map(teacher => `
                 <div class="leader-card">
-                    <div class="leader-img" style="background-image: url('${teacher.photo}'); background-size: 100%;">
+                    <div class="leader-img">
+                        <img src="${teacher.photo}" alt="${currentLanguage === 'uz' ? teacher.name_uz : teacher.name_ru}" loading="lazy">
                     </div>
                     <div class="leader-info">
                         <h3 class="leader-name">${currentLanguage === 'uz' ? teacher.name_uz : teacher.name_ru}</h3>
@@ -29,8 +34,15 @@
                     </div>
                 </div>
             `).join('');
+
+            // Smooth fade-in after content is ready
+            setTimeout(() => {
+                container.style.opacity = '1';
+            }, 50);
+
         } catch (err) {
             console.error('Error loading teachers:', err);
+            container.style.opacity = '1';
         }
     }
 
@@ -97,7 +109,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        renderTeachers();
+        // renderTeachers(); // Disabled - use static HTML instead
         renderReviews();
     });
 

@@ -13,6 +13,14 @@
 </head>
 
 <body>
+    <!-- Page Loader -->
+    <div id="pageLoader" class="page-loader">
+        <div class="loader-content">
+            <div class="loader-logo">21-<span>IDUM</span></div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container container">
@@ -217,91 +225,115 @@
     </footer>
 
     <script>
-        const languageSwitch = document.getElementById('languageSwitch');
-        const navLinks = document.querySelectorAll('.nav-links a');
-        const sectionTitles = document.querySelectorAll('.section-title');
-        const statLabels = document.querySelectorAll('.stat-label');
-
-        let currentLang = 'ru';
-        languageSwitch.addEventListener('click', () => {
-            if (currentLang === 'ru') { currentLang = 'uz'; languageSwitch.textContent = "O‘zbekcha"; updateContentToUzbek(); }
-            else { currentLang = 'ru'; languageSwitch.textContent = 'Русский'; updateContentToRussian(); }
+        // Hide loader after page is fully loaded
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 500); // Small delay for smooth transition
         });
 
-        function updateContentToUzbek() {
-            navLinks[0].textContent = 'Bosh sahifa';
-            navLinks[1].textContent = 'Maktab haqida';
-            navLinks[2].textContent = 'Jadval';
-            navLinks[3].textContent = 'Yangiliklar';
-            navLinks[4].textContent = 'FAQ';
-            sectionTitles[0].textContent = 'Maktab statistikasi';
-            sectionTitles[1].textContent = 'Muhim e‘lonlar';
-            statLabels[0].textContent = "O‘quvchilar";
-            statLabels[1].textContent = "O‘qituvchilar";
-            statLabels[2].textContent = 'Sinf (1-11)';
-            document.querySelector('.chart-title').textContent = "Choraklar bo‘yicha o‘qish sifati";
-            document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Baholar taqsimoti';
-            document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Barcha huquqlar himoya qilindi.';
-        }
-        function updateContentToRussian() {
-            navLinks[0].textContent = 'Главная';
-            navLinks[1].textContent = 'О школе';
-            navLinks[2].textContent = 'Расписание';
-            navLinks[3].textContent = 'Новости';
-            navLinks[4].textContent = 'FAQ';
-            sectionTitles[0].textContent = 'Статистика школы';
-            sectionTitles[1].textContent = 'Важные объявления';
-            statLabels[0].textContent = 'Учащихся';
-            statLabels[1].textContent = 'Преподавателей';
-            statLabels[2].textContent = 'Классов (1-11)';
-            document.querySelector('.chart-title').textContent = 'Успеваемость по четвертям';
-            document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Распределение оценок';
-            document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Все права защищены.';
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const languageSwitch = document.getElementById('languageSwitch');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sectionTitles = document.querySelectorAll('.section-title');
+            const statLabels = document.querySelectorAll('.stat-label');
 
-        const burgerMenu = document.getElementById('burgerMenu');
-        const navLinksContainer = document.getElementById('navLinks');
-        burgerMenu.addEventListener('click', () => { burgerMenu.classList.toggle('active'); navLinksContainer.classList.toggle('active'); });
-        navLinks.forEach(link => link.addEventListener('click', () => { burgerMenu.classList.remove('active'); navLinksContainer.classList.remove('active'); }));
+            let currentLang = 'ru';
+            languageSwitch.addEventListener('click', () => {
+                if (currentLang === 'ru') { currentLang = 'uz'; languageSwitch.textContent = "O‘zbekcha"; updateContentToUzbek(); }
+                else { currentLang = 'ru'; languageSwitch.textContent = 'Русский'; updateContentToRussian(); }
+            });
 
-        // Hero carousel removed
+            function updateContentToUzbek() {
+                navLinks[0].textContent = 'Bosh sahifa';
+                navLinks[1].textContent = 'Maktab haqida';
+                navLinks[2].textContent = 'Jadval';
+                navLinks[3].textContent = 'Yangiliklar';
+                navLinks[4].textContent = 'FAQ';
+                sectionTitles[0].textContent = 'Maktab statistikasi';
+                sectionTitles[1].textContent = 'Muhim e‘lonlar';
+                statLabels[0].textContent = "O‘quvchilar";
+                statLabels[1].textContent = "O‘qituvchilar";
+                statLabels[2].textContent = 'Sinf (1-11)';
+                document.querySelector('.chart-title').textContent = "Choraklar bo‘yicha o‘qish sifati";
+                document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Baholar taqsimoti';
+                document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Barcha huquqlar himoya qilindi.';
+            }
+            function updateContentToRussian() {
+                navLinks[0].textContent = 'Главная';
+                navLinks[1].textContent = 'О школе';
+                navLinks[2].textContent = 'Расписание';
+                navLinks[3].textContent = 'Новости';
+                navLinks[4].textContent = 'FAQ';
+                sectionTitles[0].textContent = 'Статистика школы';
+                sectionTitles[1].textContent = 'Важные объявления';
+                statLabels[0].textContent = 'Учащихся';
+                statLabels[1].textContent = 'Преподавателей';
+                statLabels[2].textContent = 'Классов (1-11)';
+                document.querySelector('.chart-title').textContent = 'Успеваемость по четвертям';
+                document.querySelector('.charts-container .chart-card:nth-child(2) .chart-title').textContent = 'Распределение оценок';
+                document.querySelector('.footer-bottom p').textContent = '© 2025 21-IDUM. Все права защищены.';
+            }
 
-        const canvas = document.getElementById('lineChart');
-        const mlCtx = canvas.getContext('2d');
-        const years = ['2020/2021', '2021/2022', '2022/2023', '2023/2024', '2024/2025', '2025/2026'];
-        const averageGrades = [4.1, 4.2, 3.0, 4.3, 4.4, 4.5];
-        const studentCounts = [520, 545, 560, 590, 610, 640];
-        const graduatesCount = [85, 90, 88, 92, 95, 100];
-        new Chart(mlCtx, {
-            type: 'line', data: {
-                labels: years, datasets: [
-                    { label: 'Средний балл', data: averageGrades, borderColor: '#FFD700', backgroundColor: 'rgba(255,215,0,0.2)', borderWidth: 3, fill: true, tension: 0.3 },
-                    { label: 'Количество учеников', data: studentCounts, borderColor: '#4CAF50', backgroundColor: 'rgba(76,175,80,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' },
-                    { label: 'Выпускники', data: graduatesCount, borderColor: '#2196F3', backgroundColor: 'rgba(33,150,243,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' }
-                ]
-            }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Средний балл' }, min: 0, max: 5 }, y1: { beginAtZero: true, position: 'right', title: { display: true, text: 'Количество учеников' }, grid: { drawOnChartArea: false } } } }
-        });
-        new Chart(document.getElementById('pieChart').getContext('2d'), { type: 'pie', data: { labels: ['Отлично (5)', 'Хорошо (4)', 'Удовлетворительно (3)', 'Неудовлетворительно (2)'], datasets: [{ data: [35, 45, 18, 2], backgroundColor: ['#4CAF50', '#FFD700', '#FF9800', '#F44336'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+            const burgerMenu = document.getElementById('burgerMenu');
+            const navLinksContainer = document.getElementById('navLinks');
+            burgerMenu.addEventListener('click', () => { burgerMenu.classList.toggle('active'); navLinksContainer.classList.toggle('active'); });
+            navLinks.forEach(link => link.addEventListener('click', () => { burgerMenu.classList.remove('active'); navLinksContainer.classList.remove('active'); }));
 
-        // Load latest announcements (top 3) via API
-        async function loadAnnouncements() {
-            const grid = document.getElementById('announcementsGrid');
-            const loading = document.getElementById('announcementsLoading');
-            if (!grid) return;
-            try {
-                loading && (loading.style.display = 'block');
-                const resp = await fetch('/api/announcements?limit=3');
-                const data = await resp.json();
-                const items = Array.isArray(data) ? data : (data.items || []);
-                grid.innerHTML = '';
-                const typeIcons = { important: '📢', event: '🎉', info: '📚', achievement: '🏆', urgent: '⚠️', competition: '🎯' };
-                items.forEach(item => {
-                    const icon = typeIcons[item.type] || '📢';
-                    const badgeClass = `${item.type}-badge`;
-                    const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
-                    const locationHtml = item.location ? `<span class="announcement-location">📍 ${item.location}</span>` : '';
-                    const linkHtml = item.link ? `<a href="${item.link}" class="announcement-link">Подать заявку →</a>` : '';
-                    grid.insertAdjacentHTML('beforeend', `
+            // Hero carousel removed
+
+            // Initialize charts after DOM is ready
+            function initCharts() {
+                const lineCanvas = document.getElementById('lineChart');
+                const pieCanvas = document.getElementById('pieChart');
+
+                if (!lineCanvas || !pieCanvas) {
+                    console.error('Canvas elements not found');
+                    return;
+                }
+
+                const mlCtx = lineCanvas.getContext('2d');
+                const years = ['2020/2021', '2021/2022', '2022/2023', '2023/2024', '2024/2025', '2025/2026'];
+                const averageGrades = [4.1, 4.2, 3.0, 4.3, 4.4, 4.5];
+                const studentCounts = [520, 545, 560, 590, 610, 640];
+                const graduatesCount = [85, 90, 88, 92, 95, 100];
+
+                new Chart(mlCtx, {
+                    type: 'line', data: {
+                        labels: years, datasets: [
+                            { label: 'Средний балл', data: averageGrades, borderColor: '#FFD700', backgroundColor: 'rgba(255,215,0,0.2)', borderWidth: 3, fill: true, tension: 0.3 },
+                            { label: 'Количество учеников', data: studentCounts, borderColor: '#4CAF50', backgroundColor: 'rgba(76,175,80,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' },
+                            { label: 'Выпускники', data: graduatesCount, borderColor: '#2196F3', backgroundColor: 'rgba(33,150,243,0.2)', borderWidth: 3, fill: false, tension: 0.3, yAxisID: 'y1' }
+                        ]
+                    }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Средний балл' }, min: 0, max: 5 }, y1: { beginAtZero: true, position: 'right', title: { display: true, text: 'Количество учеников' }, grid: { drawOnChartArea: false } } } }
+                });
+
+                new Chart(pieCanvas.getContext('2d'), { type: 'pie', data: { labels: ['Отлично (5)', 'Хорошо (4)', 'Удовлетворительно (3)', 'Неудовлетворительно (2)'], datasets: [{ data: [35, 45, 18, 2], backgroundColor: ['#4CAF50', '#FFD700', '#FF9800', '#F44336'], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } });
+            }
+
+            // Initialize charts
+            initCharts();
+
+            // Load latest announcements (top 3) via API
+            async function loadAnnouncements() {
+                const grid = document.getElementById('announcementsGrid');
+                const loading = document.getElementById('announcementsLoading');
+                if (!grid) return;
+                try {
+                    loading && (loading.style.display = 'block');
+                    const resp = await fetch('/api/announcements?limit=3');
+                    const data = await resp.json();
+                    const items = Array.isArray(data) ? data : (data.items || []);
+                    grid.innerHTML = '';
+                    const typeIcons = { important: '📢', event: '🎉', info: '📚', achievement: '🏆', urgent: '⚠️', competition: '🎯' };
+                    items.forEach(item => {
+                        const icon = typeIcons[item.type] || '📢';
+                        const badgeClass = `${item.type}-badge`;
+                        const dateStr = new Date(item.date).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+                        const locationHtml = item.location ? `<span class="announcement-location">📍 ${item.location}</span>` : '';
+                        const linkHtml = item.link ? `<a href="${item.link}" class="announcement-link">Подать заявку →</a>` : '';
+                        grid.insertAdjacentHTML('beforeend', `
                         <div class="announcement-card ${item.type}">
                           <div class="announcement-icon">${icon}</div>
                           <div class="announcement-content">
@@ -316,40 +348,40 @@
                           </div>
                         </div>
                     `);
-                });
-            } catch (err) {
-                console.error('Ошибка загрузки объявлений:', err);
-                grid.innerHTML = '<p style="color:#c00;">Не удалось загрузить объявления</p>';
-            } finally {
-                loading && (loading.style.display = 'none');
-            }
-        }
-        // Load events for home page
-        async function loadHomeEvents() {
-            const list = document.getElementById('homeEventsList');
-            const loading = document.getElementById('homeEventsLoading');
-            if (!list) return;
-            try {
-                if (loading) loading.style.display = 'block';
-                const resp = await fetch('/api/schedule/events?upcoming=true&limit=4');
-                const data = await resp.json();
-                const events = Array.isArray(data) ? data : (data.events || []);
-
-                if (!events.length) {
-                    list.innerHTML = '<div class="home-events-empty">Ближайших событий нет</div>';
-                    return;
+                    });
+                } catch (err) {
+                    console.error('Ошибка загрузки объявлений:', err);
+                    grid.innerHTML = '<p style="color:#c00;">Не удалось загрузить объявления</p>';
+                } finally {
+                    loading && (loading.style.display = 'none');
                 }
+            }
+            // Load events for home page
+            async function loadHomeEvents() {
+                const list = document.getElementById('homeEventsList');
+                const loading = document.getElementById('homeEventsLoading');
+                if (!list) return;
+                try {
+                    if (loading) loading.style.display = 'block';
+                    const resp = await fetch('/api/schedule/events?upcoming=true&limit=4');
+                    const data = await resp.json();
+                    const events = Array.isArray(data) ? data : (data.events || []);
 
-                list.innerHTML = events.map(evt => {
-                    const date = new Date(evt.date);
-                    const day = date.getDate().toString().padStart(2, '0');
-                    const month = date.toLocaleDateString('ru-RU', { month: 'short' });
-                    const title = evt.title_ru || evt.title_uz || 'Событие';
-                    const time = evt.time ? `<span>⏰ ${evt.time}</span>` : '';
-                    const location = evt.location_ru || evt.location_uz;
-                    const locationHtml = location ? `<span>📍 ${location}</span>` : '';
+                    if (!events.length) {
+                        list.innerHTML = '<div class="home-events-empty">Ближайших событий нет</div>';
+                        return;
+                    }
 
-                    return `
+                    list.innerHTML = events.map(evt => {
+                        const date = new Date(evt.date);
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const month = date.toLocaleDateString('ru-RU', { month: 'short' });
+                        const title = evt.title_ru || evt.title_uz || 'Событие';
+                        const time = evt.time ? `<span>⏰ ${evt.time}</span>` : '';
+                        const location = evt.location_ru || evt.location_uz;
+                        const locationHtml = location ? `<span>📍 ${location}</span>` : '';
+
+                        return `
                         <div class="home-event-card">
                             <div class="home-event-date">
                                 <div class="home-event-day">${day}</div>
@@ -361,54 +393,55 @@
                             </div>
                         </div>
                     `;
-                }).join('');
-            } catch (err) {
-                console.error('Ошибка загрузки событий:', err);
-                list.innerHTML = '<div class="home-events-empty">Не удалось загрузить события</div>';
-            } finally {
-                if (loading) loading.style.display = 'none';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAnnouncements();
-            loadHomeEvents();
-        });
-
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Yuborilmoqda...';
-            try {
-                const response = await fetch('/api/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, message })
-                });
-                const result = await response.json();
-                if (response.ok && result.ok) {
-                    alert(currentLang === 'ru' ? '✅ Ваше сообщение отправлено администратору!' : '✅ Xabaringiz administratorga yuborildi!');
-                    contactForm.reset();
-                } else {
-                    throw new Error(result.error || 'Ошибка отправки');
+                    }).join('');
+                } catch (err) {
+                    console.error('Ошибка загрузки событий:', err);
+                    list.innerHTML = '<div class="home-events-empty">Не удалось загрузить события</div>';
+                } finally {
+                    if (loading) loading.style.display = 'none';
                 }
-            } catch (error) {
-                console.error('Ошибка отправки контакта:', error);
-                alert(currentLang === 'ru' ? '❌ Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.' : '❌ Xabar yuborishda xatolik. Iltimos, keyinroq urinib ko‘ring.');
-            } finally { submitBtn.disabled = false; submitBtn.textContent = originalText; }
-        });
+            }
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-        });
+            document.addEventListener('DOMContentLoaded', () => {
+                loadAnnouncements();
+                loadHomeEvents();
+            });
 
-        window.addEventListener('load', () => { console.log('✅ Главная страница 21-IDUM загружена'); });
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const submitBtn = contactForm.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Yuborilmoqda...';
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, message })
+                    });
+                    const result = await response.json();
+                    if (response.ok && result.ok) {
+                        alert(currentLang === 'ru' ? '✅ Ваше сообщение отправлено администратору!' : '✅ Xabaringiz administratorga yuborildi!');
+                        contactForm.reset();
+                    } else {
+                        throw new Error(result.error || 'Ошибка отправки');
+                    }
+                } catch (error) {
+                    console.error('Ошибка отправки контакта:', error);
+                    alert(currentLang === 'ru' ? '❌ Ошибка при отправке сообщения. Пожалуйста, попробуйте позже.' : '❌ Xabar yuborishda xatolik. Iltimos, keyinroq urinib ko‘ring.');
+                } finally { submitBtn.disabled = false; submitBtn.textContent = originalText; }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+            });
+
+            console.log('✅ Главная страница 21-IDUM загружена');
+        }); // End of DOMContentLoaded
     </script>
 </body>
 
