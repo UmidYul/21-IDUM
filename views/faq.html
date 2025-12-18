@@ -4,7 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - 21-IDUM</title>
+    <title>Часто задаваемые вопросы (FAQ) — 21-IDUM</title>
+    <meta name="description"
+        content="Ответы на часто задаваемые вопросы о школе 21-IDUM: поступление, документы, расписание, стоимость обучения, кружки и секции" />
+    <meta name="keywords" content="FAQ 21-IDUM, вопросы о школе, поступление, документы, расписание занятий" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://school-21.uz/faq.html" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://school-21.uz/faq.html" />
+    <meta property="og:title" content="Часто задаваемые вопросы — 21-IDUM" />
+    <meta property="og:description"
+        content="Ответы на все вопросы о школе 21-IDUM: поступление, обучение, расписание" />
+    <meta property="og:image" content="https://school-21.uz/images/logo.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="FAQ — 21-IDUM" />
+    <meta name="twitter:description" content="Ответы на часто задаваемые вопросы о школе 21-IDUM" />
+
+    <!-- Alternate languages -->
+    <link rel="alternate" hreflang="ru" href="https://school-21.uz/faq.html?lang=ru" />
+    <link rel="alternate" hreflang="uz" href="https://school-21.uz/faq.html?lang=uz" />
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/21idum" href="/images/logo.png">
@@ -218,6 +242,48 @@
 
         // Load FAQ on page load
         document.addEventListener('DOMContentLoaded', loadFAQ);
+    </script>
+
+    <!-- JSON-LD Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Как поступить в школу №21-IDUM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Для поступления необходимо пройти вступительные экзамены по математике, русскому и узбекскому языкам. Регистрация на экзамены проходит в мае-июне каждого года. Документы можно подать онлайн через наш сайт или лично в приемной комиссии."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие документы нужны для поступления?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Необходимы: копия свидетельства о рождении, медицинская справка формы 086-У, характеристика из предыдущей школы (для учащихся 2-11 классов), 4 фотографии 3x4, копия паспорта одного из родителей."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какое расписание занятий в школе?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Занятия проходят в одну смену с 8:00 до 14:30. Уроки начинаются в 8:00, продолжительность урока - 45 минут. После третьего урока - большая перемена 20 минут для обеда."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Есть ли в школе кружки и секции?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, у нас работают различные кружки: робототехника, программирование, английский клуб, математический кружок, шахматы, театральная студия. Также есть спортивные секции: футбол, волейбол, баскетбол, настольный теннис."
+          }
+        }
+      ]
+    }
     </script>
 </body>
 

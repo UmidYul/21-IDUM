@@ -83,6 +83,7 @@ import adminScheduleRoutes from './routes/admin-schedule.js';
 import adminUsersRoutes from './routes/admin-users.js';
 import adminAuditRoutes from './routes/admin-audit.js';
 import uploadRoutes from './routes/upload.js';
+import seoRoutes from './routes/seo.js';
 
 // Use routes
 app.use('/api/news', newsRoutes);
@@ -99,6 +100,9 @@ app.use('/api/admin/schedule', adminScheduleRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
 app.use('/api/admin/audit', adminAuditRoutes);
 app.use('/api/upload', uploadRoutes);
+
+// SEO routes (sitemap, robots)
+app.use('/', seoRoutes);
 
 // Contact form -> Telegram
 // Simple rate-limit per IP for contact (5s between requests)
