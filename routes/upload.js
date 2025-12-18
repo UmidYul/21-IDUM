@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { requireAuth } from './auth-basic.js';
@@ -10,16 +11,32 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-// Ensure uploads directories exist
-const newsUploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'news');
-const teachersUploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'teachers');
+// Choose an uploads root that works both locally and on Vercel (read-only filesystem).
+const uploadsRoot = process.env.UPLOADS_DIR
+    ? path.resolve(process.env.UPLOADS_DIR)
+    : (process.env.VERCEL ? path.join(os.tmpdir(), 'uploads') : path.join(__dirname, '..', 'public', 'uploads'));
 
-if (!fs.existsSync(newsUploadsDir)) {
-    fs.mkdirSync(newsUploadsDir, { recursive: true });
+function ensureUploadsDir(subdir) {
+    const target = path.join(uploadsRoot, subdir);
+    try {
+        fs.mkdirSync(target, { recursive: true });
+        return target;
+    } catch (error) {
+        // On read-only FS (e.g., Vercel /var/task) fall back to /tmp to avoid crashes
+        const fallback = path.join(os.tmpdir(), 'uploads', subdir);
+        try {
+            fs.mkdirSync(fallback, { recursive: true });
+            console.warn(`Uploads dir not writable, using temp path: ${fallback}`);
+            return fallback;
+        } catch (fallbackError) {
+            console.error('Failed to prepare uploads dir:', fallbackError);
+            throw fallbackError;
+        }
+    }
 }
-if (!fs.existsSync(teachersUploadsDir)) {
-    fs.mkdirSync(teachersUploadsDir, { recursive: true });
-}
+
+const newsUploadsDir = ensureUploadsDir('news');
+const teachersUploadsDir = ensureUploadsDir('teachers');
 
 // Helper function to delete old file
 function deleteOldFile(filePath) {

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import https from 'https';
@@ -43,6 +44,10 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const uploadsRoot = process.env.UPLOADS_DIR
+    ? path.resolve(process.env.UPLOADS_DIR)
+    : (process.env.VERCEL ? path.join(os.tmpdir(), 'uploads') : path.join(__dirname, 'public', 'uploads'));
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -88,6 +93,17 @@ app.use(express.static(path.join(__dirname, 'public'), {
             res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
             res.setHeader('Pragma', 'no-cache');
             res.setHeader('Expires', '0');
+        }
+    }
+}));
+
+// Serve uploaded files even when stored outside the bundled /public (e.g., Vercel uses /tmp)
+app.use('/uploads', express.static(uploadsRoot, {
+    setHeaders: (res, filePath) => {
+        if (filePath.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else {
+            res.setHeader('Cache-Control', 'public, max-age=86400');
         }
     }
 }));
