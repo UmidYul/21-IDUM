@@ -263,11 +263,7 @@ app.get('/admin/audit', requireAuthPage, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin', 'audit.html'));
 });
 
-// Export for serverless (Vercel) and start server locally
-export default app;
-
-if (!process.env.VERCEL) {
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
-}
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});

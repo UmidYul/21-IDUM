@@ -16,7 +16,7 @@
     },
     {
       "id": "a1f5c2d4-8c3b-4e1f-9a7d-2f6b4c8a9d01",
-      "title_ru": "Спортивный день:足球турнир",
+      "title_ru": "Спортивный день: турнир",
       "title_uz": "Sport kuni: futbol turniri",
       "body_ru": "Прошёл чемпионат по футболу среди всех классов школы. Призовые места распределены справедливо, молодцы ребята!",
       "body_uz": "Maktabaning barcha sinflari o'rtasida futbol chempionati o'tkazildi. Prizoviy o'rinlar справедливо taqsimlandi.",
@@ -26,7 +26,7 @@
       "publishAt": "2025-12-15T10:00:00.000Z",
       "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
       "createdAt": "2025-12-18T10:00:00.000Z",
-      "updatedAt": "2025-12-18T10:00:00.000Z"
+      "updatedAt": "2025-12-18T14:32:35.956Z"
     },
     {
       "id": "c3f7e4g6-0e5d-6g3h-1c9f-4h8d0e0c1f03",
@@ -146,19 +146,6 @@
       "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
     },
     {
-      "id": "faq-005",
-      "question_ru": "Какова стоимость обучения?",
-      "question_uz": "O'qish narxi qancha?",
-      "answer_ru": "Обучение в школе №21-IDUM бесплатное. Финансирование осуществляется из государственного бюджета. Родители оплачивают только питание и дополнительные образовательные услуги (по желанию).",
-      "answer_uz": "21-IDUM maktabida o'qish bepul. Moliyalashtirish davlat byudjeti hisobidan amalga oshiriladi. Ota-onalar faqat ovqatlanish va qo'shimcha ta'lim xizmatlarini (ixtiyoriy) to'laydilar.",
-      "category": "general",
-      "order": 5,
-      "visible": true,
-      "createdAt": "2025-12-17T10:00:00.000Z",
-      "updatedAt": "2025-12-17T10:00:00.000Z",
-      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
-    },
-    {
       "id": "faq-006",
       "question_ru": "Как организовано питание в школе?",
       "question_uz": "Maktabda ovqatlanish qanday tashkil etilgan?",
@@ -205,19 +192,6 @@
       "answer_uz": "Sinf rahbari bilan elektron kundalik orqali, telefon orqali (raqamlar saytda e'lon qilingan) yoki kotiba orqali shaxsiy uchrashuv belgilash mumkin. Shuningdek, har chorakda ota-onalar yig'ilishlari o'tkaziladi.",
       "category": "general",
       "order": 9,
-      "visible": true,
-      "createdAt": "2025-12-17T10:00:00.000Z",
-      "updatedAt": "2025-12-17T10:00:00.000Z",
-      "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
-    },
-    {
-      "id": "faq-010",
-      "question_ru": "Есть ли школьная форма?",
-      "question_uz": "Maktab formasi bormi?",
-      "answer_ru": "Да, в школе установлена единая форма одежды. Для мальчиков: темные брюки, белая рубашка, жилет или пиджак синего цвета. Для девочек: темная юбка или брюки, белая блузка, жилет или пиджак синего цвета. Спортивная форма - белая футболка и темные спортивные брюки.",
-      "answer_uz": "Ha, maktabda yagona kiyim shakli belgilangan. O'g'il bolalar uchun: to'q rangli shim, oq ko'ylak, ko'k rangli jilet yoki pidzhak. Qizlar uchun: to'q rangli yubka yoki shim, oq bluza, ko'k rangli jilet yoki pidzhak. Sport formasi - oq futbolka va to'q rangli sport shimi.",
-      "category": "general",
-      "order": 10,
       "visible": true,
       "createdAt": "2025-12-17T10:00:00.000Z",
       "updatedAt": "2025-12-17T10:00:00.000Z",

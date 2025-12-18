@@ -32,7 +32,7 @@
             return `
         <tr>
           <td><strong>${t.name_ru}</strong><br><span class="muted">${t.name_uz || ''}</span></td>
-          <td>${t.subject_ru}<br><span class="muted">${t.position_ru}</span></td>
+          <td>${t.position_ru}</td>
           <td>${contactStr || '—'}</td>
           <td><span class="badge ${t.status === 'published' ? 'badge-success' : 'badge-secondary'}">${t.status === 'published' ? 'Публик.' : 'Черновик'}</span></td>
           <td>
@@ -48,7 +48,7 @@
         <thead>
           <tr>
             <th>ФИО</th>
-            <th>Предмет / Должность</th>
+            <th>Должность</th>
             <th>Контакты</th>
             <th>Статус</th>
             <th>Действия</th>
