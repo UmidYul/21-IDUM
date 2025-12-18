@@ -543,13 +543,13 @@
         "title_uz": "",
         "description_ru": "Фотографии со дня рождения Сары",
         "description_uz": "",
-        "coverPhoto": "http://localhost:3000/images/2.webp",
+        "coverPhoto": "./images/2.webp",
         "status": "published",
         "order": 0,
         "photos": [
           {
             "id": "48e02db8-e56b-4fcd-a4ec-5f8e2636aaee",
-            "url": "http://localhost:3000/images/3.webp",
+            "url": "./images/3.webp",
             "caption_ru": "Поздравление",
             "caption_uz": "",
             "order": 0,
@@ -557,7 +557,7 @@
           },
           {
             "id": "e18eed56-91bd-4704-b35f-e47013fbc584",
-            "url": "http://localhost:3000/images/2.webp",
+            "url": "./images/2.webp",
             "caption_ru": "Поздравление 2",
             "caption_uz": "",
             "order": 1,
