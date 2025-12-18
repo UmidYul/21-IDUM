@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import db from '../database.js';
 import { requireAuth } from './auth-basic.js';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
@@ -64,7 +65,7 @@ router.post('/', requireAuth, requireAdmin, async (req, res) => {
         const user = {
             id: crypto.randomUUID(),
             username,
-            password, // MVP: plain; future: hash
+            password: bcrypt.hashSync(password, 10),
             role,
             displayName: displayName || username,
             email: email || '',
@@ -97,7 +98,7 @@ router.patch('/:id', requireAuth, requireAdmin, async (req, res) => {
             user.username = username;
         }
         if (typeof password === 'string' && password.length > 0) {
-            user.password = password;
+            user.password = bcrypt.hashSync(password, 10);
         }
         if (role) {
             if (!ALLOWED_ROLES.includes(role)) return res.status(400).json({ ok: false, error: 'Invalid role' });

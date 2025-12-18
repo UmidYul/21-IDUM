@@ -1,6 +1,7 @@
 import express from 'express';
 import crypto from 'crypto';
 import db from '../database.js';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 const AUDIT_RETENTION_MS = 7 * 24 * 60 * 60 * 1000;
@@ -133,9 +134,24 @@ router.post('/login', async (req, res) => {
     await db.read();
     console.log('👥 Пользователи в БД:', db.data.users.map(u => ({ username: u.username, role: u.role })));
 
-    const user = db.data.users.find(u => u.username === username && u.password === password);
+    const user = db.data.users.find(u => u.username === username);
 
     if (!user) {
+        console.log('❌ Неверные креды для:', username);
+        return res.status(401).json({ ok: false, error: 'invalid credentials' });
+    }
+
+    let ok = false;
+    const stored = user.password || '';
+    if (stored.startsWith('$2a$') || stored.startsWith('$2b$') || stored.startsWith('$2y$')) {
+        ok = bcrypt.compareSync(password, stored);
+    } else {
+        ok = stored === password;
+        if (ok) {
+            user.password = bcrypt.hashSync(password, 10);
+        }
+    }
+    if (!ok) {
         console.log('❌ Неверные креды для:', username);
         return res.status(401).json({ ok: false, error: 'invalid credentials' });
     }

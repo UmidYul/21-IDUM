@@ -3,6 +3,7 @@ import { JSONFile } from 'lowdb/node';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
+import bcrypt from 'bcryptjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -18,11 +19,11 @@ await db.read();
 
 // Helper для создания дефолтного юзера
 function createDefaultUser() {
-    // Простой пароль без bcrypt для MVP, позже добавим хеширование
+    const passwordHash = bcrypt.hashSync('admin123', 10);
     return {
         id: crypto.randomUUID(),
         username: 'admin',
-        password: 'admin123', // В продакшене будет bcrypt
+        password: passwordHash,
         role: 'admin',
         createdAt: new Date().toISOString(),
         lastLoginAt: null

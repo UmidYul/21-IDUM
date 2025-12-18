@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import helmet from 'helmet';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -96,16 +97,43 @@ app.use((req, res, next) => {
     next();
 });
 
-// Security headers (basic hardening)
-app.use((req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
-    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-    // CSP: Allow inline scripts for Chart.js and other functionality
-    res.setHeader('Content-Security-Policy', "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; frame-src https://www.google.com;");
-    next();
-});
+// Security headers via Helmet
+app.use(helmet({
+    referrerPolicy: { policy: 'no-referrer-when-downgrade' },
+    xssFilter: false // deprecated, keep CSP strong
+}));
+
+// Frameguard (sameorigin)
+app.use(helmet.frameguard({ action: 'sameorigin' }));
+
+// NoSniff
+app.use(helmet.noSniff());
+
+// DNS Prefetch Control
+app.use(helmet.dnsPrefetchControl({ allow: false }));
+
+// HSTS only in production (HTTPS required)
+if (process.env.NODE_ENV === 'production') {
+    app.use(helmet.hsts({
+        maxAge: 15552000, // 180 days
+        includeSubDomains: true,
+        preload: false
+    }));
+}
+
+// Content Security Policy
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+        frameSrc: ['https://www.google.com'],
+        connectSrc: ["'self'"]
+    }
+}));
 
 // Import routes
 import newsRoutes from './routes/news.js';
