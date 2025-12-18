@@ -4,6 +4,11 @@
     const successBox = document.getElementById('successBox');
     const saveBtn = document.getElementById('saveBtn');
     const pageTitle = document.getElementById('pageTitle');
+    const photoInput = document.getElementById('photo');
+    const photoPreview = document.getElementById('photoPreview');
+    const previewImg = document.getElementById('previewImg');
+    const removePhoto = document.getElementById('removePhoto');
+    const photoUrl = document.getElementById('photoUrl');
 
     const tabs = document.querySelectorAll('.form-tab');
     const contents = document.querySelectorAll('.lang-content');
@@ -20,6 +25,55 @@
 
     function show(el, text) { if (!el) return; el.textContent = text || ''; el.style.display = 'block'; }
     function hide(el) { if (!el) return; el.style.display = 'none'; el.textContent = ''; }
+
+    // Photo upload with preview
+    if (photoInput) {
+        photoInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Show preview immediately
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                photoPreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+
+            // Upload to server
+            try {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                const r = await fetch('/api/upload/teacher-photo', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                });
+
+                const data = await r.json();
+                if (!r.ok || !data.ok) {
+                    throw new Error(data.error || 'Ошибка загрузки');
+                }
+
+                photoUrl.value = data.url;
+                console.log('Фото учителя загружено:', data.url);
+            } catch (err) {
+                show(errorBox, 'Ошибка загрузки фото: ' + err.message);
+                photoInput.value = '';
+                photoPreview.style.display = 'none';
+            }
+        });
+    }
+
+    if (removePhoto) {
+        removePhoto.addEventListener('click', () => {
+            photoInput.value = '';
+            photoUrl.value = '';
+            photoPreview.style.display = 'none';
+            previewImg.src = '';
+        });
+    }
 
     async function me() {
         try {
@@ -70,6 +124,13 @@
             document.getElementById('telegram').value = t.telegram || '';
             document.getElementById('phone').value = t.phone || '';
             document.getElementById('status').value = t.status || 'draft';
+
+            // Load existing photo if exists
+            if (t.photo) {
+                photoUrl.value = t.photo;
+                previewImg.src = t.photo;
+                photoPreview.style.display = 'block';
+            }
         } catch (err) {
             show(errorBox, 'Ошибка загрузки учителя');
         }
@@ -96,23 +157,10 @@
                     status: document.getElementById('status').value
                 };
 
-                const photoFile = document.getElementById('photo').files[0];
-                if (photoFile) {
-                    const formData = new FormData();
-                    formData.append('file', photoFile);
-                    const uploadRes = await fetch('/api/upload', {
-                        method: 'POST',
-                        body: formData,
-                        credentials: 'same-origin'
-                    });
-                    const uploadData = await uploadRes.json();
-                    if (!uploadRes.ok || !uploadData.ok) {
-                        throw new Error(uploadData.error || 'Ошибка загрузки фото');
-                    }
-                    payload.photo = uploadData.url;
-                } else if (isEdit) {
-                    // При редактировании фото не обязательно
-                } else {
+                const photoUrlValue = document.getElementById('photoUrl').value.trim();
+                if (photoUrlValue) {
+                    payload.photo = photoUrlValue;
+                } else if (!isEdit) {
                     throw new Error('Фото обязательно');
                 }
 

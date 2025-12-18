@@ -10,21 +10,50 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'news');
-if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir, { recursive: true });
+// Ensure uploads directories exist
+const newsUploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'news');
+const teachersUploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'teachers');
+
+if (!fs.existsSync(newsUploadsDir)) {
+    fs.mkdirSync(newsUploadsDir, { recursive: true });
+}
+if (!fs.existsSync(teachersUploadsDir)) {
+    fs.mkdirSync(teachersUploadsDir, { recursive: true });
 }
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
+// Helper function to delete old file
+function deleteOldFile(filePath) {
+    if (filePath && fs.existsSync(filePath)) {
+        try {
+            fs.unlinkSync(filePath);
+            console.log(`🗑️ Удален старый файл: ${filePath}`);
+        } catch (error) {
+            console.error('Error deleting old file:', error);
+        }
+    }
+}
+
+// Configure multer for news covers
+const newsStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, uploadsDir);
+        cb(null, newsUploadsDir);
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const ext = path.extname(file.originalname);
         cb(null, 'news-' + uniqueSuffix + ext);
+    }
+});
+
+// Configure multer for teacher photos
+const teacherStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, teachersUploadsDir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'teacher-' + uniqueSuffix + ext);
     }
 });
 
@@ -37,14 +66,20 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-const upload = multer({
-    storage: storage,
+const newsUpload = multer({
+    storage: newsStorage,
     fileFilter: fileFilter,
     limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
+const teacherUpload = multer({
+    storage: teacherStorage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 2 * 1024 * 1024 } // 2MB limit for teacher photos
+});
+
 // POST /api/upload/news-cover - Upload news cover image (protected)
-router.post('/news-cover', requireAuth, upload.single('image'), (req, res) => {
+router.post('/news-cover', requireAuth, newsUpload.single('image'), (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ ok: false, error: 'Файл не загружен' });
@@ -52,7 +87,7 @@ router.post('/news-cover', requireAuth, upload.single('image'), (req, res) => {
 
         const fileUrl = '/uploads/news/' + req.file.filename;
 
-        console.log(`✅ Загружено изображение: ${req.file.filename} пользователем: ${req.user.username}`);
+        console.log(`✅ Загружено изображение новости: ${req.file.filename} пользователем: ${req.user.username}`);
 
         res.json({
             ok: true,
@@ -66,12 +101,38 @@ router.post('/news-cover', requireAuth, upload.single('image'), (req, res) => {
     }
 });
 
+// POST /api/upload/teacher-photo - Upload teacher photo (protected)
+router.post('/teacher-photo', requireAuth, teacherUpload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ ok: false, error: 'Файл не загружен' });
+        }
+
+        const fileUrl = '/uploads/teachers/' + req.file.filename;
+
+        console.log(`✅ Загружено фото учителя: ${req.file.filename} пользователем: ${req.user.username}`);
+
+        res.json({
+            ok: true,
+            url: fileUrl,
+            filename: req.file.filename,
+            size: req.file.size
+        });
+    } catch (error) {
+        console.error('Teacher photo upload error:', error);
+        res.status(500).json({ ok: false, error: 'Ошибка загрузки файла' });
+    }
+});
+
 // Error handling middleware for multer
 router.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         if (error.code === 'LIMIT_FILE_SIZE') {
-            return res.status(400).json({ ok: false, error: 'Файл слишком большой (макс. 5MB)' });
+            return res.status(400).json({ ok: false, error: 'Файл слишком большой (макс. 5MB для новостей, 2MB для фото учителей)' });
         }
+        return res.status(400).json({ ok: false, error: error.message });
+    }
+    if (error) {
         return res.status(400).json({ ok: false, error: error.message });
     }
     next(error);
