@@ -347,6 +347,86 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Pretty file input */
+.form-group input[type="file"] {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    background: var(--admin-primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-right: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+    background: var(--admin-primary-dark);
+}
+
+.form-group input[type="file"]::file-selector-button:active {
+    transform: translateY(1px);
+}
+
+/* Drag & Drop file area */
+.file-drop-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    padding: 20px;
+    min-height: 140px;
+    border: 1px dashed var(--admin-border);
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.35);
+    color: var(--admin-text);
+    transition: border-color 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+}
+
+.file-drop-area .file-instructions {
+    font-size: 15px;
+    color: #cbd5e1;
+}
+
+.file-drop-area .file-instructions strong {
+    color: #fff;
+}
+
+.file-drop-area .file-name {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.file-drop-area .file-browse-btn {
+    background: var(--admin-primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-drop-area.dragover {
+    border-color: var(--admin-primary);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.form-group select option {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 8px;
+}
+
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {

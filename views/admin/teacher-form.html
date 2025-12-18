@@ -68,7 +68,13 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="photo">Фото *</label>
-                        <input type="file" id="photo" name="photo" accept="image/*" required>
+                        <input type="file" id="photo" name="photo" accept="image/*" required style="display:none">
+                        <div class="file-drop-area" data-filedrop="photo">
+                            <div class="file-instructions">
+                                Перетащите фото сюда или <strong>нажмите на поле</strong>
+                                <span class="file-name" data-filedrop-name="photo">Файл не выбран</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="order">Порядок</label>
@@ -108,6 +114,8 @@
         </div>
     </section>
 
+    <script src="/admin-filedrop.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => { window.initFileDrop && initFileDrop('photo'); });</script>
     <script src="/admin-teacher-form.js"></script>
 </body>
 

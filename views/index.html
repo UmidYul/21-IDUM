@@ -48,7 +48,7 @@
         <div class="container hero-static__content">
             <div class="hero-static__text">
                 <p class="hero-static__kicker">Специализированная школа №21</p>
-                <h1 class="hero-static__title">Учиться. Исследовать. Побеждать.</h1>
+                <h1 class="hero-static__title">Учи. Твори. Делай.</h1>
                 <p class="hero-static__subtitle">Современные кабинеты, сильные учителя и поддержка талантов с первого
                     класса.</p>
                 <div class="hero-static__actions">
@@ -323,9 +323,19 @@
                 if (!grid) return;
                 try {
                     loading && (loading.style.display = 'block');
+                    console.log('🔄 Загрузка объявлений...');
                     const resp = await fetch('/api/announcements?limit=3');
+                    console.log('📡 Ответ получен:', resp.status, resp.statusText);
+                    if (!resp.ok) {
+                        throw new Error(`HTTP error! status: ${resp.status}`);
+                    }
                     const data = await resp.json();
+                    console.log('📦 Данные:', data);
                     const items = Array.isArray(data) ? data : (data.items || []);
+                    if (items.length === 0) {
+                        grid.innerHTML = '<p style="text-align:center;color:#999;">Нет объявлений</p>';
+                        return;
+                    }
                     grid.innerHTML = '';
                     const typeIcons = { important: '📢', event: '🎉', info: '📚', achievement: '🏆', urgent: '⚠️', competition: '🎯' };
                     items.forEach(item => {
@@ -350,9 +360,10 @@
                         </div>
                     `);
                     });
+                    console.log('✅ Объявления загружены:', items.length);
                 } catch (err) {
-                    console.error('Ошибка загрузки объявлений:', err);
-                    grid.innerHTML = '<p style="color:#c00;">Не удалось загрузить объявления</p>';
+                    console.error('❌ Ошибка загрузки объявлений:', err);
+                    grid.innerHTML = '<p style="color:#c00;text-align:center;">Не удалось загрузить объявления. Проверьте консоль для деталей.</p>';
                 } finally {
                     loading && (loading.style.display = 'none');
                 }
@@ -364,8 +375,14 @@
                 if (!list) return;
                 try {
                     if (loading) loading.style.display = 'block';
+                    console.log('🔄 Загрузка событий...');
                     const resp = await fetch('/api/schedule/events?upcoming=true&limit=4');
+                    console.log('📡 События - ответ:', resp.status, resp.statusText);
+                    if (!resp.ok) {
+                        throw new Error(`HTTP error! status: ${resp.status}`);
+                    }
                     const data = await resp.json();
+                    console.log('📦 События - данные:', data);
                     const events = Array.isArray(data) ? data : (data.events || []);
 
                     if (!events.length) {
@@ -395,18 +412,18 @@
                         </div>
                     `;
                     }).join('');
+                    console.log('✅ События загружены:', events.length);
                 } catch (err) {
-                    console.error('Ошибка загрузки событий:', err);
-                    list.innerHTML = '<div class="home-events-empty">Не удалось загрузить события</div>';
+                    console.error('❌ Ошибка загрузки событий:', err);
+                    list.innerHTML = '<div class="home-events-empty">Не удалось загрузить события. Проверьте консоль.</div>';
                 } finally {
                     if (loading) loading.style.display = 'none';
                 }
             }
 
-            document.addEventListener('DOMContentLoaded', () => {
-                loadAnnouncements();
-                loadHomeEvents();
-            });
+            // Вызываем функции загрузки данных
+            loadAnnouncements();
+            loadHomeEvents();
 
             const contactForm = document.getElementById('contactForm');
             contactForm.addEventListener('submit', async (e) => {

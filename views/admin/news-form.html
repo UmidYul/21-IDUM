@@ -59,7 +59,13 @@
 
                 <div class="form-group">
                     <label for="coverImage">Обложка (необязательно)</label>
-                    <input type="file" id="coverImage" name="coverImage" accept="image/*">
+                    <input type="file" id="coverImage" name="coverImage" accept="image/*" style="display:none">
+                    <div class="file-drop-area" data-filedrop="coverImage" style="margin-top:6px;">
+                        <div class="file-instructions">
+                            Перетащите изображение сюда или <strong>нажмите на поле</strong>
+                            <span class="file-name" data-filedrop-name="coverImage">Файл не выбран</span>
+                        </div>
+                    </div>
                     <div id="imagePreview" style="margin-top:10px; display:none;">
                         <img id="previewImg" src=""
                             style="max-width:200px; border-radius:8px; border:1px solid #e5e7eb;">
@@ -87,6 +93,8 @@
         </div>
     </section>
 
+    <script src="/admin-filedrop.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => { window.initFileDrop && initFileDrop('coverImage'); });</script>
     <script src="/admin-news-form.js"></script>
 </body>
 

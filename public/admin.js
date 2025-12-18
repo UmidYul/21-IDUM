@@ -32,18 +32,24 @@
         }
         if (userLabel) userLabel.textContent = user.username;
 
-        const [news, faqAll, schedule] = await Promise.all([
+        const [news, announcements, faqAll, schedule] = await Promise.all([
             json('/api/news?lang=ru&limit=1000'),
+            json('/api/announcements'),
             json('/api/faq/all'),
             json('/api/schedule')
         ]);
 
         const statNews = document.getElementById('statNews');
+        const statAnnouncements = document.getElementById('statAnnouncements');
         const statFaq = document.getElementById('statFaq');
         const statEvents = document.getElementById('statEvents');
         if (statNews && news) {
             const list = Array.isArray(news?.news) ? news.news : [];
             statNews.textContent = list.length ?? '—';
+        }
+        if (statAnnouncements && announcements) {
+            const list = Array.isArray(announcements) ? announcements : [];
+            statAnnouncements.textContent = list.length ?? '—';
         }
         if (statFaq && faqAll) {
             const list = Array.isArray(faqAll?.faq) ? faqAll.faq : [];

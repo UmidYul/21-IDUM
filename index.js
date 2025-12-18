@@ -51,6 +51,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Логирование всех запросов
+app.use((req, res, next) => {
+    console.log(`📥 ${req.method} ${req.url}`);
+    next();
+});
+
 // Security headers (basic hardening)
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -71,6 +77,7 @@ import teachersRoutes from './routes/teachers.js';
 import reviewsRoutes from './routes/reviews.js';
 import authRoutes, { requireAuthPage } from './routes/auth-basic.js';
 import adminNewsRoutes from './routes/admin-news.js';
+import adminAnnouncementsRoutes from './routes/admin-announcements.js';
 import adminFaqRoutes from './routes/admin-faq.js';
 import adminScheduleRoutes from './routes/admin-schedule.js';
 import adminUsersRoutes from './routes/admin-users.js';
@@ -86,6 +93,7 @@ app.use('/api/teachers', teachersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/news', adminNewsRoutes);
+app.use('/api/admin/announcements', adminAnnouncementsRoutes);
 app.use('/api/admin/faq', adminFaqRoutes);
 app.use('/api/admin/schedule', adminScheduleRoutes);
 app.use('/api/admin/users', adminUsersRoutes);
@@ -139,6 +147,7 @@ app.post('/api/contact', async (req, res) => {
 
 // Serve static files
 app.get('/', (req, res) => {
+    console.log('🏠 Отправляю главную страницу index.html');
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
@@ -184,6 +193,19 @@ app.get('/admin/news/create', requireAuthPage, (req, res) => {
 
 app.get('/admin/news/edit/:id', requireAuthPage, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin', 'news-form.html'));
+});
+
+// Admin Announcements pages
+app.get('/admin/announcements', requireAuthPage, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'announcements.html'));
+});
+
+app.get('/admin/announcements/create', requireAuthPage, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'announcement-form.html'));
+});
+
+app.get('/admin/announcements/edit/:id', requireAuthPage, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'announcement-form.html'));
 });
 
 // Admin FAQ pages

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редактирование объявления — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/">На сайт</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar">
+                        <strong id="userLabel">Админ</strong>
+                        <button id="logoutBtn" class="btn btn-sm btn-danger">Выйти</button>
+                    </div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/announcements" class="active">Объявления</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li><a href="/admin/teachers">Учителя</a></li>
+                        <li><a href="/admin/reviews">Отзывы</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule">Расписание</a></li>
+                        <li id="usersMenuAdmin"><a href="/admin/users">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <div class="topbar">
+                        <div>
+                            <h1 style="margin:0 0 4px; font-size:22px" id="formTitle">Создать объявление</h1>
+                            <p class="muted" style="margin:0">Заполните все поля</p>
+                        </div>
+                        <a href="/admin/announcements" class="btn btn-secondary">← Назад</a>
+                    </div>
+
+                    <form id="announcementForm" class="form-card">
+                        <div class="form-group">
+                            <label for="title">Заголовок *</label>
+                            <input type="text" id="title" class="form-control" required maxlength="200"
+                                placeholder="Например: График зимних каникул">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="text">Текст объявления *</label>
+                            <textarea id="text" class="form-control" rows="4" required
+                                placeholder="Полный текст объявления..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="type">Тип *</label>
+                                <select id="type" class="form-control" required>
+                                    <option value="">Выберите тип</option>
+                                    <option value="info">Информация</option>
+                                    <option value="event">Мероприятие</option>
+                                    <option value="important">Важно</option>
+                                    <option value="urgent">Срочно</option>
+                                    <option value="competition">Конкурс</option>
+                                    <option value="achievement">Достижение</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="date">Дата *</label>
+                                <input type="date" id="date" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Место проведения (опционально)</label>
+                            <input type="text" id="location" class="form-control" placeholder="Например: Актовый зал">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="link">Ссылка для подачи заявки (опционально)</label>
+                            <input type="url" id="link" class="form-control" placeholder="https://...">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <a href="/admin/announcements" class="btn btn-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <script src="/admin-nav.js"></script>
+    <script>
+        const form = document.getElementById('announcementForm');
+        const urlParams = new URLSearchParams(window.location.search);
+        const isEdit = window.location.pathname.includes('/edit/');
+        const announcementId = isEdit ? window.location.pathname.split('/').pop() : null;
+
+        // Load existing announcement for edit
+        if (isEdit && announcementId) {
+            document.getElementById('formTitle').textContent = 'Редактировать объявление';
+            loadAnnouncement(announcementId);
+        }
+
+        async function loadAnnouncement(id) {
+            try {
+                const res = await fetch(`/api/announcements`);
+                if (!res.ok) throw new Error('Failed to fetch');
+
+                const data = await res.json();
+                const announcement = data.find(item => item.id === id);
+
+                if (!announcement) {
+                    alert('Объявление не найдено');
+                    window.location.href = '/admin/announcements';
+                    return;
+                }
+
+                document.getElementById('title').value = announcement.title || '';
+                document.getElementById('text').value = announcement.text || '';
+                document.getElementById('type').value = announcement.type || '';
+                document.getElementById('date').value = announcement.date || '';
+                document.getElementById('location').value = announcement.location || '';
+                document.getElementById('link').value = announcement.link || '';
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Ошибка загрузки объявления');
+            }
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                title: document.getElementById('title').value.trim(),
+                text: document.getElementById('text').value.trim(),
+                type: document.getElementById('type').value,
+                date: document.getElementById('date').value,
+                location: document.getElementById('location').value.trim(),
+                link: document.getElementById('link').value.trim(),
+                status: 'published'
+            };
+
+            try {
+                const url = isEdit
+                    ? `/api/admin/announcements/${announcementId}`
+                    : '/api/admin/announcements';
+
+                const method = isEdit ? 'PUT' : 'POST';
+
+                const res = await fetch(url, {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || 'Failed to save');
+                }
+
+                alert(isEdit ? 'Объявление обновлено!' : 'Объявление создано!');
+                window.location.href = '/admin/announcements';
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Ошибка: ' + err.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

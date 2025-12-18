@@ -8,10 +8,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/21idum" href="/images/logo.png">
+    <link rel="stylesheet" href="/style.css">
     <style>
         .news-page {
             padding: 60px 0;
             background: #f8f9fa;
+        }
+
+        .announcements-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%);
+        }
+
+        .announcements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
         }
 
         .news-grid {
@@ -135,14 +147,28 @@
     <!-- Page Header -->
     <section class="page-header">
         <div class="container">
-            <h1 class="page-title">Новости школы</h1>
+            <h1 class="page-title">Новости и объявления</h1>
             <p class="page-subtitle">Актуальные события и важная информация</p>
+        </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="announcements-section">
+        <div class="container">
+            <h2 class="section-title" style="margin-bottom: 20px;">📢 Важные объявления</h2>
+            <div class="announcements-grid" id="announcementsContainer">
+                <!-- Объявления будут загружены через JavaScript -->
+            </div>
+            <div class="loading-spinner" id="announcementsLoading">
+                Загрузка объявлений...
+            </div>
         </div>
     </section>
 
     <!-- News Section -->
     <section class="news-page">
         <div class="container">
+            <h2 class="section-title" style="margin-bottom: 20px;">📰 Новости школы</h2>
             <div class="news-grid" id="newsContainer">
                 <!-- Новости будут загружены через JavaScript -->
             </div>
@@ -194,6 +220,7 @@
             currentLang = currentLang === 'ru' ? 'uz' : 'ru';
             languageSwitch.textContent = currentLang === 'ru' ? 'Русский' : 'O\'zbekcha';
             loadNews(currentLang);
+            loadAnnouncements();
         });
 
         // Burger Menu
@@ -203,6 +230,78 @@
             navLinks.classList.toggle('active');
             burgerMenu.classList.toggle('active');
         });
+
+        // Load Announcements Function
+        async function loadAnnouncements() {
+            const container = document.getElementById('announcementsContainer');
+            const loading = document.getElementById('announcementsLoading');
+
+            loading.style.display = 'block';
+            container.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/announcements');
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const data = await response.json();
+                loading.style.display = 'none';
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p class="no-news">Объявлений пока нет</p>';
+                    return;
+                }
+
+                const typeIcons = {
+                    important: '📢',
+                    event: '🎉',
+                    info: '📚',
+                    achievement: '🏆',
+                    urgent: '⚠️',
+                    competition: '🎯'
+                };
+
+                const typeTitles = {
+                    important: 'Важно',
+                    event: 'Мероприятие',
+                    info: 'Информация',
+                    achievement: 'Достижение',
+                    urgent: 'Срочно',
+                    competition: 'Конкурс'
+                };
+
+                data.forEach(item => {
+                    const icon = typeIcons[item.type] || '📢';
+                    const badgeClass = `${item.type}-badge`;
+                    const dateStr = new Date(item.date).toLocaleDateString('ru-RU', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric'
+                    });
+                    const locationHtml = item.location ? `<span class="announcement-location">📍 ${item.location}</span>` : '';
+                    const linkHtml = item.link ? `<a href="${item.link}" class="announcement-link">Подать заявку →</a>` : '';
+
+                    container.insertAdjacentHTML('beforeend', `
+                        <div class="announcement-card ${item.type}">
+                          <div class="announcement-icon">${icon}</div>
+                          <div class="announcement-content">
+                            <div class="announcement-badge ${badgeClass}">${typeTitles[item.type] || 'Информация'}</div>
+                            <h3 class="announcement-title">${item.title}</h3>
+                            <p class="announcement-text">${item.text}</p>
+                            <div class="announcement-meta">
+                              <span class="announcement-date">📅 ${dateStr}</span>
+                              ${locationHtml}
+                              ${linkHtml}
+                            </div>
+                          </div>
+                        </div>
+                    `);
+                });
+            } catch (error) {
+                loading.style.display = 'none';
+                container.innerHTML = '<p class="error-message">Ошибка загрузки объявлений. Попробуйте позже.</p>';
+                console.error('Error loading announcements:', error);
+            }
+        }
 
         // Load News Function
         async function loadNews(lang = 'ru') {
@@ -246,13 +345,15 @@
             }
         }
 
-        // Load news on page load
+        // Load data on page load
         document.addEventListener('DOMContentLoaded', () => {
+            loadAnnouncements();
             loadNews(currentLang);
         });
 
-        // Auto-refresh news every 5 minutes
+        // Auto-refresh every 5 minutes
         setInterval(() => {
+            loadAnnouncements();
             loadNews(currentLang);
         }, 5 * 60 * 1000);
     </script>
