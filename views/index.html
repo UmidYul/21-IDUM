@@ -33,25 +33,17 @@
         </div>
     </nav>
 
-    <!-- Carousel -->
-    <section id="home">
-        <div class="container">
-            <div class="carousel">
-                <div class="carousel-inner" id="carouselInner">
-                    <div class="carousel-item" style="background-image: url('/images/1.jpg');"></div>
-                    <div class="carousel-item" style="background-image: url('/images/2.webp');"></div>
-                    <div class="carousel-item" style="background-image: url('/images/3.webp');"></div>
-                    <div class="carousel-item" style="background-image: url('/images/2.webp');"></div>
-                </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn" id="prevBtn">‹</button>
-                    <button class="carousel-btn" id="nextBtn">›</button>
-                </div>
-                <div class="carousel-indicators" id="carouselIndicators">
-                    <div class="indicator active"></div>
-                    <div class="indicator"></div>
-                    <div class="indicator"></div>
-                    <div class="indicator"></div>
+    <!-- Hero Static -->
+    <section class="hero-static" aria-label="О школе">
+        <div class="hero-static__bg"></div>
+        <div class="container hero-static__content">
+            <div class="hero-static__text">
+                <p class="hero-static__kicker">Специализированная школа №21</p>
+                <h1 class="hero-static__title">Учиться. Исследовать. Побеждать.</h1>
+                <p class="hero-static__subtitle">Современные кабинеты, сильные учителя и поддержка талантов с первого
+                    класса.</p>
+                <div class="hero-static__actions">
+                    <a class="hero-static__btn" href="/about.html">О школе</a>
                 </div>
             </div>
         </div>
@@ -271,26 +263,7 @@
         burgerMenu.addEventListener('click', () => { burgerMenu.classList.toggle('active'); navLinksContainer.classList.toggle('active'); });
         navLinks.forEach(link => link.addEventListener('click', () => { burgerMenu.classList.remove('active'); navLinksContainer.classList.remove('active'); }));
 
-        const carouselInner = document.getElementById('carouselInner');
-        const indicators = document.querySelectorAll('.indicator');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentIndex = 0; const totalItems = indicators.length; let autoPlayInterval; let isTransitioning = false;
-        function updateCarousel() { if (isTransitioning) return; isTransitioning = true; carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`; indicators.forEach((i, idx) => i.classList.toggle('active', idx === currentIndex)); setTimeout(() => { isTransitioning = false; }, 500); }
-        function nextSlide() { currentIndex = (currentIndex + 1) % totalItems; updateCarousel(); }
-        function prevSlide() { currentIndex = (currentIndex - 1 + totalItems) % totalItems; updateCarousel(); }
-        function startAutoPlay() { stopAutoPlay(); autoPlayInterval = setInterval(nextSlide, 5000); }
-        function stopAutoPlay() { if (autoPlayInterval) clearInterval(autoPlayInterval); }
-        nextBtn.addEventListener('click', () => { nextSlide(); startAutoPlay(); });
-        prevBtn.addEventListener('click', () => { prevSlide(); startAutoPlay(); });
-        indicators.forEach((indicator, index) => indicator.addEventListener('click', () => { if (currentIndex !== index) { currentIndex = index; updateCarousel(); startAutoPlay(); } }));
-        let touchStartX = 0, touchEndX = 0;
-        carouselInner.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; stopAutoPlay(); });
-        carouselInner.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; const t = 50; if (touchStartX - touchEndX > t) nextSlide(); else if (touchEndX - touchStartX > t) prevSlide(); startAutoPlay(); });
-        document.querySelector('.carousel').addEventListener('mouseenter', stopAutoPlay);
-        document.querySelector('.carousel').addEventListener('mouseleave', startAutoPlay);
-        document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') { prevSlide(); startAutoPlay(); } else if (e.key === 'ArrowRight') { nextSlide(); startAutoPlay(); } });
-        startAutoPlay();
+        // Hero carousel removed
 
         const canvas = document.getElementById('lineChart');
         const mlCtx = canvas.getContext('2d');
@@ -412,12 +385,9 @@
             submitBtn.disabled = true;
             submitBtn.textContent = currentLang === 'ru' ? 'Отправка...' : 'Yuborilmoqda...';
             try {
-                // Fetch CSRF token
-                const csrfResp = await fetch('/api/csrf');
-                const { token } = await csrfResp.json();
                 const response = await fetch('/api/contact', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': token },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, message })
                 });
                 const result = await response.json();

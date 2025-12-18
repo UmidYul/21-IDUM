@@ -106,7 +106,7 @@
                 }
 
                 show(successBox, isEdit ? 'Событие обновлено!' : 'Событие создано!');
-                setTimeout(() => { window.location.href = '/admin/schedule'; }, 1000);
+                setTimeout(() => { window.location.href = '/admin/events'; }, 1000);
             } catch (err) {
                 show(errorBox, err.message || 'Ошибка сохранения');
             } finally {

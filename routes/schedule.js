@@ -53,13 +53,21 @@ router.get('/events', async (req, res) => {
         let events = db.data.schedule?.events || [];
 
         // Filter upcoming events if requested
+        // Include events that are in the future or within the past 3 days
         if (upcoming) {
-            const now = new Date();
-            events = events.filter(e => new Date(e.date) >= now);
+            const threshold = new Date();
+            threshold.setDate(threshold.getDate() - 3);
+            events = events.filter(e => new Date(e.date) >= threshold);
         }
 
         // Sort by date
-        events = events.sort((a, b) => new Date(a.date) - new Date(b.date));
+        if (upcoming) {
+            // For upcoming list, show newest first (descending)
+            events = events.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } else {
+            // Default: ascending
+            events = events.sort((a, b) => new Date(a.date) - new Date(b.date));
+        }
 
         // Limit results
         events = events.slice(0, limit);
