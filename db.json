@@ -84,12 +84,12 @@
   ],
   "sessions": [
     {
-      "token": "87e399259deefd5cbad3dfbba96569aad8d774d52d6e2c19",
+      "token": "2b7edb985a212440264a05f66544591b977866c7ec1a96eb",
       "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
       "username": "admin",
       "role": "admin",
-      "createdAt": "2025-12-17T18:10:49.415Z",
-      "expiresAt": "2025-12-24T18:10:49.415Z"
+      "createdAt": "2025-12-18T09:33:11.996Z",
+      "expiresAt": "2025-12-25T09:33:11.996Z"
     }
   ],
   "faq": [
@@ -428,6 +428,16 @@
       "ip": "::1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
       "at": "2025-12-17T18:10:49.419Z"
+    },
+    {
+      "id": "042fde6f-be4e-4fb9-b7ad-b3a1cc90eaf3",
+      "type": "login",
+      "userId": "fdc50868-c99f-4213-9920-01e9e68466a1",
+      "username": "admin",
+      "role": "admin",
+      "ip": "127.0.0.1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0",
+      "at": "2025-12-18T09:33:11.999Z"
     }
   ],
   "teachers": [
