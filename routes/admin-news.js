@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import db from '../database.js';
 import { requireAuth } from './auth-basic.js';
+import { validate, newsSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -44,13 +45,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/admin/news - Создать новость
-router.post('/', async (req, res) => {
+router.post('/', validate(newsSchema), async (req, res) => {
     try {
         const { title_ru, title_uz, body_ru, body_uz, coverUrl, status } = req.body;
-
-        if (!title_ru || !body_ru) {
-            return res.status(400).json({ ok: false, error: 'title_ru and body_ru required' });
-        }
 
         await db.read();
 
@@ -89,7 +86,7 @@ router.post('/', async (req, res) => {
 });
 
 // PATCH /api/admin/news/:id - Обновить новость
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', validate(newsSchema.partial()), async (req, res) => {
     try {
         await db.read();
         const newsItem = db.data.news.find(n => n.id === req.params.id);

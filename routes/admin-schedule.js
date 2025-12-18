@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
+import { validate, scheduleEventSchema, bellsSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -46,17 +47,9 @@ router.get('/bells/:shift', async (req, res) => {
 });
 
 // POST /api/admin/schedule/bells - Create or update bell schedule
-router.post('/bells', async (req, res) => {
+router.post('/bells', validate(bellsSchema), async (req, res) => {
     try {
         const { shift, name_ru, name_uz, lessons } = req.body;
-
-        // Validation
-        if (!shift || !name_ru || !name_uz || !lessons || !Array.isArray(lessons)) {
-            return res.status(400).json({
-                ok: false,
-                error: 'Обязательные поля: shift, name_ru, name_uz, lessons[]'
-            });
-        }
 
         await db.read();
 
@@ -163,17 +156,9 @@ router.get('/events/:id', async (req, res) => {
 });
 
 // POST /api/admin/schedule/events - Create event
-router.post('/events', async (req, res) => {
+router.post('/events', validate(scheduleEventSchema), async (req, res) => {
     try {
-        const { title_ru, title_uz, description_ru, description_uz, date, time, location_ru, location_uz } = req.body;
-
-        // Validation
-        if (!title_ru || !date) {
-            return res.status(400).json({
-                ok: false,
-                error: 'Обязательные поля: title_ru, date'
-            });
-        }
+        const { title_ru, title_uz, description_ru, description_uz, date, time } = req.body;
 
         await db.read();
 

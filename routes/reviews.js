@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
+import { validate, reviewSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -36,13 +37,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/reviews - Create review (admin/editor only)
-router.post('/', requireAuth, requireAdmin, async (req, res) => {
+router.post('/', requireAuth, requireAdmin, validate(reviewSchema), async (req, res) => {
     try {
-        const { author, text_ru, text_uz, date, status } = req.body;
-
-        if (!author || !text_ru) {
-            return res.status(400).json({ ok: false, error: 'Required: author, text_ru' });
-        }
+        const { author_ru, author_uz, role_ru, role_uz, text_ru, text_uz, rating } = req.body;
 
         await db.read();
         db.data.reviews ||= [];
@@ -71,7 +68,7 @@ router.post('/', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // PATCH /api/reviews/:id - Update review
-router.patch('/:id', requireAuth, requireAdmin, async (req, res) => {
+router.patch('/:id', requireAuth, requireAdmin, validate(reviewSchema.partial()), async (req, res) => {
     try {
         const { id } = req.params;
         await db.read();

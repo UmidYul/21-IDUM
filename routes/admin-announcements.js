@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../database.js';
 import crypto from 'crypto';
+import { validate, announcementSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -27,25 +28,20 @@ router.get('/', requireAuth, async (req, res) => {
 });
 
 // POST create announcement
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', requireAuth, validate(announcementSchema), async (req, res) => {
     try {
-        const { title, text, type, date, location, link, status } = req.body;
-
-        if (!title || !text || !type || !date) {
-            return res.status(400).json({
-                ok: false,
-                error: 'title, text, type, and date are required'
-            });
-        }
+        const { title_ru, title_uz, description_ru, description_uz, type, date } = req.body;
 
         await db.read();
 
         const newAnnouncement = {
             id: crypto.randomUUID(),
-            title: title.trim(),
-            text: text.trim(),
+            title_ru: title_ru.trim(),
+            title_uz: title_uz.trim(),
+            description_ru: description_ru.trim(),
+            description_uz: description_uz.trim(),
             type,
-            date,
+            date: date || '',
             location: location?.trim() || '',
             link: link?.trim() || '',
             status: status || 'published',

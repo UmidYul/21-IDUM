@@ -28,7 +28,8 @@
         "express-session": "^1.17.3",
         "helmet": "^7.2.0",
         "lowdb": "^7.0.1",
-        "multer": "^2.0.2"
+        "multer": "^2.0.2",
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "nodemon": "^3.0.2"

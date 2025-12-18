@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import db from '../database.js';
 import { requireAuth } from './auth-basic.js';
 import bcrypt from 'bcryptjs';
+import { validate, userSchema, userUpdateSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -46,15 +47,9 @@ router.get('/:id', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // POST /api/admin/users
-router.post('/', requireAuth, requireAdmin, async (req, res) => {
+router.post('/', requireAuth, requireAdmin, validate(userSchema), async (req, res) => {
     try {
         const { username, password, role, displayName, email, phone } = req.body || {};
-        if (!username || !password || !role) {
-            return res.status(400).json({ ok: false, error: 'username, password, role are required' });
-        }
-        if (!ALLOWED_ROLES.includes(role)) {
-            return res.status(400).json({ ok: false, error: 'Invalid role' });
-        }
 
         await db.read();
         db.data.users ||= [];
@@ -82,7 +77,7 @@ router.post('/', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // PATCH /api/admin/users/:id
-router.patch('/:id', requireAuth, requireAdmin, async (req, res) => {
+router.patch('/:id', requireAuth, requireAdmin, validate(userUpdateSchema.partial()), async (req, res) => {
     try {
         const { username, password, role, displayName, email, phone } = req.body || {};
 
@@ -100,10 +95,7 @@ router.patch('/:id', requireAuth, requireAdmin, async (req, res) => {
         if (typeof password === 'string' && password.length > 0) {
             user.password = bcrypt.hashSync(password, 10);
         }
-        if (role) {
-            if (!ALLOWED_ROLES.includes(role)) return res.status(400).json({ ok: false, error: 'Invalid role' });
-            user.role = role;
-        }
+        if (role) user.role = role;
         if (displayName) user.displayName = displayName;
         if (email !== undefined) user.email = email;
         if (phone !== undefined) user.phone = phone;

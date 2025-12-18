@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
+import { validate, teacherSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -36,13 +37,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/teachers - Create teacher (admin/editor only)
-router.post('/', requireAuth, requireAdmin, async (req, res) => {
+router.post('/', requireAuth, requireAdmin, validate(teacherSchema), async (req, res) => {
     try {
-        const { name_ru, name_uz, position_ru, position_uz, bio_ru, bio_uz, photo, instagram, telegram, phone, status, order } = req.body;
-
-        if (!name_ru || !position_ru) {
-            return res.status(400).json({ ok: false, error: 'Required: name_ru, position_ru' });
-        }
+        const { name_ru, name_uz, position_ru, position_uz, email, phone, photoUrl } = req.body;
 
         await db.read();
         db.data.teachers ||= [];

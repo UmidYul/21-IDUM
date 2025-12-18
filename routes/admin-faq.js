@@ -1,6 +1,8 @@
 import express from 'express';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
+import crypto from 'crypto';
+import { validate, faqSchema } from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -45,17 +47,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/admin/faq - Create new FAQ item
-router.post('/', async (req, res) => {
+router.post('/', validate(faqSchema), async (req, res) => {
     try {
         const { question_ru, question_uz, answer_ru, answer_uz, category, order, visible } = req.body;
-
-        // Validation
-        if (!question_ru || !answer_ru) {
-            return res.status(400).json({
-                ok: false,
-                error: 'Обязательные поля: question_ru, answer_ru'
-            });
-        }
 
         await db.read();
 
