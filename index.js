@@ -153,6 +153,8 @@ import adminAuditRoutes from './routes/admin-audit.js';
 import uploadRoutes from './routes/upload.js';
 import seoRoutes from './routes/seo.js';
 import calendarRoutes from './routes/calendar.js';
+import galleryRoutes from './routes/gallery.js';
+import adminGalleryRoutes from './routes/admin-gallery.js';
 import { cookieParserMiddleware, csrfProtection, csrfTokenEndpoint } from './middleware/csrf.js';
 
 // Use routes
@@ -161,6 +163,7 @@ app.use('/api/announcements', announcementsRoutes);
 app.use('/api/faq', faqRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/calendar', calendarRoutes);
+app.use('/api/gallery', galleryRoutes);
 app.use('/api/teachers', teachersRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/auth', authRoutes);
@@ -171,6 +174,7 @@ app.use('/api/admin/news', csrfProtection, adminNewsRoutes);
 app.use('/api/admin/announcements', csrfProtection, adminAnnouncementsRoutes);
 app.use('/api/admin/faq', csrfProtection, adminFaqRoutes);
 app.use('/api/admin/schedule', csrfProtection, adminScheduleRoutes);
+app.use('/api/admin/gallery', csrfProtection, adminGalleryRoutes);
 app.use('/api/admin/users', csrfProtection, adminUsersRoutes);
 app.use('/api/admin/audit', adminAuditRoutes);
 app.use('/api/upload', csrfProtection, uploadRoutes);
@@ -252,6 +256,10 @@ app.get(['/team', '/team.html'], (req, res) => {
 
 app.get(['/calendar', '/calendar.html'], (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'calendar.html'));
+});
+
+app.get(['/gallery', '/gallery.html'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'gallery.html'));
 });
 
 // Basic login page (MVP)
@@ -349,6 +357,11 @@ app.get('/admin/schedule/events/edit/:id', requireAuthPage, (req, res) => {
 
 app.get('/admin/schedule/bells/edit/:shift', requireAuthPage, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin', 'schedule-bells-form.html'));
+});
+
+// Admin Gallery page
+app.get('/admin/gallery', requireAuthPage, (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'gallery.html'));
 });
 
 // Admin Users pages

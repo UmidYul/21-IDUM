@@ -32,17 +32,19 @@
         }
         if (userLabel) userLabel.textContent = user.username;
 
-        const [news, announcements, faqAll, schedule] = await Promise.all([
+        const [news, announcements, faqAll, schedule, gallery] = await Promise.all([
             json('/api/news?lang=ru&limit=1000'),
             json('/api/announcements'),
             json('/api/faq/all'),
-            json('/api/schedule')
+            json('/api/schedule'),
+            json('/api/admin/gallery/albums')
         ]);
 
         const statNews = document.getElementById('statNews');
         const statAnnouncements = document.getElementById('statAnnouncements');
         const statFaq = document.getElementById('statFaq');
         const statEvents = document.getElementById('statEvents');
+        const statGallery = document.getElementById('statGallery');
         if (statNews && news) {
             const list = Array.isArray(news?.news) ? news.news : [];
             statNews.textContent = list.length ?? '—';
@@ -58,6 +60,10 @@
         if (statEvents && schedule) {
             const events = Array.isArray(schedule?.events) ? schedule.events : [];
             statEvents.textContent = events.length ?? '—';
+        }
+        if (statGallery && gallery) {
+            const albums = Array.isArray(gallery?.albums) ? gallery.albums : [];
+            statGallery.textContent = albums.length ?? '—';
         }
 
         if (user.role === 'admin') {

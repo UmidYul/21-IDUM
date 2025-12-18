@@ -39,6 +39,7 @@ db.data ||= {
     teachers: [],
     reviews: [],
     schedule: { bells: [], events: [] },
+    gallery: { albums: [], photos: [] },
 
     // Админские сущности
     users: [],

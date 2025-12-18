@@ -423,14 +423,22 @@
     <nav class="navbar">
         <div class="navbar-container container">
             <a href="/" class="logo">21-<span>IDUM</span></a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/about.html">О школе</a></li>
                 <li><a href="/schedule.html">Расписание</a></li>
                 <li><a href="/calendar.html" class="active">Календарь</a></li>
-                <li><a href="/team.html">Команда</a></li>
+                <li><a href="/gallery.html">Галерея</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/team.html">Разработчики</a></li>
                 <li><a href="/faq.html">FAQ</a></li>
             </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
         </div>
     </nav>
 
@@ -472,8 +480,58 @@
             </div>
         </div>
     </div>
+    <!-- Footer (same as home) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Официальный сайт общеобразовательной школы №21.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about.html">О школе</a></li>
+                        <li><a href="/schedule.html">Расписание</a></li>
+                        <li><a href="/news.html">Новости</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-credit">Сайт разработан командой <a href="/team.html">IDUM Dev</a></p>
+                <p>© 2025 21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="/calendar.js"></script>
+    <script>
+        // Burger menu toggle to match home page behavior
+        (function () {
+            const burger = document.getElementById('burgerMenu');
+            const links = document.getElementById('navLinks');
+            if (burger && links) {
+                burger.addEventListener('click', () => {
+                    burger.classList.toggle('active');
+                    links.classList.toggle('active');
+                });
+                links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+                    burger.classList.remove('active');
+                    links.classList.remove('active');
+                }));
+            }
+        })();
+    </script>
 </body>
 
 </html>

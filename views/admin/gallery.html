@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Галерея — Админ-панель</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        .gallery-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .gallery-tab {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+
+        .gallery-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-card:hover .photo-actions {
+            opacity: 1;
+        }
+
+        .photo-actions button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .photo-actions button:hover {
+            transform: scale(1.1);
+        }
+
+        .upload-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-zone:hover {
+            border-color: #667eea;
+            background: #f3f4ff;
+        }
+
+        .upload-zone.dragover {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links">
+                <li><a href="/">На сайт</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="admin-wrap">
+        <div class="container">
+            <div class="admin-shell">
+                <aside class="admin-sidebar">
+                    <div class="topbar">
+                        <strong id="userLabel">Админ</strong>
+                        <button id="logoutBtn" class="btn btn-sm btn-danger">Выйти</button>
+                    </div>
+                    <ul class="nav-list" id="navMenuAdmin">
+                        <li><a href="/admin">Дашборд</a></li>
+                        <li><a href="/admin/news">Новости</a></li>
+                        <li><a href="/admin/announcements">Объявления</a></li>
+                        <li><a href="/admin/faq">FAQ</a></li>
+                        <li><a href="/admin/events">События</a></li>
+                        <li><a href="/admin/teachers">Учителя</a></li>
+                        <li><a href="/admin/reviews">Отзывы</a></li>
+                        <li><a href="/admin/gallery" class="active">Галерея</a></li>
+                        <li id="scheduleMenuAdmin"><a href="/admin/schedule">Расписание</a></li>
+                        <li id="usersMenuAdmin"><a href="/admin/users">Пользователи</a></li>
+                        <li id="auditMenuAdmin"><a href="/admin/audit">Последние входы</a></li>
+                    </ul>
+                </aside>
+                <main class="admin-content">
+                    <div class="topbar">
+                        <div>
+                            <h1 style="margin:0 0 4px; font-size:22px">Галерея</h1>
+                            <p class="muted" style="margin:0">Управление фотоальбомами</p>
+                        </div>
+                        <button id="createAlbumBtn" class="btn">+ Создать альбом</button>
+                    </div>
+
+                    <!-- Albums Tab -->
+                    <div id="albumsTable">
+                        <div class="empty">Загрузка...</div>
+                    </div>
+
+                    <!-- Photos Tab -->
+                    <div id="photosView" style="display: none;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                            <button class="btn btn-secondary" id="backToAlbumsBtn">← Назад к альбомам</button>
+                            <div style="flex: 1;">
+                                <h2 id="currentAlbumTitle" style="margin: 0 0 4px; font-size: 20px;"></h2>
+                                <p id="currentAlbumDesc" class="muted" style="margin: 0;"></p>
+                            </div>
+                            <button class="btn" id="addPhotoBtn">+ Добавить фото</button>
+                        </div>
+                        <div id="photosGrid" class="photo-grid"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create/Edit Album Modal -->
+    <div id="albumModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <h2 id="albumModalTitle">Создать альбом</h2>
+            <div id="albumErrorBox" class="error"></div>
+            <form id="albumForm">
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="title_ru">Название альбома *</label>
+                        <input type="text" id="title_ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description_ru">Описание</label>
+                        <textarea id="description_ru" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="title_uz">Albom nomi</label>
+                        <input type="text" id="title_uz">
+                    </div>
+                    <div class="form-group">
+                        <label for="description_uz">Tavsif</label>
+                        <textarea id="description_uz" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="coverPhoto">URL обложки</label>
+                    <input type="url" id="coverPhoto" placeholder="https://...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="status">Статус</label>
+                        <select id="status">
+                            <option value="draft">Черновик</option>
+                            <option value="published">Опубликовано</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Порядок</label>
+                        <input type="number" id="order" value="0" min="0">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="saveAlbumBtn">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" id="cancelAlbumBtn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Photo Modal -->
+    <div id="photoModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <h2>Добавить фото</h2>
+            <div id="photoErrorBox" class="error"></div>
+            <form id="photoForm">
+                <div class="form-group">
+                    <label for="photoUrl">URL фото *</label>
+                    <input type="url" id="photoUrl" required placeholder="https://...">
+                    <small class="muted">Вставьте ссылку на изображение или загрузите через раздел Загрузки</small>
+                </div>
+
+                <div class="form-tabs">
+                    <div class="form-tab active" data-lang="ru">🇷🇺 Русский</div>
+                    <div class="form-tab" data-lang="uz">🇺🇿 O'zbekcha</div>
+                </div>
+
+                <div class="lang-content active" data-lang="ru">
+                    <div class="form-group">
+                        <label for="caption_ru">Подпись</label>
+                        <input type="text" id="caption_ru">
+                    </div>
+                </div>
+
+                <div class="lang-content" data-lang="uz">
+                    <div class="form-group">
+                        <label for="caption_uz">Izoh</label>
+                        <input type="text" id="caption_uz">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn" id="savePhotoBtn">Добавить</button>
+                    <button type="button" class="btn btn-secondary" id="cancelPhotoBtn">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/admin-nav.js"></script>
+    <script src="/csrf-helper.js"></script>
+    <script src="/admin-gallery.js?v=20251219-2"></script>
+</body>
+
+</html>

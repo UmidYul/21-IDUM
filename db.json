@@ -534,5 +534,42 @@
       "updatedAt": "2025-12-18T10:00:00.000Z",
       "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
     }
-  ]
+  ],
+  "gallery": {
+    "albums": [
+      {
+        "id": "c2e94b96-8928-4b6d-a6a6-4298531d1dd3",
+        "title_ru": "День Сары",
+        "title_uz": "",
+        "description_ru": "Фотографии со дня рождения Сары",
+        "description_uz": "",
+        "coverPhoto": "http://localhost:3000/images/2.webp",
+        "status": "published",
+        "order": 0,
+        "photos": [
+          {
+            "id": "48e02db8-e56b-4fcd-a4ec-5f8e2636aaee",
+            "url": "http://localhost:3000/images/3.webp",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 0,
+            "addedAt": "2025-12-18T21:25:14.549Z"
+          },
+          {
+            "id": "e18eed56-91bd-4704-b35f-e47013fbc584",
+            "url": "http://localhost:3000/images/2.webp",
+            "caption_ru": "Поздравление 2",
+            "caption_uz": "",
+            "order": 1,
+            "addedAt": "2025-12-18T21:25:38.329Z"
+          }
+        ],
+        "createdAt": "2025-12-18T21:21:12.187Z",
+        "updatedAt": "2025-12-18T21:25:38.329Z",
+        "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
+        "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
+      }
+    ],
+    "photos": []
+  }
 }

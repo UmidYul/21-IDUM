@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фотогалерея — 21-IDUM</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        .gallery-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .gallery-hero h1 {
+            margin: 0 0 12px;
+            font-size: 36px;
+        }
+
+        .gallery-hero p {
+            margin: 0;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 40px 0;
+        }
+
+        .album-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .album-info {
+            padding: 20px;
+        }
+
+        .album-title {
+            margin: 0 0 8px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .album-desc {
+            margin: 0 0 12px;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .album-meta {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            padding: 40px 0;
+        }
+
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .photo-item img.lazy {
+            opacity: 0;
+        }
+
+        .photo-item img.loaded {
+            opacity: 1;
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-item:hover .photo-caption {
+            opacity: 1;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .album-view-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 40px 0 20px;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #5568d3;
+        }
+
+        .album-view-title {
+            flex: 1;
+        }
+
+        .album-view-title h2 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .album-view-title p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 28px;
+            }
+
+            .albums-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 8px;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about.html">О школе</a></li>
+                <li><a href="/schedule.html">Расписание</a></li>
+                <li><a href="/calendar.html">Календарь</a></li>
+                <li><a href="/gallery.html" class="active">Галерея</a></li>
+                <li><a href="/news.html">Новости</a></li>
+                <li><a href="/team.html">Разработчики</a></li>
+                <li><a href="/faq.html">FAQ</a></li>
+            </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="gallery-hero">
+        <h1 id="heroTitle">Фотогалерея</h1>
+        <p id="heroDesc">Наши события и достижения в фотографиях</p>
+    </div>
+
+    <div class="container">
+        <!-- Albums view -->
+        <div id="albumsView">
+            <div id="albumsGrid" class="albums-grid"></div>
+        </div>
+
+        <!-- Single album view -->
+        <div id="albumView" style="display: none;">
+            <div class="album-view-header">
+                <button class="back-btn" id="backBtn">← Назад</button>
+                <div class="album-view-title">
+                    <h2 id="albumTitle"></h2>
+                    <p id="albumDescription"></p>
+                </div>
+            </div>
+            <div id="photosGrid" class="photos-grid"></div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+        <div class="lightbox-content">
+            <img id="lightboxImage" class="lightbox-image" src="" alt="">
+            <div id="lightboxCaption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Официальный сайт общеобразовательной школы №21.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about.html">О школе</a></li>
+                        <li><a href="/schedule.html">Расписание</a></li>
+                        <li><a href="/calendar.html">Календарь</a></li>
+                        <li><a href="/gallery.html">Галерея</a></li>
+                        <li><a href="/news.html">Новости</a></li>
+                        <li><a href="/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-credit">Сайт разработан командой <a href="/team.html">IDUM Dev</a></p>
+                <p>&copy; 2025 21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/gallery.js"></script>
+</body>
+
+</html>
