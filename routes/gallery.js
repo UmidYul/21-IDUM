@@ -27,7 +27,6 @@ router.get('/albums', async (req, res) => {
             count: albums.length
         });
     } catch (error) {
-        console.error('❌ Ошибка получения альбомов:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки альбомов' });
     }
 });
@@ -59,9 +58,9 @@ router.get('/albums/:id', async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('❌ Ошибка получения альбома:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки альбома' });
     }
 });
 
 export default router;
+

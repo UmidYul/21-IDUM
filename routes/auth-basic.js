@@ -87,11 +87,8 @@ function getToken(req) {
         return m ? m[1] : v;
     }
     const cookieHeader = req.headers.cookie || '';
-    console.log('🍪 Cookie header:', cookieHeader);
     const cookies = parseCookies(cookieHeader);
-    console.log('🍪 Parsed cookies:', cookies);
     const token = cookies['auth_token'];
-    console.log('🔑 Extracted token:', token?.substring(0, 8) + '...' || 'нет токена');
     return token;
 }
 
@@ -108,39 +105,26 @@ export async function requireAuth(req, res, next) {
 // For HTML pages: redirect to /admin/login if not authorized
 export async function requireAuthPage(req, res, next) {
     const token = getToken(req);
-    console.log('🔒 requireAuthPage проверка:', {
-        path: req.path,
-        hasToken: !!token,
-        tokenPreview: token?.substring(0, 8),
-        cookieHeader: req.headers.cookie
-    });
     const user = await getSession(token);
     if (!user) {
-        console.log('❌ Нет токена или сессии, редирект на /admin/login');
         return res.redirect('/admin/login');
     }
     req.user = user;
-    console.log('✅ Авторизован:', req.user.username);
     next();
 }
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
     const { username, password } = req.body || {};
-    console.log('🔐 Попытка входа:', { username, hasPassword: !!password });
-
     if (!username || !password) {
         return res.status(400).json({ ok: false, error: 'username and password required' });
     }
 
     // Проверка по БД
     await db.read();
-    console.log('👥 Пользователи в БД:', db.data.users.map(u => ({ username: u.username, role: u.role })));
-
     const user = db.data.users.find(u => u.username === username);
 
     if (!user) {
-        console.log('❌ Неверные креды для:', username);
         return res.status(401).json({ ok: false, error: 'invalid credentials' });
     }
 
@@ -155,7 +139,6 @@ router.post('/login', async (req, res) => {
         }
     }
     if (!ok) {
-        console.log('❌ Неверные креды для:', username);
         return res.status(401).json({ ok: false, error: 'invalid credentials' });
     }
 
@@ -164,7 +147,6 @@ router.post('/login', async (req, res) => {
 
     // Сохранить сессию в БД
     await createSession(token, sessionUser);
-    console.log('✅ Успешный вход:', sessionUser.username, 'токен:', token.substring(0, 8) + '...');
 
     // Обновить lastLoginAt
     user.lastLoginAt = new Date().toISOString();
@@ -214,16 +196,13 @@ router.post('/logout', async (req, res) => {
 
 // GET /api/auth/me
 router.get('/me', async (req, res) => {
-    console.log('👤 /api/auth/me вызван');
     const token = getToken(req);
-    console.log('👤 Токен из запроса:', token?.substring(0, 8) + '...' || 'нет');
     const user = await getSession(token);
     if (!user) {
-        console.log('❌ Пользователь не найден в сессии');
         return res.status(401).json({ ok: false });
     }
-    console.log('✅ Пользователь найден:', user.username);
     res.json({ ok: true, user });
 });
 
 export default router;
+

@@ -144,7 +144,6 @@
                 document.getElementById('location').value = announcement.location || '';
                 document.getElementById('link').value = announcement.link || '';
             } catch (err) {
-                console.error('Error:', err);
                 alert('Ошибка загрузки объявления');
             }
         }
@@ -192,7 +191,6 @@
                 alert(isEdit ? 'Объявление обновлено!' : 'Объявление создано!');
                 window.location.href = '/admin/announcements';
             } catch (err) {
-                console.error('Error:', err);
                 alert('Ошибка: ' + err.message);
             }
         });

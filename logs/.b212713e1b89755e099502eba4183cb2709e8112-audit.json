@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\Yuldahsev\\Desktop\\21-IDUM\\logs\\.b212713e1b89755e099502eba4183cb2709e8112-audit.json",
+    "files": [
+        {
+            "date": 1766133390355,
+            "name": "C:\\Users\\Yuldahsev\\Desktop\\21-IDUM\\logs\\error-2025-12-19.log",
+            "hash": "e2ee44bee56e4e3d17196e830ff881ca309a96236a1fa3573b7e118379a6eaa7"
+        }
+    ],
+    "hashType": "sha256"
+}

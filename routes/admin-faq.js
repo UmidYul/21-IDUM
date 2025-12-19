@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
             count: faqItems.length
         });
     } catch (error) {
-        console.error('❌ Ошибка загрузки FAQ:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки FAQ' });
     }
 });
@@ -41,7 +40,6 @@ router.get('/:id', async (req, res) => {
 
         res.json({ ok: true, faq: faqItem });
     } catch (error) {
-        console.error('❌ Ошибка загрузки FAQ:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки FAQ' });
     }
 });
@@ -74,11 +72,8 @@ router.post('/', validate(faqSchema), async (req, res) => {
         db.data.faq.push(newFaq);
         await db.write();
 
-        console.log(`✅ Создан FAQ: ${newFaq.id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, faq: newFaq });
     } catch (error) {
-        console.error('❌ Ошибка создания FAQ:', error);
         res.status(500).json({ ok: false, error: 'Ошибка создания FAQ' });
     }
 });
@@ -119,11 +114,8 @@ router.patch('/:id', async (req, res) => {
         db.data.faq[faqIndex] = faqItem;
         await db.write();
 
-        console.log(`✅ Обновлён FAQ: ${id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, faq: faqItem });
     } catch (error) {
-        console.error('❌ Ошибка обновления FAQ:', error);
         res.status(500).json({ ok: false, error: 'Ошибка обновления FAQ' });
     }
 });
@@ -144,13 +136,11 @@ router.delete('/:id', async (req, res) => {
         db.data.faq.splice(faqIndex, 1);
         await db.write();
 
-        console.log(`✅ Удалён FAQ: ${id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true });
     } catch (error) {
-        console.error('❌ Ошибка удаления FAQ:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления FAQ' });
     }
 });
 
 export default router;
+

@@ -58,7 +58,6 @@ router.post('/', requireAuth, validate(announcementSchema), async (req, res) => 
 
         res.json({ ok: true, announcement: newAnnouncement });
     } catch (err) {
-        console.error('Error creating announcement:', err);
         res.status(500).json({ ok: false, error: err.message });
     }
 });
@@ -95,7 +94,6 @@ router.put('/:id', requireAuth, async (req, res) => {
 
         res.json({ ok: true, announcement: db.data.announcements[index] });
     } catch (err) {
-        console.error('Error updating announcement:', err);
         res.status(500).json({ ok: false, error: err.message });
     }
 });
@@ -117,9 +115,9 @@ router.delete('/:id', requireAuth, async (req, res) => {
 
         res.json({ ok: true });
     } catch (err) {
-        console.error('Error deleting announcement:', err);
         res.status(500).json({ ok: false, error: err.message });
     }
 });
 
 export default router;
+

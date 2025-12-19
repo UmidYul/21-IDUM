@@ -8,6 +8,8 @@ import os from 'os';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import https from 'https';
+import logger from './utils/logger.js';
+import requestLogger from './middleware/request-logger.js';
 
 // Send message to Telegram without external deps (uses https)
 function sendTelegram(botToken, payload) {
@@ -72,6 +74,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParserMiddleware); // Required for CSRF protection
 
+// Request logging and metrics
+app.use(requestLogger);
+
 // Static files with cache headers
 app.use(express.static(path.join(__dirname, 'public'), {
     maxAge: 0, // Default: no cache for HTML
@@ -110,7 +115,6 @@ app.use('/uploads', express.static(uploadsRoot, {
 
 // Логирование всех запросов
 app.use((req, res, next) => {
-    console.log(`📥 ${req.method} ${req.url}`);
     next();
 });
 
@@ -171,6 +175,7 @@ import seoRoutes from './routes/seo.js';
 import calendarRoutes from './routes/calendar.js';
 import galleryRoutes from './routes/gallery.js';
 import adminGalleryRoutes from './routes/admin-gallery.js';
+import healthRoutes from './routes/health.js';
 import { cookieParserMiddleware, csrfProtection, csrfTokenEndpoint } from './middleware/csrf.js';
 
 // Use routes
@@ -198,6 +203,9 @@ app.use('/api/upload', csrfProtection, uploadRoutes);
 // SEO routes (sitemap, robots)
 app.use('/', seoRoutes);
 
+// Health check and metrics
+app.use('/', healthRoutes);
+
 // Contact form -> Telegram
 // Simple rate-limit per IP for contact (5s between requests)
 const contactLast = new Map();
@@ -211,7 +219,6 @@ app.post('/api/contact', async (req, res) => {
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
     if (!botToken || !chatId) {
-        console.warn('Contact form: Telegram env vars not set; mocking send.');
         return res.json({ ok: true, mocked: true });
     }
 
@@ -233,19 +240,16 @@ app.post('/api/contact', async (req, res) => {
     try {
         const result = await sendTelegram(botToken, { chat_id: chatId, text, parse_mode: 'HTML' });
         if (!result?.ok) {
-            console.error('Telegram error:', result?.description, 'code:', result?.error_code);
             return res.status(400).json({ ok: false, error: result?.description || 'Telegram send failed', code: result?.error_code });
         }
         res.json({ ok: true });
     } catch (error) {
-        console.error('Telegram send error:', error.message);
         res.status(500).json({ ok: false, error: error.message || 'Failed to send message' });
     }
 });
 
 // Serve static files
 app.get('/', (req, res) => {
-    console.log('🏠 Отправляю главную страницу index.html');
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
@@ -398,5 +402,9 @@ app.get('/admin/audit', requireAuthPage, (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    logger.info(`Server started on http://localhost:${PORT}`);
+    logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    logger.info(`Health check: http://localhost:${PORT}/health`);
+    logger.info(`Metrics: http://localhost:${PORT}/metrics`);
 });
+

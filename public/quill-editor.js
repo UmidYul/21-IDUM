@@ -27,7 +27,6 @@
 
             const container = document.getElementById(elementId);
             if (!container) {
-                console.error(`Element with id ${elementId} not found`);
                 return null;
             }
 
@@ -93,7 +92,6 @@
 
             return quill;
         } catch (error) {
-            console.error('Error initializing Quill editor:', error);
             return null;
         }
     };
@@ -134,3 +132,4 @@
         container.quill.setContents([]);
     };
 })();
+

@@ -22,7 +22,6 @@ router.get('/bells', async (req, res) => {
             bells: bells.sort((a, b) => a.shift - b.shift)
         });
     } catch (error) {
-        console.error('❌ Ошибка загрузки звонков:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки звонков' });
     }
 });
@@ -41,7 +40,6 @@ router.get('/bells/:shift', async (req, res) => {
 
         res.json({ ok: true, bell });
     } catch (error) {
-        console.error('❌ Ошибка загрузки звонков:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки звонков' });
     }
 });
@@ -73,17 +71,14 @@ router.post('/bells', validate(bellsSchema), async (req, res) => {
             // Update existing
             db.data.schedule.bells[existingIndex] = bellSchedule;
             await db.write();
-            console.log(`✅ Обновлено расписание звонков: смена ${shift} пользователем: ${req.user.username}`);
         } else {
             // Create new
             db.data.schedule.bells.push(bellSchedule);
             await db.write();
-            console.log(`✅ Создано расписание звонков: смена ${shift} пользователем: ${req.user.username}`);
         }
 
         res.json({ ok: true, bell: bellSchedule });
     } catch (error) {
-        console.error('❌ Ошибка сохранения звонков:', error);
         res.status(500).json({ ok: false, error: 'Ошибка сохранения звонков' });
     }
 });
@@ -107,11 +102,8 @@ router.delete('/bells/:shift', async (req, res) => {
         db.data.schedule.bells.splice(index, 1);
         await db.write();
 
-        console.log(`✅ Удалено расписание звонков: смена ${shift} пользователем: ${req.user.username}`);
-
         res.json({ ok: true });
     } catch (error) {
-        console.error('❌ Ошибка удаления звонков:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления звонков' });
     }
 });
@@ -131,7 +123,6 @@ router.get('/events', async (req, res) => {
             count: events.length
         });
     } catch (error) {
-        console.error('❌ Ошибка загрузки событий:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки событий' });
     }
 });
@@ -150,7 +141,6 @@ router.get('/events/:id', async (req, res) => {
 
         res.json({ ok: true, event });
     } catch (error) {
-        console.error('❌ Ошибка загрузки события:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки события' });
     }
 });
@@ -186,11 +176,10 @@ router.post('/events', validate(scheduleEventSchema), async (req, res) => {
         db.data.schedule.events.push(newEvent);
         await db.write();
 
-        console.log(`✅ Создано событие: ${newEvent.id} (${title_ru}) пользователем: ${req.user.username}`);
+
 
         res.json({ ok: true, event: newEvent });
     } catch (error) {
-        console.error('❌ Ошибка создания события:', error);
         res.status(500).json({ ok: false, error: 'Ошибка создания события' });
     }
 });
@@ -217,7 +206,6 @@ router.patch('/events/:id', async (req, res) => {
 
         // Log incoming updates for debugging
         try {
-            console.log('🛠️ Обновление события', { id, updates });
         } catch (_) { }
 
         // Update fields
@@ -236,12 +224,10 @@ router.patch('/events/:id', async (req, res) => {
         await db.write();
 
         try {
-            console.log(`✅ Обновлено событие: ${id} пользователем: ${req.user.username}`);
         } catch (_) { }
 
         res.json({ ok: true, event });
     } catch (error) {
-        console.error('❌ Ошибка обновления события:', error);
         res.status(500).json({ ok: false, error: 'Ошибка обновления события' });
     }
 });
@@ -265,13 +251,11 @@ router.delete('/events/:id', async (req, res) => {
         db.data.schedule.events.splice(eventIndex, 1);
         await db.write();
 
-        console.log(`✅ Удалено событие: ${id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true });
     } catch (error) {
-        console.error('❌ Ошибка удаления события:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления события' });
     }
 });
 
 export default router;
+

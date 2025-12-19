@@ -60,7 +60,7 @@
                 <li><a href="/team.html">Разработчики</a></li>
                 <li><a href="/faq.html" class="active">FAQ</a></li>
             </ul>
-            <button class="language-switch" id="languageSwitch">Русский</button>
+            <button class="language-switch" id="languageSwitch" style="display: none;">Русский</button>
             <div class="burger-menu" id="burgerMenu">
                 <div class="burger-line"></div>
                 <div class="burger-line"></div>
@@ -201,7 +201,6 @@
                     error.style.display = 'block';
                 }
             } catch (err) {
-                console.error('Error loading FAQ:', err);
                 loading.style.display = 'none';
                 error.style.display = 'block';
             }

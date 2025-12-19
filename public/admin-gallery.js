@@ -1,6 +1,4 @@
 (function () {
-    console.log('🎨 Gallery script started');
-
     const logoutBtn = document.getElementById('logoutBtn');
     const userLabel = document.getElementById('userLabel');
 
@@ -24,17 +22,6 @@
     const photoErrorBox = document.getElementById('photoErrorBox');
     const savePhotoBtn = document.getElementById('savePhotoBtn');
     const cancelPhotoBtn = document.getElementById('cancelPhotoBtn');
-
-    console.log('📦 Elements loaded:', {
-        albumsTable: !!albumsTable,
-        photosView: !!photosView,
-        photosGrid: !!photosGrid,
-        createAlbumBtn: !!createAlbumBtn,
-        addPhotoBtn: !!addPhotoBtn,
-        albumModal: !!albumModal,
-        photoModal: !!photoModal,
-        photoForm: !!photoForm
-    });
 
     let currentAlbumId = null;
     let isEditMode = false;
@@ -246,7 +233,6 @@
                     if (coverPreview) coverPreview.style.display = 'none';
                 }
             } catch (err) {
-                console.error('Ошибка в обработчике coverPhotoFile:', err);
                 show(albumErrorBox, 'Ошибка: ' + err.message);
             }
         });
@@ -433,22 +419,16 @@
 
     // Add photo
     addPhotoBtn.addEventListener('click', () => {
-        console.log('📸 Add photo button clicked');
         hide(photoErrorBox);
 
         // Manually clear form fields instead of reset() to avoid triggering change events
-        console.log('Clearing photoFilesInput...');
         if (photoFilesInput) {
-            console.log('✅ photoFilesInput found, clearing value');
             photoFilesInput.value = '';
         } else {
-            console.log('❌ photoFilesInput is null');
-        }
+            }
 
         const captionRu = document.getElementById('caption_ru');
         const captionUz = document.getElementById('caption_uz');
-        console.log('caption_ru element:', !!captionRu, 'caption_uz element:', !!captionUz);
-
         if (captionRu) captionRu.value = '';
         if (captionUz) captionUz.value = '';
 
@@ -460,7 +440,6 @@
         const nameEl = document.querySelector('[data-filedrop-name="photoFiles"]');
         if (nameEl) nameEl.textContent = 'Файлы не выбраны';
 
-        console.log('Opening photo modal...');
         openModal(photoModal);
     });
 
@@ -470,20 +449,14 @@
 
     // Photo file selection handler
     const photoFilesInput = document.getElementById('photoFiles');
-    console.log('photoFilesInput element:', !!photoFilesInput);
-
     if (photoFilesInput) {
         photoFilesInput.addEventListener('change', function (e) {
-            console.log('📸 photoFilesInput change event fired');
             try {
                 const files = this.files;
-                console.log('Files count:', files?.length || 0);
-
                 const previewsContainer = document.getElementById('photosPreviews');
                 const nameEl = document.querySelector('[data-filedrop-name="photoFiles"]');
 
                 if (!files || files.length === 0) {
-                    console.log('No files selected');
                     if (previewsContainer) {
                         previewsContainer.innerHTML = '';
                         previewsContainer.style.display = 'none';
@@ -521,39 +494,28 @@
                         }
                     });
                 }
-                console.log('Preview generation completed');
-            } catch (err) {
-                console.error('❌ Error in photoFilesInput change:', err);
-            }
+                } catch (err) {
+                }
         });
     } else {
-        console.error('❌ photoFilesInput element not found!');
-    }
+        }
 
     photoForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        console.log('📸 Photo form submit started');
         hide(photoErrorBox);
         savePhotoBtn.disabled = true;
 
         try {
-            console.log('1️⃣ Looking for photoFiles input...');
             const photoInput = document.getElementById('photoFiles');
-            console.log('2️⃣ photoInput found:', !!photoInput);
-
             if (!photoInput) {
-                console.error('❌ photoInput is null');
                 throw new Error('Элемент загрузки файлов не найден');
             }
 
-            console.log('3️⃣ photoInput.files:', photoInput.files?.length || 0);
             if (!photoInput.files || photoInput.files.length === 0) {
                 throw new Error('Выберите хотя бы одно фото');
             }
 
             const files = photoInput.files;
-            console.log('4️⃣ Files count:', files.length);
-
             // Client-side validation
             const maxSize = 10 * 1024 * 1024; // 10MB
             for (let file of files) {
@@ -566,7 +528,6 @@
             }
 
             // Upload files
-            console.log('5️⃣ Uploading files...');
             const formData = new FormData();
             Array.from(files).forEach(file => {
                 formData.append('images', file);
@@ -580,27 +541,18 @@
             });
 
             const uploadData = await uploadRes.json();
-            console.log('6️⃣ Upload response:', uploadData);
-
             if (!uploadRes.ok || !uploadData.ok) {
                 throw new Error(uploadData.error || 'Ошибка загрузки файлов');
             }
 
             // Get captions
-            console.log('7️⃣ Getting captions...');
             const captionRuInput = document.getElementById('caption_ru');
             const captionUzInput = document.getElementById('caption_uz');
-
-            console.log('8️⃣ captionRuInput:', !!captionRuInput, 'value:', captionRuInput?.value);
-            console.log('9️⃣ captionUzInput:', !!captionUzInput, 'value:', captionUzInput?.value);
 
             const caption_ru = captionRuInput ? captionRuInput.value.trim() : '';
             const caption_uz = captionUzInput ? captionUzInput.value.trim() : '';
 
-            console.log('🔟 Captions set:', { caption_ru, caption_uz });
-
             // Add all photos sequentially
-            console.log('1️⃣1️⃣ Adding photos sequentially...');
             for (const file of uploadData.files) {
                 const photoData = {
                     url: file.url,
@@ -620,12 +572,10 @@
 
                 const data = await r.json();
                 if (!r.ok || !data.ok) {
-                    console.error('Error adding photo:', file.url, data.error);
-                }
+                    }
             }
 
             // Reload album to show all photos
-            console.log('1️⃣2️⃣ Reloading album...');
             const albumRes = await fetch(`/api/admin/gallery/albums/${currentAlbumId}`, {
                 credentials: 'same-origin'
             });
@@ -635,10 +585,8 @@
                 renderPhotos(albumData.album?.photos || []);
             }
 
-            console.log('✅ Photo form submit completed successfully');
             closeModal(photoModal);
         } catch (err) {
-            console.error('❌ Error in photo form submit:', err);
             show(photoErrorBox, err.message || 'Ошибка добавления');
         } finally {
             savePhotoBtn.disabled = false;
@@ -690,3 +638,4 @@
         loadAlbums();
     })();
 })();
+

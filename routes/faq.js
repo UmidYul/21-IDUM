@@ -46,7 +46,6 @@ router.get('/', async (req, res) => {
             language: validLang
         });
     } catch (error) {
-        console.error('Database error:', error);
         res.status(500).json({
             success: false,
             error: 'Database error: ' + error.message
@@ -246,3 +245,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 export default router;
+

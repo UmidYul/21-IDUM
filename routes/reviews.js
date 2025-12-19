@@ -60,7 +60,7 @@ router.post('/', requireAuth, requireAdmin, validate(reviewSchema), async (req, 
         db.data.reviews.push(review);
         await db.write();
 
-        console.log(`✅ Создан отзыв: ${review.id} (${author}) пользователем: ${req.user.username}`);
+
         res.json({ ok: true, review });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -95,7 +95,6 @@ router.patch('/:id', requireAuth, requireAdmin, validate(reviewSchema.partial())
         db.data.reviews[idx] = review;
         await db.write();
 
-        console.log(`✅ Обновлен отзыв: ${id} пользователем: ${req.user.username}`);
         res.json({ ok: true, review });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -116,7 +115,6 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
         db.data.reviews.splice(idx, 1);
         await db.write();
 
-        console.log(`✅ Удален отзыв: ${id} пользователем: ${req.user.username}`);
         res.json({ ok: true });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -124,3 +122,4 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
 });
 
 export default router;
+

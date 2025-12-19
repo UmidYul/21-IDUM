@@ -45,8 +45,7 @@
                 filterEvents();
             }
         } catch (error) {
-            console.error('Ошибка загрузки событий:', error);
-        }
+            }
     }
 
     // Setup event listeners
@@ -321,3 +320,4 @@
         init();
     }
 })();
+

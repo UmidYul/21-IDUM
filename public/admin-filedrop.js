@@ -39,8 +39,7 @@
                     input.dispatchEvent(new Event('change', { bubbles: true }));
                     setName(files[0]);
                 } catch (err) {
-                    console.error('Error in file drop:', err);
-                }
+                    }
             });
 
             area.addEventListener('click', () => {
@@ -52,8 +51,7 @@
             try {
                 setName(input?.files?.[0] || null);
             } catch (err) {
-                console.error('Error in file input change:', err);
-            }
+                }
         });
 
         setName(null);
@@ -62,3 +60,4 @@
     // expose globally
     window.initFileDrop = initFileDrop;
 })();
+

@@ -3,7 +3,6 @@
     window.initializeRichEditor = function (elementId, placeholder = 'Введите текст...') {
         const textarea = document.getElementById(elementId);
         if (!textarea) {
-            console.error(`Element with id ${elementId} not found`);
             return null;
         }
 
@@ -248,3 +247,4 @@
         }
     };
 })();
+

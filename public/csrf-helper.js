@@ -9,11 +9,9 @@ async function loadCSRFToken() {
         if (res.ok) {
             const data = await res.json();
             csrfToken = data.csrfToken;
-            console.log('🔒 CSRF токен загружен');
-        }
+            }
     } catch (err) {
-        console.error('Ошибка загрузки CSRF токена:', err);
-    }
+        }
 }
 
 // Helper to include CSRF token in fetch requests
@@ -30,3 +28,4 @@ if (document.readyState === 'loading') {
 
 // Export for use in admin forms
 window.getCSRFHeaders = getCSRFHeaders;
+

@@ -41,7 +41,6 @@
             }, 50);
 
         } catch (err) {
-            console.error('Error loading teachers:', err);
             container.style.opacity = '1';
         }
     }
@@ -77,8 +76,7 @@
                 </div>
             `).join('');
         } catch (err) {
-            console.error('Error loading reviews:', err);
-        }
+            }
     }
 
     // Helper function to get avatar emoji based on author
@@ -122,3 +120,4 @@
         }
     });
 })();
+

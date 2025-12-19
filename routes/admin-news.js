@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
 
         res.json({ ok: true, news: sorted });
     } catch (error) {
-        console.error('Ошибка получения новостей:', error);
         res.status(500).json({ ok: false, error: 'Internal server error' });
     }
 });
@@ -39,7 +38,6 @@ router.get('/:id', async (req, res) => {
 
         res.json({ ok: true, news: newsItem });
     } catch (error) {
-        console.error('Ошибка получения новости:', error);
         res.status(500).json({ ok: false, error: 'Internal server error' });
     }
 });
@@ -77,10 +75,8 @@ router.post('/', validate(newsSchema), async (req, res) => {
         db.data.news.push(newsItem);
         await db.write();
 
-        console.log('✅ Создана новость:', newsItem.id, 'пользователем:', req.user.username);
         res.status(201).json({ ok: true, news: newsItem });
     } catch (error) {
-        console.error('Ошибка создания новости:', error);
         res.status(500).json({ ok: false, error: 'Internal server error' });
     }
 });
@@ -119,10 +115,8 @@ router.patch('/:id', validate(newsSchema.partial()), async (req, res) => {
 
         await db.write();
 
-        console.log('✅ Обновлена новость:', newsItem.id, 'пользователем:', req.user.username);
         res.json({ ok: true, news: newsItem });
     } catch (error) {
-        console.error('Ошибка обновления новости:', error);
         res.status(500).json({ ok: false, error: 'Internal server error' });
     }
 });
@@ -140,12 +134,11 @@ router.delete('/:id', async (req, res) => {
         const deleted = db.data.news.splice(index, 1)[0];
         await db.write();
 
-        console.log('✅ Удалена новость:', deleted.id, 'пользователем:', req.user.username);
         res.json({ ok: true, deleted });
     } catch (error) {
-        console.error('Ошибка удаления новости:', error);
         res.status(500).json({ ok: false, error: 'Internal server error' });
     }
 });
 
 export default router;
+

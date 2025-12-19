@@ -32,7 +32,6 @@ router.get('/albums', async (req, res) => {
             count: albums.length
         });
     } catch (error) {
-        console.error('❌ Ошибка загрузки альбомов:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки альбомов' });
     }
 });
@@ -51,7 +50,6 @@ router.get('/albums/:id', async (req, res) => {
 
         res.json({ ok: true, album });
     } catch (error) {
-        console.error('❌ Ошибка загрузки альбома:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки альбома' });
     }
 });
@@ -89,11 +87,10 @@ router.post('/albums', async (req, res) => {
         db.data.gallery.albums.push(newAlbum);
         await db.write();
 
-        console.log(`✅ Создан альбом: ${newAlbum.id} (${title_ru}) пользователем: ${req.user.username}`);
+
 
         res.json({ ok: true, album: newAlbum });
     } catch (error) {
-        console.error('❌ Ошибка создания альбома:', error);
         res.status(500).json({ ok: false, error: 'Ошибка создания альбома' });
     }
 });
@@ -133,11 +130,8 @@ router.patch('/albums/:id', async (req, res) => {
         db.data.gallery.albums[albumIndex] = album;
         await db.write();
 
-        console.log(`✅ Обновлен альбом: ${id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, album });
     } catch (error) {
-        console.error('❌ Ошибка обновления альбома:', error);
         res.status(500).json({ ok: false, error: 'Ошибка обновления альбома' });
     }
 });
@@ -168,9 +162,7 @@ router.delete('/albums/:id', async (req, res) => {
                     if (fs.existsSync(filePath)) {
                         try {
                             fs.unlinkSync(filePath);
-                            console.log(`🗑️ Удален файл фото альбома: ${filePath}`);
                         } catch (error) {
-                            console.error('Ошибка при удалении файла:', error);
                         }
                     }
                 }
@@ -183,9 +175,7 @@ router.delete('/albums/:id', async (req, res) => {
             if (fs.existsSync(filePath)) {
                 try {
                     fs.unlinkSync(filePath);
-                    console.log(`🗑️ Удалена обложка альбома: ${filePath}`);
                 } catch (error) {
-                    console.error('Ошибка при удалении обложки:', error);
                 }
             }
         }
@@ -193,11 +183,8 @@ router.delete('/albums/:id', async (req, res) => {
         db.data.gallery.albums.splice(albumIndex, 1);
         await db.write();
 
-        console.log(`✅ Удален альбом: ${id} пользователем: ${req.user.username}`);
-
         res.json({ ok: true });
     } catch (error) {
-        console.error('❌ Ошибка удаления альбома:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления альбома' });
     }
 });
@@ -246,11 +233,8 @@ router.post('/albums/:albumId/photos', async (req, res) => {
 
         await db.write();
 
-        console.log(`✅ Добавлено фото в альбом ${albumId} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, photo: newPhoto, album });
     } catch (error) {
-        console.error('❌ Ошибка добавления фото:', error);
         res.status(500).json({ ok: false, error: 'Ошибка добавления фото' });
     }
 });
@@ -292,11 +276,8 @@ router.patch('/albums/:albumId/photos/:photoId', async (req, res) => {
 
         await db.write();
 
-        console.log(`✅ Обновлено фото ${photoId} в альбоме ${albumId} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, photo, album });
     } catch (error) {
-        console.error('❌ Ошибка обновления фото:', error);
         res.status(500).json({ ok: false, error: 'Ошибка обновления фото' });
     }
 });
@@ -327,9 +308,7 @@ router.delete('/albums/:albumId/photos/:photoId', async (req, res) => {
             if (fs.existsSync(filePath)) {
                 try {
                     fs.unlinkSync(filePath);
-                    console.log(`🗑️ Удален файл фото: ${filePath}`);
                 } catch (error) {
-                    console.error('Ошибка при удалении файла:', error);
                 }
             }
         }
@@ -340,13 +319,11 @@ router.delete('/albums/:albumId/photos/:photoId', async (req, res) => {
 
         await db.write();
 
-        console.log(`✅ Удалено фото ${photoId} из альбома ${albumId} пользователем: ${req.user.username}`);
-
         res.json({ ok: true, album });
     } catch (error) {
-        console.error('❌ Ошибка удаления фото:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления фото' });
     }
 });
 
 export default router;
+

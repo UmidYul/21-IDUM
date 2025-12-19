@@ -61,7 +61,7 @@
                 <li><a href="/team.html">Разработчики</a></li>
                 <li><a href="/faq.html">FAQ</a></li>
             </ul>
-            <button class="language-switch" id="languageSwitch">Русский</button>
+            <button class="language-switch" id="languageSwitch" style="display: none;">Русский</button>
             <div class="burger-menu" id="burgerMenu">
                 <div class="burger-line"></div>
                 <div class="burger-line"></div>
@@ -224,7 +224,6 @@
                     : `<div class="no-data" data-ru="Расписание для второй смены не найдено" data-uz="Ikkinchi smena uchun jadval topilmadi">${currentLang === 'ru' ? 'Расписание для второй смены не найдено' : 'Ikkinchi smena uchun jadval topilmadi'}</div>`;
 
             } catch (error) {
-                console.error('Error loading bells:', error);
                 const errorMsg = currentLang === 'ru'
                     ? 'Ошибка загрузки расписания'
                     : 'Jadvalni yuklashda xato';
@@ -300,7 +299,6 @@
                 }).join('');
 
             } catch (error) {
-                console.error('Error loading events:', error);
                 const errorMsg = currentLang === 'ru'
                     ? 'Ошибка загрузки событий'
                     : 'Tadbirlarni yuklashda xato';

@@ -72,7 +72,6 @@ router.post('/', requireAuth, requireAdmin, validate(teacherSchema), async (req,
         db.data.teachers.push(teacher);
         await db.write();
 
-        console.log(`✅ Создан учитель: ${teacher.id} (${name_ru}) пользователем: ${req.user.username}`);
         res.json({ ok: true, teacher });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -109,7 +108,6 @@ router.patch('/:id', requireAuth, requireAdmin, async (req, res) => {
         db.data.teachers[idx] = teacher;
         await db.write();
 
-        console.log(`✅ Обновлен учитель: ${id} пользователем: ${req.user.username}`);
         res.json({ ok: true, teacher });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -135,9 +133,7 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
             if (fs.existsSync(filePath)) {
                 try {
                     fs.unlinkSync(filePath);
-                    console.log(`🗑️ Удалено фото учителя: ${filePath}`);
                 } catch (error) {
-                    console.error('Ошибка при удалении файла:', error);
                 }
             }
         }
@@ -145,7 +141,6 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
         db.data.teachers.splice(idx, 1);
         await db.write();
 
-        console.log(`✅ Удален учитель: ${id} пользователем: ${req.user.username}`);
         res.json({ ok: true });
     } catch (err) {
         res.status(500).json({ ok: false, error: err.message });
@@ -153,3 +148,4 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
 });
 
 export default router;
+

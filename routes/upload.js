@@ -26,10 +26,8 @@ function ensureUploadsDir(subdir) {
         const fallback = path.join(os.tmpdir(), 'uploads', subdir);
         try {
             fs.mkdirSync(fallback, { recursive: true });
-            console.warn(`Uploads dir not writable, using temp path: ${fallback}`);
             return fallback;
         } catch (fallbackError) {
-            console.error('Failed to prepare uploads dir:', fallbackError);
             throw fallbackError;
         }
     }
@@ -45,10 +43,8 @@ function deleteOldFile(filePath) {
     if (filePath && fs.existsSync(filePath)) {
         try {
             fs.unlinkSync(filePath);
-            console.log(`🗑️ Удален старый файл: ${filePath}`);
-        } catch (error) {
-            console.error('Error deleting old file:', error);
-        }
+            } catch (error) {
+            }
     }
 }
 
@@ -142,8 +138,6 @@ router.post('/news-cover', requireAuth, newsUpload.single('image'), (req, res) =
 
         const fileUrl = '/uploads/news/' + req.file.filename;
 
-        console.log(`✅ Загружено изображение новости: ${req.file.filename} пользователем: ${req.user.username}`);
-
         res.json({
             ok: true,
             url: fileUrl,
@@ -151,7 +145,6 @@ router.post('/news-cover', requireAuth, newsUpload.single('image'), (req, res) =
             size: req.file.size
         });
     } catch (error) {
-        console.error('Upload error:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки файла' });
     }
 });
@@ -165,8 +158,6 @@ router.post('/teacher-photo', requireAuth, teacherUpload.single('image'), (req, 
 
         const fileUrl = '/uploads/teachers/' + req.file.filename;
 
-        console.log(`✅ Загружено фото учителя: ${req.file.filename} пользователем: ${req.user.username}`);
-
         res.json({
             ok: true,
             url: fileUrl,
@@ -174,7 +165,6 @@ router.post('/teacher-photo', requireAuth, teacherUpload.single('image'), (req, 
             size: req.file.size
         });
     } catch (error) {
-        console.error('Teacher photo upload error:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки файла' });
     }
 });
@@ -192,15 +182,12 @@ router.post('/gallery-photos', requireAuth, galleryUpload.array('images', 20), (
             size: file.size
         }));
 
-        console.log(`✅ Загружено ${req.files.length} фото галереи пользователем: ${req.user.username}`);
-
         res.json({
             ok: true,
             files: uploadedFiles,
             count: uploadedFiles.length
         });
     } catch (error) {
-        console.error('Gallery photos upload error:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки файлов' });
     }
 });
@@ -214,8 +201,6 @@ router.post('/album-cover', requireAuth, albumCoverUpload.single('image'), (req,
 
         const fileUrl = '/uploads/album-covers/' + req.file.filename;
 
-        console.log(`✅ Загружена обложка альбома: ${req.file.filename} пользователем: ${req.user.username}`);
-
         res.json({
             ok: true,
             url: fileUrl,
@@ -223,7 +208,6 @@ router.post('/album-cover', requireAuth, albumCoverUpload.single('image'), (req,
             size: req.file.size
         });
     } catch (error) {
-        console.error('Album cover upload error:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки файла' });
     }
 });
@@ -243,3 +227,4 @@ router.use((error, req, res, next) => {
 });
 
 export default router;
+

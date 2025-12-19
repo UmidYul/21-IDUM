@@ -56,7 +56,6 @@
             const data = await r.json();
             renderAlbums(data.albums || []);
         } catch (err) {
-            console.error('Error loading albums:', err);
             albumsGrid.innerHTML = '<div class="empty-state"><p>Не удалось загрузить альбомы</p></div>';
         }
     }
@@ -123,7 +122,6 @@
             albumsView.style.display = 'none';
             albumView.style.display = 'block';
         } catch (err) {
-            console.error('Error loading album:', err);
             alert('Не удалось загрузить альбом');
         }
     }
@@ -232,3 +230,4 @@
         }
     }
 })();
+

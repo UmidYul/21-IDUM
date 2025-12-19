@@ -30,7 +30,6 @@ router.get('/events', async (req, res) => {
             count: events.length
         });
     } catch (error) {
-        console.error('❌ Ошибка получения событий календаря:', error);
         res.status(500).json({ ok: false, error: 'Ошибка загрузки событий' });
     }
 });
@@ -87,11 +86,10 @@ router.get('/export.ics', async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename="school-21-calendar.ics"');
         res.send(calendar.toString());
 
-        console.log(`📅 Экспорт календаря: ${events.length} событий`);
-    } catch (error) {
-        console.error('❌ Ошибка экспорта календаря:', error);
+        } catch (error) {
         res.status(500).json({ ok: false, error: 'Ошибка экспорта календаря' });
     }
 });
 
 export default router;
+

@@ -109,7 +109,6 @@
                     </table>
                 `;
             } catch (err) {
-                console.error('Error:', err);
                 document.getElementById('announcementsTable').innerHTML =
                     '<div class="empty error">Ошибка загрузки объявлений</div>';
             }
@@ -129,7 +128,6 @@
                 alert('Объявление удалено');
                 loadAnnouncements();
             } catch (err) {
-                console.error('Error:', err);
                 alert('Ошибка при удалении');
             }
         }

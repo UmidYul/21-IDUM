@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
             events: events.sort((a, b) => new Date(a.date) - new Date(b.date))
         });
     } catch (error) {
-        console.error('Database error:', error);
         res.status(500).json({
             success: false,
             error: 'Database error: ' + error.message
@@ -46,23 +45,17 @@ router.get('/bells', async (req, res) => {
 // GET /api/schedule/events - Get upcoming events
 router.get('/events', async (req, res) => {
     try {
-        console.log('📅 Получен запрос на /api/schedule/events');
         const limit = parseInt(req.query.limit) || 10;
         const upcoming = req.query.upcoming === 'true';
-        console.log(`   Параметры: limit=${limit}, upcoming=${upcoming}`);
-
         await db.read();
         let events = db.data.schedule?.events || [];
-        console.log(`📊 Найдено событий в БД: ${events.length}`);
-
         // Filter upcoming events if requested
         // Include events that are in the future or within the past 3 days
         if (upcoming) {
             const threshold = new Date();
             threshold.setDate(threshold.getDate() - 3);
             events = events.filter(e => new Date(e.date) >= threshold);
-            console.log(`   После фильтрации upcoming: ${events.length} событий`);
-        }
+            }
 
         // Sort by date
         if (upcoming) {
@@ -75,15 +68,12 @@ router.get('/events', async (req, res) => {
 
         // Limit results
         events = events.slice(0, limit);
-        console.log(`✅ Отправляю ${events.length} событий`);
-
         res.json({
             success: true,
             events,
             count: events.length
         });
     } catch (error) {
-        console.error('❌ Ошибка при получении событий:', error);
         res.status(500).json({
             success: false,
             error: 'Database error: ' + error.message
@@ -330,3 +320,4 @@ router.delete('/events/:id', async (req, res) => {
 });
 
 export default router;
+

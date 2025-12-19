@@ -60,7 +60,6 @@ router.get('/sitemap.xml', async (req, res) => {
         res.header('Content-Type', 'application/xml');
         res.send(xml);
     } catch (error) {
-        console.error('Sitemap generation error:', error);
         res.status(500).send('Error generating sitemap');
     }
 });
@@ -99,3 +98,4 @@ Allow: /
 });
 
 export default router;
+

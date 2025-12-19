@@ -8,9 +8,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        /* Снегопад */
+        @keyframes snowfall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .snowflake {
+            position: fixed;
+            top: 60px;
+            color: #4FB3D9;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(79, 179, 217, 0.8), 0 0 15px rgba(30, 144, 255, 0.5);
+            pointer-events: none;
+            z-index: 9999;
+            animation: snowfall linear forwards;
+            user-select: none;
+        }
+
+        /* Конфети при клике */
+        @keyframes confetti-burst {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx, 0), var(--ty, 0)) scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            animation: confetti-burst 2.5s ease-out forwards;
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Снегопад -->
+    <div class="snowfall-container" id="snowfallContainer"></div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container container">
@@ -25,7 +71,7 @@
                 <li><a href="/team.html" class="active">Разработчики</a></li>
                 <li><a href="/faq.html">FAQ</a></li>
             </ul>
-            <button class="language-switch" id="languageSwitch">Русский</button>
+            <button class="language-switch" id="languageSwitch" style="display: none;">Русский</button>
             <div class="burger-menu" id="burgerMenu">
                 <div class="burger-line"></div>
                 <div class="burger-line"></div>
@@ -210,6 +256,145 @@
             currentLang = currentLang === 'ru' ? 'uz' : 'ru';
             languageSwitch.textContent = currentLang === 'ru' ? 'Русский' : "O‘zbekcha";
         });
+
+        // Снегопад для новогодней атмосферы
+        function createSnowflakes() {
+            const container = document.getElementById('snowfallContainer');
+            const snowflakesCount = 50; // Количество снежинок
+            const snowflakeSymbols = ['❄', '✦', '❅', '❆'];
+
+            for (let i = 0; i < snowflakesCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.textContent = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+
+                // Случайные позиции и размеры
+                const randomLeft = Math.random() * 100;
+                const randomSize = Math.random() * 0.5 + 0.5;
+                const randomDuration = Math.random() * 10 + 10;
+                const randomDelay = Math.random() * 5;
+                const randomOpacity = Math.random() * 0.5 + 0.5;
+
+                snowflake.style.left = randomLeft + '%';
+                snowflake.style.fontSize = (1 + randomSize) + 'em';
+                snowflake.style.animation = `snowfall ${randomDuration}s linear infinite`;
+                snowflake.style.animationDelay = randomDelay + 's';
+                snowflake.style.opacity = randomOpacity;
+
+                // Добавляем случайный сдвиг по горизонтали
+                const swayAmount = Math.random() * 200 - 100;
+                snowflake.style.setProperty('--sway-amount', swayAmount + 'px');
+
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Запускаем снегопад - непрерывный поток
+        const symbols = ['❄', '✦', '❅', '❆', '*'];
+
+        function createSingleSnowflake() {
+            const snowflake = document.createElement('span');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+            const leftPos = Math.random() * 100;
+            const duration = Math.random() * 6 + 10;
+            const size = Math.random() * 1 + 0.8;
+
+            snowflake.style.left = leftPos + '%';
+            snowflake.style.fontSize = size + 'em';
+            snowflake.style.animationDuration = duration + 's';
+            snowflake.style.opacity = Math.random() * 0.4 + 0.4;
+
+            document.body.appendChild(snowflake);
+
+            // Удаляем снежинку после завершения анимации
+            setTimeout(() => {
+                snowflake.remove();
+            }, duration * 1000);
+        }
+
+        // Конфети при клике на страницу
+        function createConfetti(x, y) {
+            const confettiCount = 40;
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#FF8B94', '#A8E6CF', '#FFD3B6', '#FFAAA5', '#C7CEEA', '#B5EAD7'];
+
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = ['🎉', '🎊', '⭐', '✨', '🎈'][Math.floor(Math.random() * 5)];
+
+                // Направление взрыва - равномерно во все стороны
+                const angle = (i / confettiCount) * Math.PI * 2;
+                const distance = Math.random() * 100 + 50; // 50-150px
+                const randomTx = Math.cos(angle) * distance;
+                const randomTy = Math.sin(angle) * distance - 100; // Немного вверх в начале
+
+                const randomDelay = Math.random() * 0.05;
+                const size = Math.random() * 18 + 12;
+
+                confetti.style.left = x + 'px';
+                confetti.style.top = y + 'px';
+                confetti.style.fontSize = size + 'px';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.setProperty('--tx', randomTx + 'px');
+                confetti.style.setProperty('--ty', randomTy + 'px');
+                confetti.style.animationDelay = randomDelay + 's';
+
+                document.body.appendChild(confetti);
+
+                // Удаляем конфети после анимации
+                setTimeout(() => confetti.remove(), 2600);
+            }
+        }
+
+        // Слушаем клики по странице
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('a, button')) {
+                createConfetti(e.clientX, e.clientY);
+            }
+        });
+
+        // Отслеживание скорости движения мыши для увеличения снежинок
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let lastMouseTime = Date.now();
+        let mouseSpeedMultiplier = 1;
+
+        document.addEventListener('mousemove', (e) => {
+            const now = Date.now();
+            const timeDelta = now - lastMouseTime;
+
+            if (timeDelta > 0) {
+                const distX = e.clientX - lastMouseX;
+                const distY = e.clientY - lastMouseY;
+                const distance = Math.sqrt(distX * distX + distY * distY);
+
+                // Скорость = пиксели за миллисекунду
+                const speed = distance / timeDelta;
+
+                // Множитель от скорости (1x при медленном движении, до 8x при быстром)
+                mouseSpeedMultiplier = Math.min(8, Math.max(1, speed * 3));
+            }
+
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+            lastMouseTime = now;
+        });
+
+        // Создаем снежинки непрерывно, количество зависит от скорости мыши
+        setInterval(() => {
+            // Создаем базовое количество + добавляем в зависимости от скорости мыши
+            const snowflakesToCreate = Math.floor(mouseSpeedMultiplier);
+            for (let i = 0; i < snowflakesToCreate; i++) {
+                createSingleSnowflake();
+            }
+        }, 150);
+
+        // Создаем первую партию сразу
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createSingleSnowflake, i * 50);
+        }
     </script>
 </body>
 

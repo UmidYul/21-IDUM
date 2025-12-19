@@ -102,8 +102,7 @@
                 });
             }
         } catch (err) {
-            console.error('Error loading bells:', err);
-        }
+            }
     }
 
     if (form) {
@@ -165,3 +164,4 @@
         }
     })();
 })();
+
