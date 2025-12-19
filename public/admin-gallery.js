@@ -1,4 +1,6 @@
 (function () {
+    console.log('🎨 Gallery script started');
+
     const logoutBtn = document.getElementById('logoutBtn');
     const userLabel = document.getElementById('userLabel');
 
@@ -22,6 +24,17 @@
     const photoErrorBox = document.getElementById('photoErrorBox');
     const savePhotoBtn = document.getElementById('savePhotoBtn');
     const cancelPhotoBtn = document.getElementById('cancelPhotoBtn');
+
+    console.log('📦 Elements loaded:', {
+        albumsTable: !!albumsTable,
+        photosView: !!photosView,
+        photosGrid: !!photosGrid,
+        createAlbumBtn: !!createAlbumBtn,
+        addPhotoBtn: !!addPhotoBtn,
+        albumModal: !!albumModal,
+        photoModal: !!photoModal,
+        photoForm: !!photoForm
+    });
 
     let currentAlbumId = null;
     let isEditMode = false;
@@ -93,7 +106,6 @@
                     </td>
                     <td>${album.photoCount} фото</td>
                     <td>${statusBadge}</td>
-                    <td>${album.order}</td>
                     <td>
                         <button class="btn btn-sm" onclick="viewAlbumPhotos('${album.id}')">Фото</button>
                         <button class="btn btn-sm" onclick="editAlbum('${album.id}')">Редактировать</button>
@@ -110,7 +122,6 @@
                         <th>Альбом</th>
                         <th>Фото</th>
                         <th>Статус</th>
-                        <th>Порядок</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -144,8 +155,31 @@
         isEditMode = false;
         currentAlbumId = null;
         albumModalTitle.textContent = 'Создать альбом';
-        albumForm.reset();
+
+        // Manually clear form fields instead of reset()
+        const titleRu = document.getElementById('title_ru');
+        const titleUz = document.getElementById('title_uz');
+        const descRu = document.getElementById('description_ru');
+        const descUz = document.getElementById('description_uz');
+        const coverPhotoFile = document.getElementById('coverPhotoFile');
+        const coverPhoto = document.getElementById('coverPhoto');
+        const status = document.getElementById('status');
+        const order = document.getElementById('order');
+
+        if (titleRu) titleRu.value = '';
+        if (titleUz) titleUz.value = '';
+        if (descRu) descRu.value = '';
+        if (descUz) descUz.value = '';
+        if (coverPhotoFile) coverPhotoFile.value = '';
+        if (coverPhoto) coverPhoto.value = '';
+        if (status) status.value = 'draft';
+        if (order) order.value = '0';
+
         hide(albumErrorBox);
+        const coverPreview = document.getElementById('coverPreview');
+        if (coverPreview) coverPreview.style.display = 'none';
+        const nameEl = document.querySelector('[data-filedrop-name="coverPhotoFile"]');
+        if (nameEl) nameEl.textContent = 'Файл не выбран';
         openModal(albumModal);
     });
 
@@ -153,20 +187,109 @@
         closeModal(albumModal);
     });
 
+    // Cover photo upload handler
+    const coverPhotoInput = document.getElementById('coverPhotoFile');
+    if (coverPhotoInput) {
+        coverPhotoInput.addEventListener('change', async (e) => {
+            try {
+                const file = e.target?.files?.[0];
+                if (!file) return;
+
+                const coverPreview = document.getElementById('coverPreview');
+                const coverPreviewImg = document.getElementById('coverPreviewImg');
+                const coverPhotoHidden = document.getElementById('coverPhoto');
+
+                // Validate
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (file.size > maxSize) {
+                    show(albumErrorBox, 'Файл слишком большой (макс. 5MB)');
+                    if (coverPhotoInput) coverPhotoInput.value = '';
+                    return;
+                }
+
+                if (!file.type.startsWith('image/')) {
+                    show(albumErrorBox, 'Файл должен быть изображением');
+                    if (coverPhotoInput) coverPhotoInput.value = '';
+                    return;
+                }
+
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    if (coverPreviewImg) coverPreviewImg.src = ev.target.result;
+                    if (coverPreview) coverPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+
+                // Upload
+                try {
+                    const formData = new FormData();
+                    formData.append('image', file);
+
+                    const uploadRes = await fetch('/api/upload/album-cover', {
+                        method: 'POST',
+                        headers: getCSRFHeaders(),
+                        body: formData,
+                        credentials: 'same-origin'
+                    });
+
+                    const uploadData = await uploadRes.json();
+                    if (!uploadRes.ok || !uploadData.ok) {
+                        throw new Error(uploadData.error || 'Ошибка загрузки');
+                    }
+
+                    if (coverPhotoHidden) coverPhotoHidden.value = uploadData.url;
+                    hide(albumErrorBox);
+                } catch (err) {
+                    show(albumErrorBox, 'Ошибка загрузки обложки: ' + err.message);
+                    if (coverPhotoInput) coverPhotoInput.value = '';
+                    if (coverPreview) coverPreview.style.display = 'none';
+                }
+            } catch (err) {
+                console.error('Ошибка в обработчике coverPhotoFile:', err);
+                show(albumErrorBox, 'Ошибка: ' + err.message);
+            }
+        });
+    }
+
+    // Remove cover button
+    const removeCoverBtn = document.getElementById('removeCover');
+    if (removeCoverBtn) {
+        removeCoverBtn.addEventListener('click', () => {
+            const coverPhotoInput = document.getElementById('coverPhotoFile');
+            const coverPhotoHidden = document.getElementById('coverPhoto');
+            const coverPreview = document.getElementById('coverPreview');
+            const nameEl = document.querySelector('[data-filedrop-name="coverPhotoFile"]');
+
+            if (coverPhotoInput) coverPhotoInput.value = '';
+            if (coverPhotoHidden) coverPhotoHidden.value = '';
+            if (coverPreview) coverPreview.style.display = 'none';
+            if (nameEl) nameEl.textContent = 'Файл не выбран';
+        });
+    }
+
     albumForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         hide(albumErrorBox);
         saveAlbumBtn.disabled = true;
 
         try {
+            const titleRu = document.getElementById('title_ru');
+            const titleUz = document.getElementById('title_uz');
+            const descRu = document.getElementById('description_ru');
+            const descUz = document.getElementById('description_uz');
+            const coverPhotoEl = document.getElementById('coverPhoto');
+            const statusEl = document.getElementById('status');
+            const orderEl = document.getElementById('order');
+
             const payload = {
-                title_ru: document.getElementById('title_ru').value.trim(),
-                title_uz: document.getElementById('title_uz').value.trim(),
-                description_ru: document.getElementById('description_ru').value.trim(),
-                description_uz: document.getElementById('description_uz').value.trim(),
-                coverPhoto: document.getElementById('coverPhoto').value.trim(),
-                status: document.getElementById('status').value,
-                order: parseInt(document.getElementById('order').value) || 0
+                title_ru: titleRu?.value?.trim() || '',
+                title_uz: titleUz?.value?.trim() || '',
+                description_ru: descRu?.value?.trim() || '',
+                description_uz: descUz?.value?.trim() || '',
+                coverPhoto: coverPhotoEl?.value?.trim() || '',
+                status: statusEl?.value || 'draft',
+                order: parseInt(orderEl?.value || '0') || 0
             };
 
             const url = isEditMode ? `/api/admin/gallery/albums/${currentAlbumId}` : '/api/admin/gallery/albums';
@@ -208,13 +331,31 @@
             currentAlbumId = id;
             albumModalTitle.textContent = 'Редактировать альбом';
 
-            document.getElementById('title_ru').value = album.title_ru || '';
-            document.getElementById('title_uz').value = album.title_uz || '';
-            document.getElementById('description_ru').value = album.description_ru || '';
-            document.getElementById('description_uz').value = album.description_uz || '';
-            document.getElementById('coverPhoto').value = album.coverPhoto || '';
-            document.getElementById('status').value = album.status || 'draft';
-            document.getElementById('order').value = album.order || 0;
+            const titleRu = document.getElementById('title_ru');
+            const titleUz = document.getElementById('title_uz');
+            const descRu = document.getElementById('description_ru');
+            const descUz = document.getElementById('description_uz');
+            const coverPhotoEl = document.getElementById('coverPhoto');
+            const statusEl = document.getElementById('status');
+            const orderEl = document.getElementById('order');
+
+            if (titleRu) titleRu.value = album.title_ru || '';
+            if (titleUz) titleUz.value = album.title_uz || '';
+            if (descRu) descRu.value = album.description_ru || '';
+            if (descUz) descUz.value = album.description_uz || '';
+            if (coverPhotoEl) coverPhotoEl.value = album.coverPhoto || '';
+            if (statusEl) statusEl.value = album.status || 'draft';
+            if (orderEl) orderEl.value = album.order || 0;
+
+            // Show existing cover if available
+            const coverPreview = document.getElementById('coverPreview');
+            const coverPreviewImg = document.getElementById('coverPreviewImg');
+            if (album.coverPhoto && coverPreviewImg && coverPreview) {
+                coverPreviewImg.src = album.coverPhoto;
+                coverPreview.style.display = 'block';
+            } else if (coverPreview) {
+                coverPreview.style.display = 'none';
+            }
 
             hide(albumErrorBox);
             openModal(albumModal);
@@ -292,8 +433,34 @@
 
     // Add photo
     addPhotoBtn.addEventListener('click', () => {
-        photoForm.reset();
+        console.log('📸 Add photo button clicked');
         hide(photoErrorBox);
+
+        // Manually clear form fields instead of reset() to avoid triggering change events
+        console.log('Clearing photoFilesInput...');
+        if (photoFilesInput) {
+            console.log('✅ photoFilesInput found, clearing value');
+            photoFilesInput.value = '';
+        } else {
+            console.log('❌ photoFilesInput is null');
+        }
+
+        const captionRu = document.getElementById('caption_ru');
+        const captionUz = document.getElementById('caption_uz');
+        console.log('caption_ru element:', !!captionRu, 'caption_uz element:', !!captionUz);
+
+        if (captionRu) captionRu.value = '';
+        if (captionUz) captionUz.value = '';
+
+        const previewsContainer = document.getElementById('photosPreviews');
+        if (previewsContainer) {
+            previewsContainer.innerHTML = '';
+            previewsContainer.style.display = 'none';
+        }
+        const nameEl = document.querySelector('[data-filedrop-name="photoFiles"]');
+        if (nameEl) nameEl.textContent = 'Файлы не выбраны';
+
+        console.log('Opening photo modal...');
         openModal(photoModal);
     });
 
@@ -301,36 +468,177 @@
         closeModal(photoModal);
     });
 
+    // Photo file selection handler
+    const photoFilesInput = document.getElementById('photoFiles');
+    console.log('photoFilesInput element:', !!photoFilesInput);
+
+    if (photoFilesInput) {
+        photoFilesInput.addEventListener('change', function (e) {
+            console.log('📸 photoFilesInput change event fired');
+            try {
+                const files = this.files;
+                console.log('Files count:', files?.length || 0);
+
+                const previewsContainer = document.getElementById('photosPreviews');
+                const nameEl = document.querySelector('[data-filedrop-name="photoFiles"]');
+
+                if (!files || files.length === 0) {
+                    console.log('No files selected');
+                    if (previewsContainer) {
+                        previewsContainer.innerHTML = '';
+                        previewsContainer.style.display = 'none';
+                    }
+                    if (nameEl) nameEl.textContent = 'Файлы не выбраны';
+                    return;
+                }
+
+                // Update file count
+                if (nameEl) {
+                    nameEl.textContent = files.length === 1
+                        ? files[0].name
+                        : `Выбрано файлов: ${files.length}`;
+                }
+
+                // Show previews
+                if (previewsContainer) {
+                    previewsContainer.innerHTML = '';
+                    previewsContainer.style.display = 'grid';
+
+                    Array.from(files).forEach(file => {
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function (ev) {
+                                const img = document.createElement('img');
+                                img.src = ev.target.result;
+                                img.style.width = '100%';
+                                img.style.height = '100px';
+                                img.style.objectFit = 'cover';
+                                img.style.borderRadius = '8px';
+                                img.style.border = '1px solid #e5e7eb';
+                                previewsContainer.appendChild(img);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+                console.log('Preview generation completed');
+            } catch (err) {
+                console.error('❌ Error in photoFilesInput change:', err);
+            }
+        });
+    } else {
+        console.error('❌ photoFilesInput element not found!');
+    }
+
     photoForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        console.log('📸 Photo form submit started');
         hide(photoErrorBox);
         savePhotoBtn.disabled = true;
 
         try {
-            const payload = {
-                url: document.getElementById('photoUrl').value.trim(),
-                caption_ru: document.getElementById('caption_ru').value.trim(),
-                caption_uz: document.getElementById('caption_uz').value.trim()
-            };
+            console.log('1️⃣ Looking for photoFiles input...');
+            const photoInput = document.getElementById('photoFiles');
+            console.log('2️⃣ photoInput found:', !!photoInput);
 
-            const r = await fetch(`/api/admin/gallery/albums/${currentAlbumId}/photos`, {
+            if (!photoInput) {
+                console.error('❌ photoInput is null');
+                throw new Error('Элемент загрузки файлов не найден');
+            }
+
+            console.log('3️⃣ photoInput.files:', photoInput.files?.length || 0);
+            if (!photoInput.files || photoInput.files.length === 0) {
+                throw new Error('Выберите хотя бы одно фото');
+            }
+
+            const files = photoInput.files;
+            console.log('4️⃣ Files count:', files.length);
+
+            // Client-side validation
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            for (let file of files) {
+                if (!file.type.startsWith('image/')) {
+                    throw new Error(`Файл ${file.name} не является изображением`);
+                }
+                if (file.size > maxSize) {
+                    throw new Error(`Файл ${file.name} слишком большой (макс. 10MB)`);
+                }
+            }
+
+            // Upload files
+            console.log('5️⃣ Uploading files...');
+            const formData = new FormData();
+            Array.from(files).forEach(file => {
+                formData.append('images', file);
+            });
+
+            const uploadRes = await fetch('/api/upload/gallery-photos', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...getCSRFHeaders()
-                },
-                body: JSON.stringify(payload),
+                headers: getCSRFHeaders(),
+                body: formData,
                 credentials: 'same-origin'
             });
 
-            const data = await r.json();
-            if (!r.ok || !data.ok) {
-                throw new Error(data.error || 'Ошибка добавления фото');
+            const uploadData = await uploadRes.json();
+            console.log('6️⃣ Upload response:', uploadData);
+
+            if (!uploadRes.ok || !uploadData.ok) {
+                throw new Error(uploadData.error || 'Ошибка загрузки файлов');
             }
 
+            // Get captions
+            console.log('7️⃣ Getting captions...');
+            const captionRuInput = document.getElementById('caption_ru');
+            const captionUzInput = document.getElementById('caption_uz');
+
+            console.log('8️⃣ captionRuInput:', !!captionRuInput, 'value:', captionRuInput?.value);
+            console.log('9️⃣ captionUzInput:', !!captionUzInput, 'value:', captionUzInput?.value);
+
+            const caption_ru = captionRuInput ? captionRuInput.value.trim() : '';
+            const caption_uz = captionUzInput ? captionUzInput.value.trim() : '';
+
+            console.log('🔟 Captions set:', { caption_ru, caption_uz });
+
+            // Add all photos sequentially
+            console.log('1️⃣1️⃣ Adding photos sequentially...');
+            for (const file of uploadData.files) {
+                const photoData = {
+                    url: file.url,
+                    caption_ru,
+                    caption_uz
+                };
+
+                const r = await fetch(`/api/admin/gallery/albums/${currentAlbumId}/photos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...getCSRFHeaders()
+                    },
+                    body: JSON.stringify(photoData),
+                    credentials: 'same-origin'
+                });
+
+                const data = await r.json();
+                if (!r.ok || !data.ok) {
+                    console.error('Error adding photo:', file.url, data.error);
+                }
+            }
+
+            // Reload album to show all photos
+            console.log('1️⃣2️⃣ Reloading album...');
+            const albumRes = await fetch(`/api/admin/gallery/albums/${currentAlbumId}`, {
+                credentials: 'same-origin'
+            });
+
+            if (albumRes.ok) {
+                const albumData = await albumRes.json();
+                renderPhotos(albumData.album?.photos || []);
+            }
+
+            console.log('✅ Photo form submit completed successfully');
             closeModal(photoModal);
-            renderPhotos(data.album.photos || []);
         } catch (err) {
+            console.error('❌ Error in photo form submit:', err);
             show(photoErrorBox, err.message || 'Ошибка добавления');
         } finally {
             savePhotoBtn.disabled = false;

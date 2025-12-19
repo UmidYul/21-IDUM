@@ -1,9 +1,14 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
 import { validate, teacherSchema } from '../middleware/validation.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 function requireAdmin(req, res, next) {
@@ -121,6 +126,21 @@ router.delete('/:id', requireAuth, requireAdmin, async (req, res) => {
 
         const idx = db.data.teachers.findIndex(t => t.id === id);
         if (idx === -1) return res.status(404).json({ ok: false, error: 'Teacher not found' });
+
+        const teacher = db.data.teachers[idx];
+
+        // Delete associated photo file if it exists
+        if (teacher.photo && teacher.photo.startsWith('/uploads/')) {
+            const filePath = path.join(__dirname, '..', 'public', teacher.photo);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`🗑️ Удалено фото учителя: ${filePath}`);
+                } catch (error) {
+                    console.error('Ошибка при удалении файла:', error);
+                }
+            }
+        }
 
         db.data.teachers.splice(idx, 1);
         await db.write();

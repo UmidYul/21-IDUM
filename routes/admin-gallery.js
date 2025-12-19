@@ -1,8 +1,13 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 import { requireAuth } from './auth-basic.js';
 import db from '../database.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 // All routes require authentication
@@ -153,6 +158,38 @@ router.delete('/albums/:id', async (req, res) => {
             return res.status(404).json({ ok: false, error: 'Альбом не найден' });
         }
 
+        const album = db.data.gallery.albums[albumIndex];
+
+        // Delete all associated photo files
+        if (album.photos && album.photos.length > 0) {
+            album.photos.forEach(photo => {
+                if (photo.url && photo.url.startsWith('/uploads/')) {
+                    const filePath = path.join(__dirname, '..', 'public', photo.url);
+                    if (fs.existsSync(filePath)) {
+                        try {
+                            fs.unlinkSync(filePath);
+                            console.log(`🗑️ Удален файл фото альбома: ${filePath}`);
+                        } catch (error) {
+                            console.error('Ошибка при удалении файла:', error);
+                        }
+                    }
+                }
+            });
+        }
+
+        // Delete cover photo if it's local
+        if (album.coverPhoto && album.coverPhoto.startsWith('/uploads/')) {
+            const filePath = path.join(__dirname, '..', 'public', album.coverPhoto);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`🗑️ Удалена обложка альбома: ${filePath}`);
+                } catch (error) {
+                    console.error('Ошибка при удалении обложки:', error);
+                }
+            }
+        }
+
         db.data.gallery.albums.splice(albumIndex, 1);
         await db.write();
 
@@ -282,6 +319,21 @@ router.delete('/albums/:albumId/photos/:photoId', async (req, res) => {
             return res.status(404).json({ ok: false, error: 'Фото не найдено' });
         }
 
+        const photo = album.photos[photoIndex];
+
+        // Delete associated file if it exists
+        if (photo.url && photo.url.startsWith('/uploads/')) {
+            const filePath = path.join(__dirname, '..', 'public', photo.url);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`🗑️ Удален файл фото: ${filePath}`);
+                } catch (error) {
+                    console.error('Ошибка при удалении файла:', error);
+                }
+            }
+        }
+
         album.photos.splice(photoIndex, 1);
         album.updatedAt = new Date().toISOString();
         album.updatedBy = req.user.id;
@@ -290,7 +342,7 @@ router.delete('/albums/:albumId/photos/:photoId', async (req, res) => {
 
         console.log(`✅ Удалено фото ${photoId} из альбома ${albumId} пользователем: ${req.user.username}`);
 
-        res.json({ ok: true });
+        res.json({ ok: true, album });
     } catch (error) {
         console.error('❌ Ошибка удаления фото:', error);
         res.status(500).json({ ok: false, error: 'Ошибка удаления фото' });

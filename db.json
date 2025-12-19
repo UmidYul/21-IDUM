@@ -538,34 +538,90 @@
   "gallery": {
     "albums": [
       {
-        "id": "c2e94b96-8928-4b6d-a6a6-4298531d1dd3",
-        "title_ru": "День Сары",
-        "title_uz": "",
-        "description_ru": "Фотографии со дня рождения Сары",
+        "id": "ed780f2a-40d0-4b99-9cd8-2a2e9603ce1e",
+        "title_ru": "День Спорта",
+        "title_uz": "Sport Kuni",
+        "description_ru": "День Спорта в нашей школе",
         "description_uz": "",
-        "coverPhoto": "./images/2.webp",
+        "coverPhoto": "/uploads/album-covers/album-cover-1766131181073-547116302.jpg",
         "status": "published",
         "order": 0,
         "photos": [
           {
-            "id": "48e02db8-e56b-4fcd-a4ec-5f8e2636aaee",
-            "url": "./images/3.webp",
+            "id": "f3b732a8-21ac-457a-9aed-36e18d28f715",
+            "url": "/uploads/gallery/gallery-1766131229995-14040540.jpg",
             "caption_ru": "Поздравление",
             "caption_uz": "",
             "order": 0,
-            "addedAt": "2025-12-18T21:25:14.549Z"
+            "addedAt": "2025-12-19T08:00:30.034Z"
           },
           {
-            "id": "e18eed56-91bd-4704-b35f-e47013fbc584",
-            "url": "./images/2.webp",
-            "caption_ru": "Поздравление 2",
+            "id": "07cd39b3-91c7-498d-9edb-41d6ff5ae901",
+            "url": "/uploads/gallery/gallery-1766131229998-231880383.jpg",
+            "caption_ru": "Поздравление",
             "caption_uz": "",
             "order": 1,
-            "addedAt": "2025-12-18T21:25:38.329Z"
+            "addedAt": "2025-12-19T08:00:30.042Z"
+          },
+          {
+            "id": "19330f8c-e7ec-4ab4-809c-acf5b629235e",
+            "url": "/uploads/gallery/gallery-1766131230001-110022204.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 2,
+            "addedAt": "2025-12-19T08:00:30.052Z"
+          },
+          {
+            "id": "81496054-7f46-4161-b8ee-901f1516bb5f",
+            "url": "/uploads/gallery/gallery-1766131230003-405286223.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 3,
+            "addedAt": "2025-12-19T08:00:30.063Z"
+          },
+          {
+            "id": "b63238a9-85e2-42d6-bc66-bb5e00a913cd",
+            "url": "/uploads/gallery/gallery-1766131230005-246400984.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 4,
+            "addedAt": "2025-12-19T08:00:30.071Z"
+          },
+          {
+            "id": "042e0f16-7f10-44a5-b9f6-108f812f78f8",
+            "url": "/uploads/gallery/gallery-1766131230006-180195387.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 5,
+            "addedAt": "2025-12-19T08:00:30.081Z"
+          },
+          {
+            "id": "d1ba1b55-51f2-49eb-a150-f55cd823832f",
+            "url": "/uploads/gallery/gallery-1766131230008-835968349.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 6,
+            "addedAt": "2025-12-19T08:00:30.090Z"
+          },
+          {
+            "id": "5600a445-0ab4-417d-8605-89a7153e342e",
+            "url": "/uploads/gallery/gallery-1766131230012-52670951.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 7,
+            "addedAt": "2025-12-19T08:00:30.101Z"
+          },
+          {
+            "id": "579fbe9f-f654-4f5e-bbe5-d811c6d72b0c",
+            "url": "/uploads/gallery/gallery-1766131230014-783328185.jpg",
+            "caption_ru": "Поздравление",
+            "caption_uz": "",
+            "order": 8,
+            "addedAt": "2025-12-19T08:00:30.113Z"
           }
         ],
-        "createdAt": "2025-12-18T21:21:12.187Z",
-        "updatedAt": "2025-12-18T21:25:38.329Z",
+        "createdAt": "2025-12-19T08:00:02.603Z",
+        "updatedAt": "2025-12-19T08:00:30.113Z",
         "createdBy": "fdc50868-c99f-4213-9920-01e9e68466a1",
         "updatedBy": "fdc50868-c99f-4213-9920-01e9e68466a1"
       }

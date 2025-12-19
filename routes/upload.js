@@ -37,6 +37,8 @@ function ensureUploadsDir(subdir) {
 
 const newsUploadsDir = ensureUploadsDir('news');
 const teachersUploadsDir = ensureUploadsDir('teachers');
+const galleryUploadsDir = ensureUploadsDir('gallery');
+const albumCoversDir = ensureUploadsDir('album-covers');
 
 // Helper function to delete old file
 function deleteOldFile(filePath) {
@@ -95,6 +97,42 @@ const teacherUpload = multer({
     limits: { fileSize: 2 * 1024 * 1024 } // 2MB limit for teacher photos
 });
 
+// Configure multer for gallery photos
+const galleryStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, galleryUploadsDir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'gallery-' + uniqueSuffix + ext);
+    }
+});
+
+const galleryUpload = multer({
+    storage: galleryStorage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit for gallery photos
+});
+
+// Configure multer for album covers
+const albumCoverStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, albumCoversDir);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'album-cover-' + uniqueSuffix + ext);
+    }
+});
+
+const albumCoverUpload = multer({
+    storage: albumCoverStorage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit for album covers
+});
+
 // POST /api/upload/news-cover - Upload news cover image (protected)
 router.post('/news-cover', requireAuth, newsUpload.single('image'), (req, res) => {
     try {
@@ -141,11 +179,60 @@ router.post('/teacher-photo', requireAuth, teacherUpload.single('image'), (req, 
     }
 });
 
+// POST /api/upload/gallery-photos - Upload gallery photos (multiple, protected)
+router.post('/gallery-photos', requireAuth, galleryUpload.array('images', 20), (req, res) => {
+    try {
+        if (!req.files || req.files.length === 0) {
+            return res.status(400).json({ ok: false, error: 'Файлы не загружены' });
+        }
+
+        const uploadedFiles = req.files.map(file => ({
+            url: '/uploads/gallery/' + file.filename,
+            filename: file.filename,
+            size: file.size
+        }));
+
+        console.log(`✅ Загружено ${req.files.length} фото галереи пользователем: ${req.user.username}`);
+
+        res.json({
+            ok: true,
+            files: uploadedFiles,
+            count: uploadedFiles.length
+        });
+    } catch (error) {
+        console.error('Gallery photos upload error:', error);
+        res.status(500).json({ ok: false, error: 'Ошибка загрузки файлов' });
+    }
+});
+
+// POST /api/upload/album-cover - Upload album cover (protected)
+router.post('/album-cover', requireAuth, albumCoverUpload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ ok: false, error: 'Файл не загружен' });
+        }
+
+        const fileUrl = '/uploads/album-covers/' + req.file.filename;
+
+        console.log(`✅ Загружена обложка альбома: ${req.file.filename} пользователем: ${req.user.username}`);
+
+        res.json({
+            ok: true,
+            url: fileUrl,
+            filename: req.file.filename,
+            size: req.file.size
+        });
+    } catch (error) {
+        console.error('Album cover upload error:', error);
+        res.status(500).json({ ok: false, error: 'Ошибка загрузки файла' });
+    }
+});
+
 // Error handling middleware for multer
 router.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         if (error.code === 'LIMIT_FILE_SIZE') {
-            return res.status(400).json({ ok: false, error: 'Файл слишком большой (макс. 5MB для новостей, 2MB для фото учителей)' });
+            return res.status(400).json({ ok: false, error: 'Файл слишком большой (макс. 10MB для галереи, 5MB для новостей, 2MB для учителей)' });
         }
         return res.status(400).json({ ok: false, error: error.message });
     }

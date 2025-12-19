@@ -6,15 +6,21 @@ export const newsSchema = z.object({
         .min(1, 'Заголовок на русском обязателен')
         .max(200, 'Заголовок не должен превышать 200 символов'),
     title_uz: z.string()
-        .min(1, 'Заголовок на узбекском обязателен')
-        .max(200, 'Заголовок не должен превышать 200 символов'),
+        .max(200, 'Заголовок не должен превышать 200 символов')
+        .optional()
+        .or(z.literal('')),
     body_ru: z.string()
         .min(1, 'Текст на русском обязателен')
         .max(50000, 'Текст не должен превышать 50000 символов'),
     body_uz: z.string()
-        .min(1, 'Текст на узбекском обязателен')
-        .max(50000, 'Текст не должен превышать 50000 символов'),
-    coverUrl: z.string().url('Некорректный URL обложки').optional().or(z.literal('')),
+        .max(50000, 'Текст не должен превышать 50000 символов')
+        .optional()
+        .or(z.literal('')),
+    // Allow absolute URLs or relative paths under /uploads/
+    coverUrl: z.union([
+        z.string().url('Некорректный URL обложки'),
+        z.string().regex(/^\/uploads\//, 'Некорректный путь обложки')
+    ]).optional().or(z.literal('')),
     status: z.enum(['draft', 'published'], {
         errorMap: () => ({ message: 'Статус должен быть draft или published' })
     })

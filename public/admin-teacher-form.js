@@ -26,43 +26,72 @@
     function show(el, text) { if (!el) return; el.textContent = text || ''; el.style.display = 'block'; }
     function hide(el) { if (!el) return; el.style.display = 'none'; el.textContent = ''; }
 
-    // Photo upload with preview
+    // Photo upload with preview, validation, progress
     if (photoInput) {
+        const progressWrap = document.getElementById('photoUploadProgress');
+        const progressBar = document.getElementById('photoProgressBar');
+        const progressText = document.getElementById('photoProgressText');
+
         photoInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
 
+            // client-side validation
+            const maxSize = parseInt(photoInput.dataset.maxSize || (2 * 1024 * 1024), 10);
+            const minWidth = parseInt(photoInput.dataset.minWidth || 0, 10);
+            const minHeight = parseInt(photoInput.dataset.minHeight || 0, 10);
+            try {
+                const v = await UploadUtils.validateImageFile(file, {
+                    maxSize,
+                    minWidth,
+                    minHeight,
+                    allowedTypes: ['image/jpeg', 'image/png', 'image/webp']
+                });
+                if (!v.ok) throw new Error(v.error);
+            } catch (err) {
+                show(errorBox, err.message);
+                photoInput.value = '';
+                return;
+            }
+
             // Show preview immediately
             const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImg.src = e.target.result;
+            reader.onload = (ev) => {
+                previewImg.src = ev.target.result;
                 photoPreview.style.display = 'block';
             };
             reader.readAsDataURL(file);
 
-            // Upload to server
+            // Upload with progress
             try {
-                const formData = new FormData();
-                formData.append('image', file);
+                if (progressWrap) { progressWrap.classList.add('show'); progressWrap.setAttribute('aria-hidden', 'false'); }
+                if (progressText) { progressText.textContent = '0%'; progressText.setAttribute('aria-hidden', 'false'); }
+                if (progressBar) { progressBar.style.width = '0%'; }
 
-                const r = await fetch('/api/upload/teacher-photo', {
-                    method: 'POST',
+                const data = await UploadUtils.uploadImageWithProgress({
+                    url: '/api/upload/teacher-photo',
+                    file,
                     headers: getCSRFHeaders(),
-                    body: formData,
-                    credentials: 'same-origin'
+                    onProgress: (percent) => {
+                        if (progressBar) progressBar.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
+                    }
                 });
 
-                const data = await r.json();
-                if (!r.ok || !data.ok) {
-                    throw new Error(data.error || 'Ошибка загрузки');
+                if (!data || !data.ok) {
+                    throw new Error((data && data.error) || 'Ошибка загрузки');
                 }
 
                 photoUrl.value = data.url;
-                console.log('Фото учителя загружено:', data.url);
             } catch (err) {
-                show(errorBox, 'Ошибка загрузки фото: ' + err.message);
+                show(errorBox, 'Ошибка загрузки фото: ' + (err.message || ''));
                 photoInput.value = '';
                 photoPreview.style.display = 'none';
+            } finally {
+                setTimeout(() => {
+                    if (progressWrap) { progressWrap.classList.remove('show'); progressWrap.setAttribute('aria-hidden', 'true'); }
+                    if (progressText) { progressText.setAttribute('aria-hidden', 'true'); }
+                }, 500);
             }
         });
     }
@@ -73,6 +102,9 @@
             photoUrl.value = '';
             photoPreview.style.display = 'none';
             previewImg.src = '';
+            // Reset filename display
+            const nameEl = document.querySelector('[data-filedrop-name="photo"]');
+            if (nameEl) nameEl.textContent = 'Файл не выбран';
         });
     }
 

@@ -58,9 +58,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="text">Текст объявления *</label>
+                            <label for="text">Текст объявления * (формат: HTML)</label>
                             <textarea id="text" class="form-control" rows="4" required
-                                placeholder="Полный текст объявления..."></textarea>
+                                placeholder="Полный текст объявления..." style="min-height: 300px;"></textarea>
                         </div>
 
                         <div class="form-row">
@@ -131,7 +131,14 @@
                 }
 
                 document.getElementById('title').value = announcement.title || '';
-                document.getElementById('text').value = announcement.text || '';
+
+                // Load text into Quill editor if available
+                if (window.setEditorContent) {
+                    setEditorContent('text', announcement.text || '');
+                } else {
+                    document.getElementById('text').value = announcement.text || '';
+                }
+
                 document.getElementById('type').value = announcement.type || '';
                 document.getElementById('date').value = announcement.date || '';
                 document.getElementById('location').value = announcement.location || '';
@@ -145,9 +152,15 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Get text from Quill editor if available, otherwise from textarea
+            let text = document.getElementById('text').value.trim();
+            if (window.getEditorHTML) {
+                text = getEditorHTML('text');
+            }
+
             const data = {
                 title: document.getElementById('title').value.trim(),
-                text: document.getElementById('text').value.trim(),
+                text: text,
                 type: document.getElementById('type').value,
                 date: document.getElementById('date').value,
                 location: document.getElementById('location').value.trim(),
@@ -185,6 +198,15 @@
         });
     </script>
     <script src="/csrf-helper.js"></script>
+    <script src="/rich-editor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize rich text editor for announcement text
+            if (window.initializeRichEditor) {
+                initializeRichEditor('text', 'Напишите текст объявления...');
+            }
+        });
+    </script>
 </body>
 
 </html>

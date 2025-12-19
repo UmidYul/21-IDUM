@@ -1,6 +1,11 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import db from '../database.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 // GET /api/news - Get all news
@@ -218,6 +223,21 @@ router.delete('/:id', async (req, res) => {
                 success: false,
                 error: 'News not found'
             });
+        }
+
+        const news = db.data.news[newsIndex];
+
+        // Delete associated image file if it exists
+        if (news.coverUrl && news.coverUrl.startsWith('/uploads/')) {
+            const filePath = path.join(__dirname, '..', 'public', news.coverUrl);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`🗑️ Удален файл новости: ${filePath}`);
+                } catch (error) {
+                    console.error('Ошибка при удалении файла:', error);
+                }
+            }
         }
 
         db.data.news.splice(newsIndex, 1);

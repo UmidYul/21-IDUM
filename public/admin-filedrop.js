@@ -6,21 +6,56 @@
         const nameEl = document.querySelector(`[data-filedrop-name="${inputId}"]`);
         const browseBtn = document.querySelector(`[data-filedrop-browse="${inputId}"]`);
 
-        function setName(file) { if (nameEl) { nameEl.textContent = file ? file.name : 'Файл не выбран'; } }
-
-        if (browseBtn) { browseBtn.addEventListener('click', () => input.click()); }
-        if (area) {
-            ;['dragenter', 'dragover'].forEach(evt => area.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); area.classList.add('dragover'); }));
-            ;['dragleave', 'drop'].forEach(evt => area.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); area.classList.remove('dragover'); }));
-            area.addEventListener('drop', (e) => {
-                const files = e.dataTransfer?.files; if (!files || !files.length) return;
-                input.files = files; // assign FileList
-                input.dispatchEvent(new Event('change', { bubbles: true }));
-                setName(files[0]);
-            });
-            area.addEventListener('click', () => input.click());
+        function setName(file) {
+            if (nameEl) {
+                nameEl.textContent = file ? file.name : 'Файл не выбран';
+            }
         }
-        input.addEventListener('change', () => setName(input.files?.[0] || null));
+
+        if (browseBtn) {
+            browseBtn.addEventListener('click', () => {
+                if (input) input.click();
+            });
+        }
+
+        if (area) {
+            ['dragenter', 'dragover'].forEach(evt => area.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.classList.add('dragover');
+            }));
+
+            ['dragleave', 'drop'].forEach(evt => area.addEventListener(evt, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.classList.remove('dragover');
+            }));
+
+            area.addEventListener('drop', (e) => {
+                try {
+                    const files = e.dataTransfer?.files;
+                    if (!files || !files.length || !input) return;
+                    input.files = files;
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                    setName(files[0]);
+                } catch (err) {
+                    console.error('Error in file drop:', err);
+                }
+            });
+
+            area.addEventListener('click', () => {
+                if (input) input.click();
+            });
+        }
+
+        input.addEventListener('change', () => {
+            try {
+                setName(input?.files?.[0] || null);
+            } catch (err) {
+                console.error('Error in file input change:', err);
+            }
+        });
+
         setName(null);
     }
 

@@ -365,9 +365,19 @@
                         <div class="news-content">
                             <h3 class="news-title">${item.title}</h3>
                             <p class="news-excerpt">${item.excerpt || ''}</p>
-                            <a href="#" class="news-link">Читать далее →</a>
                         </div>
                     `;
+
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'news-link';
+                    link.textContent = 'Читать далее →';
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        openNewsModal(item);
+                    };
+
+                    newsCard.querySelector('.news-content').appendChild(link);
                     newsContainer.appendChild(newsCard);
                 });
             } catch (error) {
@@ -376,6 +386,120 @@
                 console.error('Error loading news:', error);
             }
         }
+
+        // Open news modal
+        window.openNewsModal = function (item) {
+            const modal = document.createElement('div');
+            modal.className = 'news-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                padding: 20px;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                border-radius: 12px;
+                max-width: 800px;
+                width: 100%;
+                max-height: 80vh;
+                overflow-y: auto;
+                padding: 30px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+                position: relative;
+            `;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.style.cssText = `
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                background: none;
+                border: none;
+                font-size: 28px;
+                cursor: pointer;
+                color: #999;
+                padding: 0;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            closeBtn.textContent = '×';
+            closeBtn.onclick = () => modal.remove();
+
+            // Get title and content from API response (single language per request)
+            const title = item.title || '';
+            const body = item.content || '';
+
+            let html = `<div style="display: flex; flex-direction: column; gap: 15px; padding-right: 40px;">`;
+
+            // Title
+            if (title) {
+                html += `<h2 style="margin: 0; font-size: 28px; color: var(--text-dark); line-height: 1.3;">${title}</h2>`;
+            }
+
+            // Cover image
+            if (item.coverUrl) {
+                html += `<img src="${item.coverUrl}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">`;
+            }
+
+            // Date
+            let dateStr = '';
+            if (item.publish_date) {
+                // If already formatted as string
+                if (typeof item.publish_date === 'string' && item.publish_date.includes('.')) {
+                    dateStr = item.publish_date;
+                } else {
+                    // Parse date
+                    const date = new Date(item.publish_date);
+                    if (!isNaN(date.getTime())) {
+                        dateStr = date.toLocaleDateString('ru-RU');
+                    }
+                }
+            } else if (item.created_at) {
+                const date = new Date(item.created_at);
+                if (!isNaN(date.getTime())) {
+                    dateStr = date.toLocaleDateString('ru-RU');
+                }
+            }
+
+            if (dateStr) {
+                html += `<div style="color: #999; font-size: 14px;">📅 ${dateStr}</div>`;
+            }
+
+            html += `<hr style="margin: 15px 0; border: none; border-top: 1px solid #e5e7eb;">`;
+
+            // Main content
+            if (body) {
+                html += `<div style="line-height: 1.8; color: var(--text-dark);">${body}</div>`;
+            } else {
+                html += `<div style="color: #999;">Содержание не найдено</div>`;
+            }
+
+            html += `</div>`;
+
+            content.innerHTML = html;
+            content.appendChild(closeBtn);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        };
 
         // Load data on page load
         document.addEventListener('DOMContentLoaded', () => {

@@ -68,13 +68,16 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="photo">Фото *</label>
-                        <input type="file" id="photo" name="photo" accept="image/*" style="display:none">
+                        <input type="file" id="photo" name="photo" accept="image/*" style="display:none"
+                            data-max-size="2097152" data-min-width="200" data-min-height="200">
                         <div class="file-drop-area" data-filedrop="photo">
                             <div class="file-instructions">
                                 Перетащите фото сюда или <strong>нажмите на поле</strong>
-                                <span class="file-name" data-filedrop-name="photo">Файл не выбран</span>
                             </div>
                         </div>
+                        <div class="file-name" data-filedrop-name="photo" style="margin-top:6px">Файл не выбран</div>
+                        <div class="text-sm muted" style="margin-top:6px">Рекомендуемый размер: 400x400+. Макс: 2MB.
+                            Форматы: JPEG, PNG, WebP.</div>
                         <div id="photoPreview" style="margin-top:10px; display:none;">
                             <img id="previewImg" src=""
                                 style="max-width:200px; border-radius:8px; border:1px solid #e5e7eb;">
@@ -83,10 +86,7 @@
                         </div>
                         <input type="hidden" id="photoUrl" name="photoUrl">
                     </div>
-                    <div class="form-group">
-                        <label for="order">Порядок</label>
-                        <input type="number" id="order" name="order" min="0">
-                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -121,6 +121,7 @@
         </div>
     </section>
     <script src="/csrf-helper.js"></script>
+    <script src="/upload-utils.js"></script>
     <script src="/admin-filedrop.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => { window.initFileDrop && initFileDrop('photo'); });</script>
     <script src="/admin-teacher-form.js"></script>
