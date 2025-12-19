@@ -1,10 +1,13 @@
 import winston from 'winston';
-import DailyRotateFile from 'winston-daily-rotate-file';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Проверка на Vercel или serverless окружение
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL === 'true';
+const isServerless = isVercel || process.env.AWS_LAMBDA_FUNCTION_NAME;
 
 // Формат логов
 const logFormat = winston.format.combine(
@@ -18,26 +21,7 @@ const logFormat = winston.format.combine(
     })
 );
 
-// Транспорт для ошибок (только error уровень)
-const errorTransport = new DailyRotateFile({
-    filename: path.join(__dirname, '..', 'logs', 'error-%DATE%.log'),
-    datePattern: 'YYYY-MM-DD',
-    level: 'error',
-    maxSize: '20m',
-    maxFiles: '30d',
-    format: logFormat
-});
-
-// Транспорт для всех логов
-const combinedTransport = new DailyRotateFile({
-    filename: path.join(__dirname, '..', 'logs', 'combined-%DATE%.log'),
-    datePattern: 'YYYY-MM-DD',
-    maxSize: '20m',
-    maxFiles: '14d',
-    format: logFormat
-});
-
-// Консольный вывод для development
+// Консольный транспорт
 const consoleTransport = new winston.transports.Console({
     format: winston.format.combine(
         winston.format.colorize(),
@@ -51,19 +35,45 @@ const consoleTransport = new winston.transports.Console({
     )
 });
 
+// Создание транспортов в зависимости от окружения
+const transports = [consoleTransport];
+
+// Файловые транспорты только для локального окружения
+if (!isServerless) {
+    try {
+        const DailyRotateFile = (await import('winston-daily-rotate-file')).default;
+
+        // Транспорт для ошибок
+        const errorTransport = new DailyRotateFile({
+            filename: path.join(__dirname, '..', 'logs', 'error-%DATE%.log'),
+            datePattern: 'YYYY-MM-DD',
+            level: 'error',
+            maxSize: '20m',
+            maxFiles: '30d',
+            format: logFormat
+        });
+
+        // Транспорт для всех логов
+        const combinedTransport = new DailyRotateFile({
+            filename: path.join(__dirname, '..', 'logs', 'combined-%DATE%.log'),
+            datePattern: 'YYYY-MM-DD',
+            maxSize: '20m',
+            maxFiles: '14d',
+            format: logFormat
+        });
+
+        transports.push(errorTransport, combinedTransport);
+    } catch (err) {
+        // Если не удалось загрузить DailyRotateFile, просто используем консоль
+        console.warn('File logging disabled:', err.message);
+    }
+}
+
 // Создание логгера
 const logger = winston.createLogger({
     level: process.env.LOG_LEVEL || 'info',
-    transports: [
-        errorTransport,
-        combinedTransport
-    ]
+    transports: transports
 });
-
-// Добавляем консольный вывод в development
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(consoleTransport);
-}
 
 // Вспомогательные методы
 logger.logRequest = (req, res, duration) => {
