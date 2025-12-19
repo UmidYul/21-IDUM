@@ -7,6 +7,8 @@
     <title>Фотогалерея — 21-IDUM</title>
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/images/logo.png">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://school-21.uz/gallery" />
     <style>
         .gallery-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -294,13 +296,13 @@
             <a href="/" class="logo">21-<span>IDUM</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/about.html">О школе</a></li>
-                <li><a href="/schedule.html">Расписание</a></li>
-                <li><a href="/calendar.html">Календарь</a></li>
-                <li><a href="/gallery.html" class="active">Галерея</a></li>
-                <li><a href="/news.html">Новости</a></li>
-                <li><a href="/team.html">Разработчики</a></li>
-                <li><a href="/faq.html">FAQ</a></li>
+                <li><a href="/about">О школе</a></li>
+                <li><a href="/schedule">Расписание</a></li>
+                <li><a href="/calendar">Календарь</a></li>
+                <li><a href="/gallery" class="active">Галерея</a></li>
+                <li><a href="/news">Новости</a></li>
+                <li><a href="/team">Разработчики</a></li>
+                <li><a href="/faq">FAQ</a></li>
             </ul>
             <button class="language-switch" id="languageSwitch">Русский</button>
             <div class="burger-menu" id="burgerMenu">
@@ -365,23 +367,31 @@
                     <h3>Навигация</h3>
                     <ul class="footer-links">
                         <li><a href="/">Главная</a></li>
-                        <li><a href="/about.html">О школе</a></li>
-                        <li><a href="/schedule.html">Расписание</a></li>
-                        <li><a href="/calendar.html">Календарь</a></li>
-                        <li><a href="/gallery.html">Галерея</a></li>
-                        <li><a href="/news.html">Новости</a></li>
-                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="/about">О школе</a></li>
+                        <li><a href="/schedule">Расписание</a></li>
+                        <li><a href="/calendar">Календарь</a></li>
+                        <li><a href="/gallery">Галерея</a></li>
+                        <li><a href="/news">Новости</a></li>
+                        <li><a href="/faq">FAQ</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-credit">Сайт разработан командой <a href="/team.html">IDUM Dev</a></p>
+                <p class="footer-credit">Сайт разработан командой <a href="/team">IDUM Dev</a></p>
                 <p>&copy; 2025 21-IDUM. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
     <script src="/gallery.js"></script>
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>

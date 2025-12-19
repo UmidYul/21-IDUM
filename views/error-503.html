@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>503 - Сервис недоступен</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/images/logo.png">
+    <style>
+        .error-wrapper {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1;
+            color: #bfa181;
+            text-shadow: 0 2px 10px rgba(191, 161, 129, 0.15);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .error-icon {
+            font-size: 60px;
+            margin: 20px 0;
+            display: inline-block;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-10deg);
+            }
+
+            75% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .error-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+            color: #bfa181;
+        }
+
+        .error-message {
+            font-size: 18px;
+            color: #bfa181;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .error-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .error-btn-primary {
+            background: linear-gradient(135deg, #bfa181 0%, #e2c9a0 100%);
+            color: white;
+        }
+
+        .error-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(191, 161, 129, 0.3);
+        }
+
+        .error-btn-secondary {
+            background: #f3f4f6;
+            color: #bfa181;
+            border: 2px solid #bfa181;
+        }
+
+        .error-btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .error-code {
+                font-size: 80px;
+            }
+
+            .error-title {
+                font-size: 24px;
+            }
+
+            .error-message {
+                font-size: 16px;
+            }
+
+            .error-buttons {
+                flex-direction: column;
+            }
+
+            .error-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container container">
+            <a href="/" class="logo">21-<span>IDUM</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/about">О школе</a></li>
+                <li><a href="/schedule">Расписание</a></li>
+                <li><a href="/calendar">Календарь</a></li>
+                <li><a href="/gallery">Галерея</a></li>
+                <li><a href="/news">Новости</a></li>
+                <li><a href="/team">Разработчики</a></li>
+                <li><a href="/faq">FAQ</a></li>
+            </ul>
+            <button class="language-switch" id="languageSwitch">Русский</button>
+            <div class="burger-menu" id="burgerMenu">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="error-wrapper">
+        <div class="error-container">
+            <div class="error-icon">🛠️</div>
+            <h1 class="error-code">503</h1>
+            <h2 class="error-title">Сервис недоступен</h2>
+            <p class="error-message">
+                Сервер временно недоступен. Возможно, выполняется техническое обслуживание. Пожалуйста, попробуйте
+                позже.
+            </p>
+
+            <div class="error-buttons">
+                <a href="/" class="error-btn error-btn-primary">На главную</a>
+                <button class="error-btn error-btn-secondary" onclick="history.back()">Вернуться назад</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>21-IDUM</h3>
+                    <p>Официальный сайт общеобразовательной школы №21.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li>+998 (77) 453-55-50</li>
+                        <li>info@21idum.uz</li>
+                        <li>г. Фаргона, ул. Кокандская, 56</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/about">О школе</a></li>
+                        <li><a href="/schedule">Расписание</a></li>
+                        <li><a href="/news">Новости</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-credit">Сайт разработан командой <a href="/team">IDUM Dev</a></p>
+                <p>&copy; 2025 21-IDUM. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

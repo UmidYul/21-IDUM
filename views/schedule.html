@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/21idum" href="/images/logo.png">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://school-21.uz/schedule" />
     <style>
         /* Spacing tweaks for schedule page */
         .schedule-section {
@@ -53,13 +55,13 @@
             <a href="/" class="logo">21-<span>IDUM</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="/">Главная</a></li>
-                <li><a href="/about.html">О школе</a></li>
-                <li><a href="/schedule.html" class="active">Расписание</a></li>
-                <li><a href="/calendar.html">Календарь</a></li>
-                <li><a href="/gallery.html">Галерея</a></li>
-                <li><a href="/news.html">Новости</a></li>
-                <li><a href="/team.html">Разработчики</a></li>
-                <li><a href="/faq.html">FAQ</a></li>
+                <li><a href="/about">О школе</a></li>
+                <li><a href="/schedule" class="active">Расписание</a></li>
+                <li><a href="/calendar">Календарь</a></li>
+                <li><a href="/gallery">Галерея</a></li>
+                <li><a href="/news">Новости</a></li>
+                <li><a href="/team">Разработчики</a></li>
+                <li><a href="/faq">FAQ</a></li>
             </ul>
             <button class="language-switch" id="languageSwitch">Русский</button>
             <div class="burger-menu" id="burgerMenu">
@@ -150,17 +152,17 @@
                     <h3>Навигация</h3>
                     <ul class="footer-links">
                         <li><a href="/">Главная</a></li>
-                        <li><a href="/about.html">О школе</a></li>
-                        <li><a href="/schedule.html">Расписание</a></li>
-                        <li><a href="/calendar.html">Календарь</a></li>
-                        <li><a href="/gallery.html">Галерея</a></li>
-                        <li><a href="/news.html">Новости</a></li>
-                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="/about">О школе</a></li>
+                        <li><a href="/schedule">Расписание</a></li>
+                        <li><a href="/calendar">Календарь</a></li>
+                        <li><a href="/gallery">Галерея</a></li>
+                        <li><a href="/news">Новости</a></li>
+                        <li><a href="/faq">FAQ</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-credit">Сайт разработан командой <a href="/team.html">IDUM Dev</a></p>
+                <p class="footer-credit">Сайт разработан командой <a href="/team">IDUM Dev</a></p>
                 <p>&copy; 2025 Школа №21-IDUM. Все права защищены.</p>
             </div>
         </div>
@@ -181,7 +183,7 @@
                 });
             }
             if (languageSwitch) {
-                languageSwitch.textContent = lang === 'ru' ? 'O‘zbekcha' : 'Русский';
+                languageSwitch.textContent = lang === 'ru' ? 'Русский' : "O'zbekcha";
             }
             document.querySelectorAll('[data-ru]').forEach(el => {
                 el.textContent = el.getAttribute(`data-${lang}`);

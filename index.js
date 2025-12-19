@@ -151,8 +151,8 @@ app.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
-        frameSrc: ['https://www.google.com'],
-        connectSrc: ["'self'"]
+        frameSrc: ['https://www.google.com', 'https://www.youtube.com'],
+        connectSrc: ["'self'", 'https://maps.googleapis.com']
     }
 }));
 
@@ -398,6 +398,29 @@ app.get('/admin/users/edit/:id', requireAuthPage, (req, res) => {
 // Admin Audit page (recent logins)
 app.get('/admin/audit', requireAuthPage, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin', 'audit.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    logger.error(`Error ${status}: ${err.message}`);
+
+    if (status === 404) {
+        return res.status(404).sendFile(path.join(__dirname, 'views', 'error-404.html'));
+    }
+    if (status === 403) {
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'error-403.html'));
+    }
+    if (status === 503) {
+        return res.status(503).sendFile(path.join(__dirname, 'views', 'error-503.html'));
+    }
+
+    res.status(status).sendFile(path.join(__dirname, 'views', 'error-500.html'));
+});
+
+// 404 handler for unmatched routes
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'views', 'error-404.html'));
 });
 
 // Start server
