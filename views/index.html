@@ -94,8 +94,85 @@
                 <li><a href="/calendar">Календарь</a></li>
                 <li><a href="/gallery">Галерея</a></li>
                 <li><a href="/news">Новости</a></li>
+                <li class="dropdown" id="teachersDropdown">
+                    <a href="#" class="dropdown-toggle">Учителя</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/teachers/math">Математика</a></li>
+                        <li><a href="/teachers/physics">Физика</a></li>
+                        <li><a href="/teachers/chemistry">Химия</a></li>
+                        <li><a href="/teachers/biology">Биология</a></li>
+                        <li><a href="/teachers/informatics">Информатика</a></li>
+                        <li><a href="/teachers/english">Английский язык</a></li>
+                        <li><a href="/teachers/russian">Русский язык</a></li>
+                        <li><a href="/teachers/uzbek">Узбекский язык</a></li>
+                        <li><a href="/teachers/history">История</a></li>
+                        <li><a href="/teachers/geography">География</a></li>
+                        <li><a href="/teachers/pe">Физкультура</a></li>
+                        <li><a href="/teachers/music">Музыка</a></li>
+                        <li><a href="/teachers/art">Изобразительное искусство</a></li>
+                    </ul>
+                </li>
                 <li><a href="/team">Разработчики</a></li>
                 <li><a href="/faq">FAQ</a></li>
+                <style>
+                    .dropdown {
+                        position: relative;
+                    }
+
+                    .dropdown-toggle::after {
+                        content: " ▼";
+                        font-size: 0.7em;
+                    }
+
+                    .dropdown-menu {
+                        display: none;
+                        position: absolute;
+                        left: 0;
+                        top: 100%;
+                        background: #fff;
+                        min-width: 180px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                        border-radius: 6px;
+                        z-index: 100;
+                        padding: 8px 0;
+                    }
+
+                    .dropdown-menu li {
+                        list-style: none;
+                    }
+
+                    .dropdown-menu a {
+                        display: block;
+                        padding: 8px 20px;
+                        color: #222;
+                        text-decoration: none;
+                        transition: background 0.15s;
+                    }
+
+                    .dropdown-menu a:hover {
+                        background: #f5f5f5;
+                    }
+
+                    .dropdown:hover .dropdown-menu,
+                    .dropdown:focus-within .dropdown-menu {
+                        display: block;
+                    }
+
+                    @media (max-width: 900px) {
+                        .dropdown-menu {
+                            position: static;
+                            box-shadow: none;
+                            background: #fff;
+                            min-width: 0;
+                            border-radius: 0;
+                            padding: 0;
+                        }
+
+                        .dropdown-menu a {
+                            padding: 12px 24px;
+                        }
+                    }
+                </style>
             </ul>
             <button class="language-switch" id="languageSwitch">Русский</button>
             <div class="burger-menu" id="burgerMenu">
@@ -302,6 +379,24 @@
             const navLinks = document.querySelectorAll('.nav-links a');
             const sectionTitles = document.querySelectorAll('.section-title');
             const statLabels = document.querySelectorAll('.stat-label');
+            // Dropdown for mobile: close on click
+            const teachersDropdown = document.getElementById('teachersDropdown');
+            if (teachersDropdown) {
+                teachersDropdown.addEventListener('click', function (e) {
+                    if (window.innerWidth <= 900) {
+                        const menu = teachersDropdown.querySelector('.dropdown-menu');
+                        if (menu) menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                });
+                document.addEventListener('click', function (e) {
+                    if (window.innerWidth <= 900) {
+                        const menu = teachersDropdown.querySelector('.dropdown-menu');
+                        if (menu && !teachersDropdown.contains(e.target)) menu.style.display = 'none';
+                    }
+                });
+            }
 
             let currentLang = 'ru';
             languageSwitch.addEventListener('click', () => {
